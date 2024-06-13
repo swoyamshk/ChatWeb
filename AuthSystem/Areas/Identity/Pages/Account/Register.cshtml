@@ -1,0 +1,131 @@
+﻿@page
+@model RegisterModel
+@{
+    Layout = "/Views/Shared/_CustomLayoutRegister.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/register.css?v=1.0">
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <title>@ViewData["Title"] - ChatterBox</title>
+
+</head>
+<body>
+    <div class="container">
+        <div class="left"></div>
+        <div class="right">
+            <div class="login-box">
+                <div class="logo">
+                    <img src="~/img/logo1-bg.png" alt="ChatterBox Logo">
+                </div>
+                <h2>Welcome</h2>
+                <p>Create A New Account</p>
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <label for="firstName">First Name</label>
+                    <input asp-for="Input.FirstName" class="form-control" id="firstName" placeholder="John" />
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+
+                    <label for="lastName">Last Name</label>
+                    <input asp-for="Input.LastName" class="form-control" id="lastName" placeholder="Doe" />
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+
+                    <label for="email">Email</label>
+                    <input asp-for="Input.Email" class="form-control" id="email" placeholder="example.email@gmail.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                    <label for="password">Password</label>
+                    <input asp-for="Input.Password" class="form-control" id="password" placeholder="At least 8+ characters" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+
+                    <button type="submit" class="btn btn-primary">Sign-up</button>
+                </form>
+
+                <div class="login-link">
+                    <p>Already have an account? <a asp-page="/Account/Login" asp-area="Identity">Login</a></p>
+                </div>
+                <hr>
+                <div class="login-link">
+                    <p>Login with Google? <a asp-page="/Account/Login" asp-area="Identity">Google</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <script>
+            $(document).ready(function () {
+                $.validator.addMethod("lettersOnly", function (value, element) {
+                    return this.optional(element) || /^[a-zA-Z]+$/.test(value);
+                }, "Please enter only letters.");
+
+                $.validator.addMethod("passwordComplexity", function (value, element) {
+                    return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(value);
+                }, "Password must have one uppercase, one lowercase, one number, and one special character.");
+
+                $("#registerForm").validate({
+                    rules: {
+                        "Input.FirstName": {
+                            required: true,
+                            lettersOnly: true
+                        },
+                        "Input.LastName": {
+                            required: true,
+                            lettersOnly: true
+                        },
+                        "Input.Email": {
+                            required: true,
+                            email: true
+                        },
+                        "Input.Password": {
+                            required: true,
+                            minlength: 6,
+                            passwordComplexity: true
+                        },
+                        "Input.ConfirmPassword": {
+                            required: true,
+                            equalTo: "#password"
+                        }
+                    },
+                    messages: {
+                        "Input.FirstName": {
+                            required: "First Name is required.",
+                            lettersOnly: "First Name cannot contain numbers or special characters."
+                        },
+                        "Input.LastName": {
+                            required: "Last Name is required.",
+                            lettersOnly: "Last Name cannot contain numbers or special characters."
+                        },
+                        "Input.Email": {
+                            required: "Email is required.",
+                            email: "Please enter a valid email address."
+                        },
+                        "Input.Password": {
+                            required: "Password is required.",
+                            minlength: "Password must be at least 6 characters long.",
+                            passwordComplexity: "Password must have one uppercase, one lowercase, one number, and one special character."
+                        },
+                        "Input.ConfirmPassword": {
+                            required: "Confirm Password is required.",
+                            equalTo: "Passwords do not match."
+                        }
+                    }
+                });
+            });
+        </script>
+    }
+</body>
+</html>

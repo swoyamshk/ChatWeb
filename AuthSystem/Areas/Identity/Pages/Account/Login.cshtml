@@ -1,0 +1,89 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = "/Views/Shared/_CustomLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - ChatterBox</title>
+    <link rel="stylesheet" href="~/css/login.css?v=1.0">
+</head>
+<body>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="left"></div>
+        <div class="right">
+            <div class="login-box">
+                <div class="logo">
+                    <img src="/img/logo1-bg.png" alt="Logo">
+                </div>
+                <h2>Welcome back</h2>
+                <p>Log in to your account</p>
+                <form id="account" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <label for="email">Email</label>
+                    <input asp-for="Input.Email" id="email" class="form-control" autocomplete="username" placeholder="example.email@gmail.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                    <label for="password">Password</label>
+                    <input asp-for="Input.Password" id="password" class="form-control" autocomplete="current-password" placeholder="Enter at least 8+ characters" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                    <div class="remember-forgot">
+                        <label asp-for="Input.RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
+                    </div>
+
+                    <button id="login-submit" type="submit" class="btn btn-primary">Log in</button>
+                </form>
+
+                <section>
+                    <hr />
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                        article about setting up this ASP.NET application to support logging in via external services
+                                    </a>.
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p>
+                                        @foreach (var provider in Model.ExternalLogins!)
+                                        {
+                                            <button type="submit" class="btn btn-danger" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+                        }
+                    }
+                </section>
+
+                <div class="signup-link">
+                    <p>Don't have an account? <a asp-page="/Account/Register" asp-area="Identity">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

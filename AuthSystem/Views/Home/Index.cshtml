@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnyChat Conversations</title>
+    <link rel="stylesheet" href="~/css/Landing.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Added Font Awesome CSS -->
+</head>
+<body>
+  <div class="outer-container">
+        <div class="side-content pl-5 left">
+            <img src="img/1st.png" alt="pic1">
+    </div>
+    <div class="container">
+        <div class="logo">
+            <img src="img/logo1.png" alt="Logo">
+        </div>
+        <h2>Unleash AnyChat Conversations</h2>
+        <p>To continue, kindly log in with your account</p>
+            <button>
+                <a href="https://localhost:7143/Identity/Account/Login" class="btn">Get Started</a>
+            </button>
+    </div>
+    <div class="side-content right pl-5">
+        <img src="img/2nd.png" alt="pic2">
+    </div>
+</div>
+    <div class="file-sharing-background">
+        <div class="file-sharing-container">
+            <h3>What is a ChatterBox, and what can it do for you?</h3>                
+            <p class="file-sharing-footer">Chatterbox is a complete group chat solution designed to cater to all your communication needs. </p>
+        </div>
+    </div>
+    
+    <!-- New Features Section -->
+    <section class="features-section">
+      <h2>Features you'll love</h2>
+      <div class="features-container">
+          <div class="feature feature-create-chat-rooms">
+              <h3>Create and Join Chat Rooms</h3>
+              <p>Create new chat rooms for different topics or join existing ones. Collaborate with your team, discuss ideas, or just have fun with friends in dedicated spaces.</p>
+          </div>
+          <div class="feature feature-file-sharing">
+              <h3>File sharing made simple.</h3>
+              <p>Share files with colleagues, friends, or family with just a few clicks.</p>
+              <p>Upload a file to share →</p>
+          </div>
+          <div class="feature feature-real-time-messaging">
+              <h3>Real-time Messaging</h3>
+              <p>Enjoy instant communication with real-time messaging. See your friends' responses as they type and stay engaged with live chat updates.</p>
+          </div>
+      </div>
+  </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start rounded-4">
+      <div class="footer-container">
+          <div class="footer-left">
+              <img src="img/logo1-bg.png" alt="Footer Logo" class="footer-logo">
+          </div>
+          <div class="footer-right">
+              <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #3434c9;">
+                  <i class="fab fa-facebook-f"></i>
+              </button>
+              <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #c21313;">
+                  <i class="fab fa-youtube"></i>
+              </button>
+              <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #be8a31;">
+                  <i class="fab fa-instagram"></i>
+              </button>
+              <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #6890d3;">
+                  <i class="fab fa-twitter"></i>
+              </button>
+          </div>
+      </div>
+  </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+</body>
+</html>
