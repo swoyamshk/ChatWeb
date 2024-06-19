@@ -17,5 +17,9 @@ public class ApplicationUser : IdentityUser
 	[PersonalData]
 	[Column(TypeName = "nvarchar(100)")]
 	public string? LastName { get; set; }
+
+    public DateTime? LastLoginDate { get; set; }
+
+    public string? ActiveStatus { get; set; } = "Active";
 }
 

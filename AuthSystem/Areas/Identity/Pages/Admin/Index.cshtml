@@ -1,0 +1,58 @@
+﻿@page
+@model IndexModel
+
+<h2>User Management</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Roles</th>
+            <th>Last Logged In </th>
+            <th>Activity Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
+                <td>
+                    @foreach (var role in user.Roles)
+                    {
+                        <span>@role</span>
+                        <br />
+                    }
+                </td>
+                <td>
+                    @if (user.LastLoginDate.HasValue)
+                    {
+                        @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                    }
+                    else
+                    {
+                        <p>Never Logged In</p>
+                    }
+                </td>
+                <td>
+                    @if (string.IsNullOrWhiteSpace(user.ActiveStatus))
+                    {
+                        <p>Inactive</p>
+                    }
+                    else
+                    {
+                        @user.ActiveStatus
+                    }
+                </td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@user.Id">Edit</a> |
+                    <a asp-page="Delete" asp-route-id="@user.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="btn-danger"><a class="dropdown-item" style="color:white;text-decoration:none" asp-area="Identity" asp-page="/AdminUserCreation">AdminCreate</a></button>

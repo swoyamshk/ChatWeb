@@ -89,11 +89,15 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");
+                        user.LastLoginDate = DateTime.Now;
+                        user.ActiveStatus = "Active";
+                        await _userManager.UpdateAsync(user);
+
 
                         // Check user roles and set the appropriate returnUrl
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                         {
-                            returnUrl = Url.Content("~/Home/Privacy");
+                            returnUrl = Url.Content("~/Identity/Admin");
                         }
                         else if (await _userManager.IsInRoleAsync(user, "User"))
                         {
@@ -113,7 +117,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        ModelState.AddModelError(string.Empty, "Invalid Email or Password.");
                         return Page();
                     }
                 }

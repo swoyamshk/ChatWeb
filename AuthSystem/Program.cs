@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AuthSystem.Areas.Identity.Data;
 using AuthSystem.Hubs;
+using AuthSystem.Services;
+using SendGrid.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 
 
@@ -21,15 +24,27 @@ services.AddAuthentication().AddGoogle(googleOptions =>
  
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
 	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<AuthDbContext>();
 
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1)); //Token valid for 1 hour
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
+
+
+//Configure SendGrid Settings to Dotnet Application
+builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGridSettings"));
+builder.Services.AddSendGrid(options =>
+{
+    options.ApiKey = builder.Configuration.GetSection("SendGridSettings").GetValue<string>("ApiKey"); //Configuring ApiKey for SendGrid Library
+});
+
+builder.Services.AddScoped<IEmailSender, EmailSenderService>();
+
 
 var app = builder.Build();
 
@@ -51,6 +66,10 @@ app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
 
 
+
+
+
+//Add Roles to the Database
 using(var scope = app.Services.CreateScope())
 {
 	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -65,31 +84,44 @@ using(var scope = app.Services.CreateScope())
 }
 
 
+//Add Admin account to the database
 using (var scope = app.Services.CreateScope())
 {
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     string email = configuration["AdminUser:Email"];
     string password = configuration["AdminUser:Password"];
 
+    logger.LogInformation("Attempting to create admin user with Email: {Email}", email);
+
     if (await userManager.FindByEmailAsync(email) == null)
     {
-        var user = new ApplicationUser();
-        user.UserName = email;
-        user.Email = email;
+        var user = new ApplicationUser
+        {
+            UserName = email,
+            Email = email,
+            EmailConfirmed = true
+        };
 
         var result = await userManager.CreateAsync(user, password);
+
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(user, "Admin");
+            logger.LogInformation("Admin user created successfully.");
         }
         else
         {
-            // Handle errors
-            throw new Exception($"Failed to create user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            foreach (var error in result.Errors)
+            {
+                logger.LogError("Error creating admin user: {Error}", error.Description);
+            }
         }
     }
+    else
+    {
+        logger.LogInformation("Admin user already exists.");
+    }
 }
-
-
 
 app.Run();

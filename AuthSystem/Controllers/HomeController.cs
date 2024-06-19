@@ -23,9 +23,7 @@ namespace AuthSystem.Controllers
 		public IActionResult Privacy()
 		{
 			return View();
-		}
-        [Authorize(Roles = "User")]
-        public IActionResult Chat()
+		}        public IActionResult Chat()
         {
             return View();
         }
@@ -35,5 +33,8 @@ namespace AuthSystem.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
+
+
+
 	}
 }
