@@ -1,6 +1,7 @@
-using AuthSystem.Areas.Identity.Data; // Adjust namespace if necessary
+using AuthSystem.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ public class IndexModel : PageModel
     }
 
     public List<UserViewModel> Users { get; set; }
+    [BindProperty(SupportsGet = true)]
+    public string CurrentFilter { get; set; }
 
     public class UserViewModel
     {
@@ -34,9 +37,26 @@ public class IndexModel : PageModel
     {
         Users = new List<UserViewModel>();
 
-        var users = await _userManager.Users.ToListAsync();
+        var usersQuery = _userManager.Users.AsQueryable();
 
-        foreach (var user in users)
+        if (!string.IsNullOrEmpty(CurrentFilter))
+        {
+            usersQuery = usersQuery.Where(u => u.Email.Contains(CurrentFilter));
+        }
+
+        // Filter users who do NOT have the role "Admin"
+        var nonAdminUsers = new List<ApplicationUser>();
+        foreach (var user in usersQuery)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            if (!roles.Contains("Admin"))
+            {
+                nonAdminUsers.Add(user);
+            }
+        }
+
+        // Retrieve additional details for the filtered non-admin users
+        foreach (var user in nonAdminUsers)
         {
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -44,12 +64,15 @@ public class IndexModel : PageModel
             {
                 Id = user.Id,
                 Email = user.Email,
-                FirstName = user.FirstName, // Add if exists in ApplicationUser
-                LastName = user.LastName,   // Add if exists in ApplicationUser
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Roles = roles.ToList(),
                 LastLoginDate = user.LastLoginDate,
                 ActiveStatus = user.ActiveStatus
             });
         }
     }
+
+
+
 }

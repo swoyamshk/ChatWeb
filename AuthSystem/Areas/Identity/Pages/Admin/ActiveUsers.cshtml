@@ -1,0 +1,55 @@
+﻿@page
+@model ActiveUsersModel
+@using AuthSystem.Areas.Identity.Data; // Adjust namespace if necessary
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using Microsoft.EntityFrameworkCore;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Threading.Tasks;
+
+<h2>Active Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Roles</th>
+            <th>Last Logged In</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.ActiveUsers)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
+                <td>
+                    @foreach (var role in user.Roles)
+                    {
+                        <span>@role</span>
+                        <br />
+                    }
+                </td>
+                <td>
+                    @if (user.LastLoginDate.HasValue)
+                    {
+                        @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                    }
+                    else
+                    {
+                        <p>Never Logged In</p>
+                    }
+                </td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@user.Id">Edit</a> |
+                    <a asp-page="Delete" asp-route-id="@user.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Ensure to include any necessary scripts or stylesheets *@

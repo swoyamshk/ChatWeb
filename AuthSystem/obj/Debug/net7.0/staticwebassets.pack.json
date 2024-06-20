@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\AuthSystem.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDash.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\adminDash.css"
+    },
+    {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Landing.css",
       "PackagePath": "staticwebassets\\css\\Landing.css"
     },

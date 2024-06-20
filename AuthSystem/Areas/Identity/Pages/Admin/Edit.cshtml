@@ -22,7 +22,7 @@
     <div class="form-group">
         <label asp-for="Input.Roles"></label>
         <select asp-for="Input.Roles" asp-items="@(
-            new SelectList(new List<string> { "Admin", "Manager", "User" })
+            new SelectList(new List<string> {"Manager", "User" })
         )" class="form-control">Select Roles</select>
         <span asp-validation-for="Input.Roles" class="text-danger"></span>
     </div>

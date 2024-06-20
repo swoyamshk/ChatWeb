@@ -1,58 +1,87 @@
 ﻿@page
 @model IndexModel
 
-<h2>User Management</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Full Name</th>
-            <th>Roles</th>
-            <th>Last Logged In </th>
-            <th>Activity Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.Users)
-        {
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="~/css/Admin/adminDash.css" />
+
+<div style="padding: 20px;">
+    <h2 style="margin-bottom: 20px; margin-left:30px;">Users</h2>
+
+    <div class="header-controls" style="display: flex; justify-content: space-between; align-items: center; margin-right:10px;margin-bottom: 20px;">
+        <form method="get" style="margin: 0; flex-grow: 1;">
+            <div class="input-group search-bar" style=" margin-right: 200px;" width="200px">
+                <input type="text" class="form-control" name="CurrentFilter" placeholder="Search by Email" value="@Model.CurrentFilter">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-outline-secondary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <a class="btn-add-user" asp-area="Identity" asp-page="/AdminUserCreation">
+            <i class="fas fa-plus-circle"></i> Add User
+        </a>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
             <tr>
-                <td>@user.Email</td>
-                <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
-                <td>
-                    @foreach (var role in user.Roles)
-                    {
-                        <span>@role</span>
-                        <br />
-                    }
-                </td>
-                <td>
-                    @if (user.LastLoginDate.HasValue)
-                    {
-                        @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
-                    }
-                    else
-                    {
-                        <p>Never Logged In</p>
-                    }
-                </td>
-                <td>
-                    @if (string.IsNullOrWhiteSpace(user.ActiveStatus))
-                    {
-                        <p>Inactive</p>
-                    }
-                    else
-                    {
-                        @user.ActiveStatus
-                    }
-                </td>
-                <td>
-                    <a asp-page="Edit" asp-route-id="@user.Id">Edit</a> |
-                    <a asp-page="Delete" asp-route-id="@user.Id">Delete</a>
-                </td>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Roles</th>
+                <th>Last Logged In</th>
+                <th>Activity Status</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
-<button class="btn-danger"><a class="dropdown-item" style="color:white;text-decoration:none" asp-area="Identity" asp-page="/AdminUserCreation">AdminCreate</a></button>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
+                    <td>
+                        @foreach (var role in user.Roles)
+                        {
+                            <span>@role</span>
+
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        @if (user.LastLoginDate.HasValue)
+                        {
+                            @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                        }
+                        else
+                        {
+                            <p>Never Logged In</p>
+                        }
+                    </td>
+                    <td>
+                        @if (user.ActiveStatus == "Active")
+                        {
+                            <span class="badge badge-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-secondary">Inactive</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
+                        <a asp-page="Delete" asp-route-id="@user.Id"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+}

@@ -1,0 +1,118 @@
+﻿/* Global link styling */
+a {
+    color: #007bff; /* Default link color */
+    text-decoration: none; /* Remove underline by default */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+    /* Link hover state */
+    a:hover {
+        color: #0056b3; /* Darker blue on hover */
+        text-decoration: underline; /* Underline on hover */
+    }
+
+/* Button within danger button styling */
+.btn-add-user {
+    background-color: cadetblue; /* Cadet blue background color */
+    color: white; /* White text color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 7px; /* Rounded button corners */
+    padding: 10px 15px; /* Adjust padding for button size */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
+}
+
+    /* Button within danger button hover state */
+    .btn-add-user:hover {
+        background-color: lightsteelblue; /* Lighter shade of cadet blue on hover */
+        color: black; /* Maintain white text color on hover */
+        text-decoration: none; /* Remove underline on hover */
+    }
+
+/* Edit and delete icons */
+.table a i.fas {
+    color: #6c757d; /* Initial gray color */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+/* Hover state for edit and delete icons */
+.table a:hover i.fas {
+    color: cadetblue; /* Cadet blue color on hover */
+}
+
+/* Container for the table */
+.table-container {
+    border-radius: 8px; /* Slight curved border radius */
+    border: 1px solid #ddd; /* Light gray border */
+    overflow: hidden; /* Ensure border radius is applied properly */
+    margin-left: 30px; /* Matching left margin */
+    margin-right: 30px;
+    padding: 20px; /* Padding inside the container */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Add shadow */
+}
+
+/* Table header and data alignment */
+.table th, .table td {
+    text-align: center;
+    padding: 12px 8px; /* Adjust padding instead of margin */
+}
+
+/* Table row styling to ensure consistent spacing */
+.table tr {
+    padding-bottom: 12px; /* Ensure consistent padding between rows */
+}
+
+    /* Last table row to ensure consistent spacing */
+    .table tr:last-child td {
+        padding-bottom: 12px; /* Ensure last row has the same bottom padding */
+    }
+
+/* Styling for badge indicating success */
+.badge-success {
+    background-color: #28a745;
+    color: white;
+    font-size: 0.8em; /* Decrease font size */
+    padding: 5px 10px; /* Adjust padding for smaller font size */
+    font-weight: normal;
+}
+
+/* Styling for badge indicating secondary status */
+.badge-secondary {
+    background-color: #6c757d;
+    color: white;
+    font-size: 0.9em; /* Decrease font size */
+    padding: 5px 10px; /* Adjust padding for smaller font size */
+    font-weight: normal;
+}
+
+/* Adjustments for the search bar */
+.search-bar {
+    padding: 6px 0; /* Adjust horizontal padding */
+   
+}
+
+    .search-bar .form-control {
+        border-radius: 0; /* Remove border radius if not needed */
+    }
+
+/* Container and header controls for consistent margin */
+.container {
+    margin-left: 30px; /* Matching left margin */
+    margin-right: 30px; /* Matching right margin */
+}
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-right: 30px; /* Add right margin */
+}
+
+.search-form {
+    margin: 0;
+    flex-grow: 1;
+}
+
+.input-group {
+    margin-right: 200px;
+}

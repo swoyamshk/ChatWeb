@@ -97,8 +97,8 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                         // Check user roles and set the appropriate returnUrl
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                         {
-                            returnUrl = Url.Content("~/Identity/Admin");
-                        }
+							returnUrl = Url.Content("~/Identity/Admin/");
+						}
                         else if (await _userManager.IsInRoleAsync(user, "User"))
                         {
                             returnUrl = Url.Content("~/Home/Chat");
