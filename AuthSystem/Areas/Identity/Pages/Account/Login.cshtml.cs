@@ -53,6 +53,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -84,6 +85,13 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user != null)
                 {
+                    // Check if the user is disabled
+                    if (user.IsDisabled)
+                    {
+                        ModelState.AddModelError(string.Empty, "Your account is disabled. Please contact support.");
+                        return Page();
+                    }
+
                     // Attempt to sign in using the username (which is now the first name)
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
@@ -93,12 +101,11 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                         user.ActiveStatus = "Active";
                         await _userManager.UpdateAsync(user);
 
-
                         // Check user roles and set the appropriate returnUrl
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                         {
-							returnUrl = Url.Content("~/Identity/Admin/");
-						}
+                            returnUrl = Url.Content("~/Identity/Admin/");
+                        }
                         else if (await _userManager.IsInRoleAsync(user, "User"))
                         {
                             returnUrl = Url.Content("~/Home/Chat");
@@ -130,6 +137,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
     }
 }

@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="~/css/Admin/adminDash.css" />
 
-<div style="padding: 20px;">
-    <h2 style="margin-bottom: 20px; margin-left:30px;">Users</h2>
+<div style="padding-left: 20px; padding-bottom:15px;">
+    <h2 style="margin-left:15px;">User Management</h2>
 
-    <div class="header-controls" style="display: flex; justify-content: space-between; align-items: center; margin-right:10px;margin-bottom: 20px;">
+    <div class="header-controls" style="display: flex; justify-content: space-between; align-items: center; margin-right:10px">
         <form method="get" style="margin: 0; flex-grow: 1;">
             <div class="input-group search-bar" style=" margin-right: 200px;" width="200px">
                 <input type="text" class="form-control" name="CurrentFilter" placeholder="Search by Email" value="@Model.CurrentFilter">
@@ -19,9 +19,16 @@
                 </div>
             </div>
         </form>
+        <a class="btn-add-user" asp-area="Identity" asp-page="ActiveUsers">
+            Inactive Users
+        </a>
+        <a class="btn-add-user" asp-area="Identity" asp-page="DisabledUsers">
+            Disabled Users
+        </a>
         <a class="btn-add-user" asp-area="Identity" asp-page="/AdminUserCreation">
             <i class="fas fa-plus-circle"></i> Add User
         </a>
+        
     </div>
 </div>
 
@@ -34,6 +41,7 @@
                 <th>Roles</th>
                 <th>Last Logged In</th>
                 <th>Activity Status</th>
+                
                 <th>Actions</th>
             </tr>
         </thead>

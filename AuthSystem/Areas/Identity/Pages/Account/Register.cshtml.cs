@@ -131,7 +131,8 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
-                    LastName = Input.LastName
+                    LastName = Input.LastName,
+                    IsDisabled = false
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

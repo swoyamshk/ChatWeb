@@ -76,7 +76,9 @@ namespace AuthSystem.Areas.Identity.Pages
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
             {
+                user.ActiveStatus = "Inactive";
                 await _userManager.AddToRoleAsync(user, "Manager");
+
 
                 _logger.LogInformation("User created a new account with password.");
 

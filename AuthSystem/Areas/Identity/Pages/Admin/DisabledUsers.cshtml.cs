@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class ActiveUsersModel : PageModel
+public class DisabledUsersModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public ActiveUsersModel(UserManager<ApplicationUser> userManager)
+    public DisabledUsersModel(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
     }
 
-    public List<UserViewModel> InactiveUsers { get; set; }
+    public List<UserViewModel> DisabledUsers { get; set; }
 
     public class UserViewModel
     {
@@ -25,13 +25,14 @@ public class ActiveUsersModel : PageModel
         public string LastName { get; set; }
         public IList<string> Roles { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public bool IsDisabled { get; set; }
     }
 
     public async Task OnGetAsync()
     {
-        InactiveUsers = new List<UserViewModel>();
+        DisabledUsers = new List<UserViewModel>();
 
-        var users = await _userManager.Users.Where(u => u.ActiveStatus == "Inactive").ToListAsync();
+        var users = await _userManager.Users.Where(u => u.IsDisabled == true).ToListAsync();
 
         foreach (var user in users)
         {
@@ -41,15 +42,17 @@ public class ActiveUsersModel : PageModel
             if (roles.Contains("Admin"))
                 continue;
 
-            InactiveUsers.Add(new UserViewModel
+            DisabledUsers.Add(new UserViewModel
             {
                 Id = user.Id,
                 Email = user.Email,
-                FirstName = user.FirstName, // Add if exists in ApplicationUser
-                LastName = user.LastName,   // Add if exists in ApplicationUser
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Roles = roles.ToList(),
-                LastLoginDate = user.LastLoginDate
+                LastLoginDate = user.LastLoginDate,
+                IsDisabled = user.IsDisabled // Assign IsDisabled property
             });
         }
     }
+
 }

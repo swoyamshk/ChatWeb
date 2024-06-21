@@ -32,14 +32,37 @@ using System.Threading.Tasks;
 
             public string LastName { get; set; }
 
-            [Required(ErrorMessage = "Please select at least one role.")]
-            public IList<string> Roles { get; set; }
-
             [Required(ErrorMessage = "Please select an active status.")]
             public string ActiveStatus { get; set; }
+        public bool IsDisabled { get; set; }
+    }
+
+    public async Task<IActionResult> OnGetAsync(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+
+        if (user == null)
+        {
+            return NotFound();
         }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        var roles = await _userManager.GetRolesAsync(user);
+
+        Input = new InputModel
+        {
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            ActiveStatus = user.ActiveStatus,
+            IsDisabled = user.IsDisabled
+        };
+
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(string id)
+    {
+        if (ModelState.IsValid)
         {
             var user = await _userManager.FindByIdAsync(id);
 
@@ -48,73 +71,31 @@ using System.Threading.Tasks;
                 return NotFound();
             }
 
-            var roles = await _userManager.GetRolesAsync(user);
+            user.Email = Input.Email;
+            user.UserName = Input.Email;
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.ActiveStatus = Input.ActiveStatus;
+            user.IsDisabled = Input.IsDisabled;
 
-            Input = new InputModel
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
             {
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Roles = roles.ToList(),
-                ActiveStatus = user.ActiveStatus
-            };
-
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(string id)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByIdAsync(id);
-
-                if (user == null)
+                foreach (var error in result.Errors)
                 {
-                    return NotFound();
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
-
-                user.Email = Input.Email;
-                user.UserName = Input.Email;
-                user.FirstName = Input.FirstName;
-                user.LastName = Input.LastName;
-                user.ActiveStatus = Input.ActiveStatus;
-
-                var roles = await _userManager.GetRolesAsync(user);
-                var result = await _userManager.UpdateAsync(user);
-
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                    return Page();
-                }
-
-                // Remove current roles and add selected roles
-                var roleResult = await _userManager.RemoveFromRolesAsync(user, roles);
-                if (!roleResult.Succeeded)
-                {
-                    foreach (var error in roleResult.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                    return Page();
-                }
-
-                roleResult = await _userManager.AddToRolesAsync(user, Input.Roles);
-                if (!roleResult.Succeeded)
-                {
-                    foreach (var error in roleResult.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                    return Page();
-                }
-
-                return RedirectToPage("Index");
+                return Page();
             }
 
-            return Page();
+            // Remove current roles and add selected roles
+
+            return RedirectToPage("Index");
         }
+
+        return Page();
     }
+
+
+}

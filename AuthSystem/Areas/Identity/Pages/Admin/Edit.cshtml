@@ -1,39 +1,47 @@
 ﻿@page
 @model EditModel
 
-<h2>Edit User</h2>
+<link rel="stylesheet" href="~/css/Admin/adminEdit.css">
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="Input.Email"></label>
-        <input asp-for="Input.Email" class="form-control" readonly />
-        <span asp-validation-for="Input.Email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.FirstName"></label>
-        <input asp-for="Input.FirstName" class="form-control" />
-        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.LastName"></label>
-        <input asp-for="Input.LastName" class="form-control" />
-        <span asp-validation-for="Input.LastName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.Roles"></label>
-        <select asp-for="Input.Roles" asp-items="@(
-            new SelectList(new List<string> {"Manager", "User" })
-        )" class="form-control">Select Roles</select>
-        <span asp-validation-for="Input.Roles" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.ActiveStatus"></label>
-        <select asp-for="Input.ActiveStatus" asp-items="@(
-            new SelectList(new List<string> { "Active", "Inactive" })
-        )" class="form-control">Status</select>
-        <span asp-validation-for="Input.ActiveStatus" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+<div class="main-container">
+    <h2 class="heading">Edit User</h2>
 
-<a asp-page="Index">Back to List</a>
+    <div class="form-container">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" readonly />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ActiveStatus"></label>
+                <select asp-for="Input.ActiveStatus" asp-items="@(
+                    new SelectList(new List<string> { "Active", "Inactive" })
+                )" class="form-control">
+                </select>
+                <span asp-validation-for="Input.ActiveStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.IsDisabled"></label>
+                <select asp-for="Input.IsDisabled" class="form-control">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+                <span asp-validation-for="Input.IsDisabled" class="text-danger"></span>
+            </div>
+            <button type="submit" class="save-btn">Save</button>
+        </form>
+
+        <a asp-page="Index" class="back-to-list">Back to List</a>
+    </div>
+</div>

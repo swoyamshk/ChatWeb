@@ -21,5 +21,7 @@ public class ApplicationUser : IdentityUser
     public DateTime? LastLoginDate { get; set; }
 
     public string? ActiveStatus { get; set; } = "Active";
+
+    public bool IsDisabled { get; set; } = false;
 }
 

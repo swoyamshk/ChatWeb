@@ -1,14 +1,27 @@
 ﻿@page
 @model DeleteModel
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/css/Admin/adminDelete.css"> <!-- Link to your custom CSS file -->
 
-<h2>Delete User</h2>
+<div class="container">
+    <div class="text-left">
+        <h2 class="mt-5 heading">Delete User</h2>
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="Input.Email"></label>
-        <input asp-for="Input.Email" class="form-control" readonly />
-        <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <div class="form-container">
+            <form method="post" class="mt-3">
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control input-small" readonly />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+
+        <a asp-page="Index" class="mt-3 d-block back-to-list">Back to List</a>
     </div>
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
-<a asp-page="Index">Back to List</a>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+
+
