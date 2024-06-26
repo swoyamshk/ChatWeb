@@ -1,6 +1,6 @@
 ﻿@page
 @model ActiveUsersModel
-@using AuthSystem.Areas.Identity.Data; 
+@using AuthSystem.Areas.Identity.Data;
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.AspNetCore.Mvc.RazorPages;
 @using Microsoft.EntityFrameworkCore;
@@ -8,46 +8,66 @@
 @using System.Linq;
 @using System.Threading.Tasks;
 
-<h2>Inactive Users</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<link rel="stylesheet" href="~/css/Admin/adminActive.css" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Full Name</th>
-            <th>Roles</th>
-            <th>Last Logged In</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.InactiveUsers)
-        {
+<div class="container">
+    <h2>Inactive Users</h2>
+
+    <form method="get" class="form-inline mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="SearchString" placeholder="Search by Email" value="@Model.SearchString" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>@user.Email</td>
-                <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
-                <td>
-                    @foreach (var role in user.Roles)
-                    {
-                        <span>@role</span>
-                        <br />
-                    }
-                </td>
-                <td>
-                    @if (user.LastLoginDate.HasValue)
-                    {
-                        @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
-                    }
-                    else
-                    {
-                        <p>Never Logged In</p>
-                    }
-                </td>
-                <td>
-                    <a asp-page="Edit" asp-route-id="@user.Id">Edit</a> |
-                    <a asp-page="Delete" asp-route-id="@user.Id">Delete</a>
-                </td>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Roles</th>
+                <th>Last Logged In</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.InactiveUsers)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
+                    <td>
+                        @foreach (var role in user.Roles)
+                        {
+                            <span>@role</span>
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        @if (user.LastLoginDate.HasValue)
+                        {
+                            @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                        }
+                        else
+                        {
+                            <p>Never Logged In</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@user.Id" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-page="Delete" asp-route-id="@user.Id" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

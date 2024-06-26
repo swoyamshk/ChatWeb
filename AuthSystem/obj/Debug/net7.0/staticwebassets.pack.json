@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\AuthSystem.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminActive.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\adminActive.css"
+    },
+    {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminCreate.css",
       "PackagePath": "staticwebassets\\css\\Admin\\adminCreate.css"
     },
@@ -15,6 +19,10 @@
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDelete.css",
       "PackagePath": "staticwebassets\\css\\Admin\\adminDelete.css"
+    },
+    {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDisable.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\adminDisable.css"
     },
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminEdit.css",

@@ -1,4 +1,5 @@
 using AuthSystem.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+[Authorize(Roles = "Admin")]
 public class DisabledUsersModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -16,6 +19,7 @@ public class DisabledUsersModel : PageModel
     }
 
     public List<UserViewModel> DisabledUsers { get; set; }
+    public string CurrentFilter { get; set; }
 
     public class UserViewModel
     {
@@ -28,11 +32,18 @@ public class DisabledUsersModel : PageModel
         public bool IsDisabled { get; set; }
     }
 
-    public async Task OnGetAsync()
+    public async Task OnGetAsync(string currentFilter)
     {
-        DisabledUsers = new List<UserViewModel>();
+        IQueryable<ApplicationUser> usersQuery = _userManager.Users.Where(u => u.IsDisabled);
 
-        var users = await _userManager.Users.Where(u => u.IsDisabled == true).ToListAsync();
+        if (!string.IsNullOrEmpty(currentFilter))
+        {
+            usersQuery = usersQuery.Where(u => u.Email.Contains(currentFilter));
+        }
+
+        var users = await usersQuery.ToListAsync();
+
+        DisabledUsers = new List<UserViewModel>();
 
         foreach (var user in users)
         {
@@ -46,13 +57,15 @@ public class DisabledUsersModel : PageModel
             {
                 Id = user.Id,
                 Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                FirstName = user.FirstName, // Add if exists in ApplicationUser
+                LastName = user.LastName,   // Add if exists in ApplicationUser
                 Roles = roles.ToList(),
                 LastLoginDate = user.LastLoginDate,
                 IsDisabled = user.IsDisabled // Assign IsDisabled property
             });
         }
-    }
 
+        // Assign the current filter value to maintain state
+        CurrentFilter = currentFilter;
+    }
 }

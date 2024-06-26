@@ -44,19 +44,9 @@ public class IndexModel : PageModel
             usersQuery = usersQuery.Where(u => u.Email.Contains(CurrentFilter));
         }
 
-        // Filter users who do NOT have the role "Admin"
-        var nonAdminUsers = new List<ApplicationUser>();
-        foreach (var user in usersQuery)
-        {
-            var roles = await _userManager.GetRolesAsync(user);
-            if (!roles.Contains("Admin"))
-            {
-                nonAdminUsers.Add(user);
-            }
-        }
+        var users = await usersQuery.ToListAsync();
 
-        // Retrieve additional details for the filtered non-admin users
-        foreach (var user in nonAdminUsers)
+        foreach (var user in users)
         {
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -72,9 +62,4 @@ public class IndexModel : PageModel
             });
         }
     }
-
-
-
-
-
 }

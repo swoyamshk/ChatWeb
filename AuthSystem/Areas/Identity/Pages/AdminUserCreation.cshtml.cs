@@ -27,15 +27,15 @@ namespace AuthSystem.Areas.Identity.Pages
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "First name is required")]
             [StringLength(50)]
             public string FirstName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Last Name is required")]
             [StringLength(50)]
             public string LastName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Email is required")]
             [EmailAddress]
             public string Email { get; set; }
         }

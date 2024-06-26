@@ -1,7 +1,6 @@
 ﻿@page
 @model IndexModel
 
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="~/css/Admin/adminDash.css" />
 
@@ -28,7 +27,6 @@
         <a class="btn-add-user" asp-area="Identity" asp-page="/AdminUserCreation">
             <i class="fas fa-plus-circle"></i> Add User
         </a>
-        
     </div>
 </div>
 
@@ -41,7 +39,6 @@
                 <th>Roles</th>
                 <th>Last Logged In</th>
                 <th>Activity Status</th>
-                
                 <th>Actions</th>
             </tr>
         </thead>
@@ -55,7 +52,6 @@
                         @foreach (var role in user.Roles)
                         {
                             <span>@role</span>
-
                             <br />
                         }
                     </td>
@@ -80,8 +76,11 @@
                         }
                     </td>
                     <td>
-                        <a asp-page="Edit" asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
-                        <a asp-page="Delete" asp-route-id="@user.Id"><i class="fas fa-trash-alt"></i></a>
+                        @if (!user.Roles.Contains("Admin"))
+                        {
+                            <a asp-page="Edit" asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
+                            <a asp-page="Delete" asp-route-id="@user.Id"><i class="fas fa-trash-alt"></i></a>
+                        }
                     </td>
                 </tr>
             }

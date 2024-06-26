@@ -1,4 +1,5 @@
 using AuthSystem.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+[Authorize(Roles = "Admin")]
 public class ActiveUsersModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -16,6 +18,7 @@ public class ActiveUsersModel : PageModel
     }
 
     public List<UserViewModel> InactiveUsers { get; set; }
+    public string SearchString { get; set; }
 
     public class UserViewModel
     {
@@ -27,29 +30,39 @@ public class ActiveUsersModel : PageModel
         public DateTime? LastLoginDate { get; set; }
     }
 
-    public async Task OnGetAsync()
+    public async Task OnGetAsync(string searchString)
     {
-        InactiveUsers = new List<UserViewModel>();
+        IQueryable<ApplicationUser> usersQuery = _userManager.Users.Where(u => u.ActiveStatus == "Inactive");
 
-        var users = await _userManager.Users.Where(u => u.ActiveStatus == "Inactive").ToListAsync();
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            usersQuery = usersQuery.Where(u => u.Email.Contains(searchString));
+        }
+
+        var users = await usersQuery.ToListAsync();
+
+        InactiveUsers = new List<UserViewModel>();
 
         foreach (var user in users)
         {
             var roles = await _userManager.GetRolesAsync(user);
 
-            // Exclude users with the "Admin" role
-            if (roles.Contains("Admin"))
-                continue;
-
-            InactiveUsers.Add(new UserViewModel
+            // Ensure roles other than "Admin" are included
+            if (!roles.Contains("Admin"))
             {
-                Id = user.Id,
-                Email = user.Email,
-                FirstName = user.FirstName, // Add if exists in ApplicationUser
-                LastName = user.LastName,   // Add if exists in ApplicationUser
-                Roles = roles.ToList(),
-                LastLoginDate = user.LastLoginDate
-            });
+                InactiveUsers.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FirstName = user.FirstName, // Add if exists in ApplicationUser
+                    LastName = user.LastName,   // Add if exists in ApplicationUser
+                    Roles = roles.ToList(),     // Store all roles for the user
+                    LastLoginDate = user.LastLoginDate
+                });
+            }
         }
+
+        // Assign the search string to the property to maintain state
+        SearchString = searchString;
     }
 }

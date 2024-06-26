@@ -8,48 +8,75 @@
 @using System.Linq;
 @using System.Threading.Tasks;
 
-<h2>Disabled Users</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<link rel="stylesheet" href="~/css/Admin/adminDisable.css" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Full Name</th>
-            <th>Roles</th>
-            <th>Last Logged In</th>
-            <th>IsDisabled</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<div class="container">
+    <h2>Disabled Users</h2>
+
+    <div style="margin-bottom: 20px;">
+        <form method="get">
+            <div class="input-group">
+                <input type="text" class="form-control" name="CurrentFilter" placeholder="Search by Email" value="@Model.CurrentFilter">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-outline-secondary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Roles</th>
+                <th>Last Logged In</th>
+                <th>Is Disabled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
-                @foreach (var user in Model.DisabledUsers)
-                {
+            @foreach (var user in Model.DisabledUsers)
+            {
                 <tr>
                     <td>@user.Email</td>
                     <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
                     <td>
-                            @foreach (var role in user.Roles)
-                            {
+                        @foreach (var role in user.Roles)
+                        {
                             <span>@role</span>
                             <br />
-                            }
+                        }
                     </td>
                     <td>
-                            @if (user.LastLoginDate.HasValue)
-                            {
-                                @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
-                            }
-                            else
-                            {
+                        @if (user.LastLoginDate.HasValue)
+                        {
+                            @user.LastLoginDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                        }
+                        else
+                        {
                             <p>Never Logged In</p>
-                            }
+                        }
                     </td>
                     <td>@(user.IsDisabled ? "Yes" : "No")</td>
                     <td>
-                        <a asp-page="Edit" asp-route-id="@user.Id">Edit</a> |
-                        <a asp-page="Delete" asp-route-id="@user.Id">Delete</a>
+                        <a asp-page="Edit" asp-route-id="@user.Id" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-page="Delete" asp-route-id="@user.Id" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
                     </td>
                 </tr>
-                }
+            }
         </tbody>
-</table>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+}

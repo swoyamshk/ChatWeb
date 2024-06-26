@@ -1,16 +1,28 @@
-﻿@page
+﻿@{
+    ViewData["Title"] = "Chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Fetch the email of the logged-in user
+    var userEmail = User.Identity.IsAuthenticated ? User.Identity.Name : "Guest";
+}
+
 <div class="container">
+    <h2>Chat Room</h2>
     <div class="row p-1">
-        <div class="col-1">User</div>
-        <div class="col-5"><input type="text" id="userInput" /></div>
+        <!--<div class="col-1">User</div>-->
+        <div class="col-5">
+            <input type="hidden" id="userInput" class="form-control" value="@userEmail" readonly />
+        </div>
     </div>
     <div class="row p-1">
         <div class="col-1">Message</div>
-        <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
+        <div class="col-5">
+            <input type="text" class="form-control w-100" id="messageInput" />
+        </div>
     </div>
     <div class="row p-1">
         <div class="col-6 text-end">
-            <input type="button" id="sendButton" value="Send Message" />
+            <input type="button" class="btn btn-primary" id="sendButton" value="Send Message" onclick="sendMessage()" />
         </div>
     </div>
     <div class="row p-1">
@@ -20,9 +32,58 @@
     </div>
     <div class="row p-1">
         <div class="col-6">
-            <ul id="messagesList"></ul>
+            <ul id="messagesList" class="list-group"></ul>
         </div>
     </div>
 </div>
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+
+@section Scripts {
+    <script>
+        async function sendMessage() {
+            const user = document.getElementById("userInput").value;
+            const message = document.getElementById("messageInput").value;
+
+            if (user && message) {
+                const messageObj = { userName: user, text: message };
+
+                const response = await fetch('/api/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(messageObj)
+                });
+
+                if (response.ok) {
+                    const savedMessage = await response.json();
+                    appendMessageToList(savedMessage);
+                    document.getElementById("messageInput").value = ""; // Clear input field
+                } else {
+                    console.error('Failed to send message');
+                }
+            }
+        }
+
+        async function loadMessages() {
+            const response = await fetch('/api/messages');
+            if (response.ok) {
+                const messages = await response.json();
+                messages.forEach(messageObj => appendMessageToList(messageObj));
+            } else {
+                console.error('Failed to load messages');
+            }
+        }
+
+        function appendMessageToList(messageObj) {
+            const messagesList = document.getElementById("messagesList");
+            const li = document.createElement("li");
+            li.className = "list-group-item";
+            li.textContent = `${messageObj.userName}: ${messageObj.text} (${new Date(messageObj.timestamp).toLocaleString()})`;
+            messagesList.appendChild(li);
+        }
+
+        window.onload = function () {
+            loadMessages();
+        };
+    </script>
+}
