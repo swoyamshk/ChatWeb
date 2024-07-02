@@ -27,7 +27,7 @@ namespace AuthSystem.Areas.Identity.Pages
 
         public class InputModel
         {
-            [Required(ErrorMessage = "First name is required")]
+            [Required(ErrorMessage = "First Name is required")]
             [StringLength(50)]
             public string FirstName { get; set; }
 

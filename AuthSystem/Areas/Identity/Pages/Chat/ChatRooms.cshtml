@@ -1,0 +1,30 @@
+﻿@page
+@model ChatRoomsModel
+@{
+    ViewData["Title"] = "Chat Rooms";
+}
+
+<h2>Chat Rooms</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var room in Model.ChatRooms)
+        {
+            <tr>
+                <td>@room.Name</td>
+                <td>
+                    <a asp-page="Chat" asp-route-roomId="@room.Id" class="btn btn-primary">Join</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="CreateChatRoom" class="btn btn-success">Create New Chat Room</a>
+    

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthSystem.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthSystem.Areas.Identity.Data;
@@ -23,5 +24,7 @@ public class ApplicationUser : IdentityUser
     public string? ActiveStatus { get; set; } = "Active";
 
     public bool IsDisabled { get; set; } = false;
+
+    public virtual ICollection<ChatParticipant> ChatRooms { get; set; }
 }
 

@@ -1,4 +1,4 @@
-﻿*{
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,13 +10,13 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 .container {
     display: flex;
     width: 100%;
-    min-height: 100vh; 
+    min-height: 100vh;
 }
 
 .left {
@@ -117,8 +117,62 @@ section {
         text-decoration: none;
     }
 
-.btn{
-    width:450px;
-    border-radius:20px;
+.btn {
+    width: 450px; /* Adjust width as needed */
+    border-radius: 20px;
     margin-top: 15px;
+}
+
+/* Google Sign-in Button */
+.google-signin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    color: #555;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .google-signin-btn img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+    .google-signin-btn:hover {
+        background-color: #f7f7f7;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left {
+        display: none; /* Hide the background image container */
+    }
+
+    .right {
+        flex: none;
+        width: 100%;
+    }
+
+    .login-box {
+        width: 100%; /* Adjust to full width */
+        max-width: 100%; /* Adjust to full width */
+        padding: 20px;
+        background-image: none; /* Remove background image */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+        width: 100%;
+    }
 }

@@ -85,10 +85,10 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user != null)
                 {
-                    // Check if the user is disabled
-                    if (user.IsDisabled)
+                    // Check if the user is inactive
+                    if (user.ActiveStatus != "Active")
                     {
-                        ModelState.AddModelError(string.Empty, "Your account is disabled. Please contact support.");
+                        ModelState.AddModelError(string.Empty, "Your account is inactive. Please contact support.");
                         return Page();
                     }
 
@@ -137,7 +137,5 @@ namespace AuthSystem.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-
     }
 }

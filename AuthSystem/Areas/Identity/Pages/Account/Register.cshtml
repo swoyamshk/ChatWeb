@@ -1,24 +1,17 @@
 ﻿@page
 @model RegisterModel
-@{
-    Layout = "/Views/Shared/_CustomLayoutRegister.cshtml";
-}
 
-<!DOCTYPE html>
-<html lang="en">
+@{
+    Layout = "/Views/Shared/_CustomLayout.cshtml";
+}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/css/register.css?v=1.0">
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
-    <title>@ViewData["Title"] - ChatterBox</title>
+    <link rel="stylesheet" href="~/css/Register.css?v=1.0">
 
+    <title>@ViewData["Title"] - ChatterBox</title>
 </head>
-<body>
+<body>s
     <div class="container">
         <div class="left"></div>
         <div class="right">
@@ -59,73 +52,75 @@
                 </div>
                 <hr>
                 <div class="login-link">
-                    <p>Login with Google? <a asp-page="/Account/Login" asp-area="Identity">Google</a></p>
+                    <button id="google-signin-button" class="google-signin-btn">
+                        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo"> <a asp-page="/Account/Login" asp-area="Identity">Sign in with Google</a>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.validator.addMethod("lettersOnly", function (value, element) {
+                return this.optional(element) || /^[a-zA-Z]+$/.test(value);
+            }, "Please enter only letters.");
 
-        <script>
-            $(document).ready(function () {
-                $.validator.addMethod("lettersOnly", function (value, element) {
-                    return this.optional(element) || /^[a-zA-Z]+$/.test(value);
-                }, "Please enter only letters.");
+            $.validator.addMethod("passwordComplexity", function (value, element) {
+                return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(value);
+            }, "Password must have one uppercase, one lowercase, one number, and one special character.");
 
-                $.validator.addMethod("passwordComplexity", function (value, element) {
-                    return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/.test(value);
-                }, "Password must have one uppercase, one lowercase, one number, and one special character.");
-
-                $("#registerForm").validate({
-                    rules: {
-                        "Input.FirstName": {
-                            required: true,
-                            lettersOnly: true
-                        },
-                        "Input.LastName": {
-                            required: true,
-                            lettersOnly: true
-                        },
-                        "Input.Email": {
-                            required: true,
-                            email: true
-                        },
-                        "Input.Password": {
-                            required: true,
-                            minlength: 6,
-                            passwordComplexity: true
-                        },
-                        "Input.ConfirmPassword": {
-                            required: true,
-                            equalTo: "#password"
-                        }
+            $("#registerForm").validate({
+                rules: {
+                    "Input.FirstName": {
+                        required: true,
+                        lettersOnly: true
                     },
-                    messages: {
-                        "Input.FirstName": {
-                            required: "First Name is required.",
-                            lettersOnly: "First Name cannot contain numbers or special characters."
-                        },
-                        "Input.LastName": {
-                            required: "Last Name is required.",
-                            lettersOnly: "Last Name cannot contain numbers or special characters."
-                        },
-                        "Input.Email": {
-                            required: "Email is required.",
-                            email: "Please enter a valid email address."
-                        },
-                        "Input.Password": {
-                            required: "Password is required.",
-                            minlength: "Password must be at least 6 characters long.",
-                            passwordComplexity: "Password must have one uppercase, one lowercase, one number, and one special character."
-                        },
-                        "Input.ConfirmPassword": {
-                            required: "Confirm Password is required.",
-                            equalTo: "Passwords do not match."
-                        }
+                    "Input.LastName": {
+                        required: true,
+                        lettersOnly: true
+                    },
+                    "Input.Email": {
+                        required: true,
+                        email: true
+                    },
+                    "Input.Password": {
+                        required: true,
+                        minlength: 6,
+                        passwordComplexity: true
+                    },
+                    "Input.ConfirmPassword": {
+                        required: true,
+                        equalTo: "#password"
                     }
-                });
+                },
+                messages: {
+                    "Input.FirstName": {
+                        required: "First Name is required.",
+                        lettersOnly: "First Name cannot contain numbers or special characters."
+                    },
+                    "Input.LastName": {
+                        required: "Last Name is required.",
+                        lettersOnly: "Last Name cannot contain numbers or special characters."
+                    },
+                    "Input.Email": {
+                        required: "Email is required.",
+                        email: "Please enter a valid email address."
+                    },
+                    "Input.Password": {
+                        required: "Password is required.",
+                        minlength: "Password must be at least 6 characters long.",
+                        passwordComplexity: "Password must have one uppercase, one lowercase, one number, and one special character."
+                    },
+                    "Input.ConfirmPassword": {
+                        required: "Confirm Password is required.",
+                        equalTo: "Passwords do not match."
+                    }
+                }
             });
-        </script>
-    }
+        });
+    </script>
 </body>
-</html>

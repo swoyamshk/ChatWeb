@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\css\\Admin\\adminEdit.css"
     },
     {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Chat\\userChat.css",
+      "PackagePath": "staticwebassets\\css\\Chat\\userChat.css"
+    },
+    {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Landing.css",
       "PackagePath": "staticwebassets\\css\\Landing.css"
     },

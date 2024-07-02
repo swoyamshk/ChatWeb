@@ -194,6 +194,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/LEGION/Desktop/Auth/AuthSystem/Areas/Identity/Pages/Chat/Chat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQ2hhdFxDaGF0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LEGION/Desktop/Auth/AuthSystem/Areas/Identity/Pages/Chat/ChatRooms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQ2hhdFxDaGF0Um9vbXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LEGION/Desktop/Auth/AuthSystem/Areas/Identity/Pages/Chat/CreateChatRoom.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQ2hhdFxDcmVhdGVDaGF0Um9vbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/LEGION/Desktop/Auth/AuthSystem/Areas/Identity/Pages/ResetPasswordAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcUmVzZXRQYXNzd29yZEFkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

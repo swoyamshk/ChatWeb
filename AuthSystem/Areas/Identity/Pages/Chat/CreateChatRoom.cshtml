@@ -1,0 +1,19 @@
+﻿@page
+@model CreateChatRoomModel
+@{
+    ViewData["Title"] = "Create New Chat Room";
+}
+
+<h2>Create New Chat Room</h2>
+
+<form asp-page-handler="Create" method="post">
+    <div class="form-group">
+        <label asp-for="RoomName"></label>
+        <input asp-for="RoomName" class="form-control" />
+    </div>
+    <div class="form-check">
+        <input asp-for="IsGroupChat" class="form-check-input" />
+        <label asp-for="IsGroupChat" class="form-check-label">Is Group Chat</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Room</button>
+</form>

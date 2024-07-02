@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AuthSystem.Areas.Identity.Data;
-using AuthSystem.Hubs;
 using AuthSystem.Services;
 using SendGrid.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using AuthSystem.Hubs;
 
 
 
@@ -64,13 +64,14 @@ app.MapControllerRoute(
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
+app.MapHub<PrivateChatHub>("/privatechathub");
 
 
 
 
 
 //Add Roles to the Database
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
 	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
