@@ -7,6 +7,8 @@ namespace AuthSystem.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsGroupChat { get; set; }
+        public string CreatorId { get; set; }
+        public virtual ApplicationUser Creator { get; set; }
         public virtual ICollection<ChatMessage> Messages { get; set; }
         public virtual ICollection<ChatParticipant> Participants { get; set; }
     }

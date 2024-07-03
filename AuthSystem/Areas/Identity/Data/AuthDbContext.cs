@@ -34,6 +34,12 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(cp => cp.User)
             .WithMany(u => u.ChatRooms)
             .HasForeignKey(cp => cp.UserId);
+
+        builder.Entity<ChatRoom>()
+           .HasOne(cr => cr.Creator)
+           .WithMany()
+           .HasForeignKey(cr => cr.CreatorId)
+           .OnDelete(DeleteBehavior.Restrict);
     }
 
 }

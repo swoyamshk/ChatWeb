@@ -4,55 +4,63 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-        </li>
+<link rel="stylesheet" href="~/css/Navbar.css" />
 
-
-        @if (User.IsInRole("Admin"))
-        {
-            <li class="nav-item">
-               <li><a class="nav-link" asp-area="Identity" asp-page="/Admin/Index">Home</a></li>
-            </li>
-            <li class="nav-item">
-                <a id="logout" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
-            </li>
-            <!--
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Admin
-                </a>
-               <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Logout</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/AdminUserCreation">AdminCreate</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Admin/Index">CRUD</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Admin/AdminDashboard">Dashboard</a></li>
-                </ul>
-            </li>
-            -->
-        }
-        else
-        {
-            <li class="nav-item">
-                <a id="logout" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
-            </li>
-        }
-    }
-    else
-    {
-        <li class="nav-item">
-            <a id="register" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a id="login" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
-    }
-</ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">ChatterBox</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li class="nav-item">
+                    <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Identity" asp-page="/Admin/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logout" class="nav-link" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                    </li>
+                    <!-- Uncomment this section for a dropdown menu
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/AdminUserCreation">AdminCreate</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Admin/Index">CRUD</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Admin/AdminDashboard">Dashboard</a>
+                        </div>
+                    </li>
+                    -->
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a id="logout" class="nav-link" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a id="register" class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a id="login" class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
