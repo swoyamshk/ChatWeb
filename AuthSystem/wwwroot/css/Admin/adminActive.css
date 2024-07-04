@@ -2,6 +2,11 @@
     padding: 20px;
 }
 
+.input-group {
+    width: 600px;
+    margin-bottom: 20px;
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -26,14 +31,41 @@
         vertical-align: middle;
     }
 
-
 .fas {
     font-size: 18px;
     margin-right: 5px;
-    color: #6c757d; 
+    color: #6c757d;
     transition: color 0.3s;
 }
 
     .fas:hover {
-        color: cadetblue; 
+        color: cadetblue;
     }
+
+/* Responsive table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.never {
+    margin-top: 10px;
+}
+
+/* Adjust table font size and padding for smaller screens */
+@media (max-width: 767px) {
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 4px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .table th, .table td {
+        padding: 2px;
+        font-size: 12px;
+    }
+    .input-group{
+        width:300px;
+    }
+}

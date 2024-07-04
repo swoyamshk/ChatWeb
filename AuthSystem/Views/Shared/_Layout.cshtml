@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using AuthSystem.Areas.Identity.Data
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -12,7 +11,7 @@
     <title>@ViewData["Title"] - ChatterBox</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/UserAuthMVC.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
     <header>
@@ -37,24 +36,6 @@
                                 <li class="nav-item">
                                     <a id="logout" class="nav-link" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
                                 </li>
-                                <!-- Uncomment this section for a dropdown menu
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Admin
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-area="Identity" asp-page="/AdminUserCreation">AdminCreate</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Admin/Index">CRUD</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Admin/AdminDashboard">Dashboard</a>
-                                    </div>
-                                </li>
-                                -->
                             }
                             else
                             {
@@ -82,11 +63,9 @@
             @RenderBody()
         </main>
     </div>
-    <!-- <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - UserAuthMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

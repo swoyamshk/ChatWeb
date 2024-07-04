@@ -173,7 +173,7 @@ section {
     }
 
 /* Media Queries for Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .container {
         flex-direction: column;
     }
@@ -187,13 +187,22 @@ section {
     }
 
     .login-box {
-        padding: 20px;
+        max-width: 90%; /* Increase maximum width for larger screens */
+        padding: 60px; /* Adjust padding for larger screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        max-width: 95%; /* Increase maximum width for medium screens */
+        padding: 40px; /* Adjust padding for medium screens */
     }
 }
 
 @media (max-width: 480px) {
     .login-box {
-        padding: 10px;
+        max-width: 100%; /* Full width for small screens */
+        padding: 20px; /* Adjust padding for smaller screens */
     }
 
     h2 {
@@ -204,26 +213,11 @@ section {
         font-size: 14px;
     }
 
-    .btn {
+    button,
+    button.google-button {
+        width: 100%; /* Adjust button width for smaller screens */
         font-size: 14px;
         padding: 8px; /* Adjust padding for smaller screens */
-        width: 90%; /* Decrease button width for smaller screens */
-        border-radius: 5px; /* Ensure the button keeps its curved shape */
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-    .google-button {
-        width: 90%; /* Adjust Google button width for consistency */
-        font-size: 14px;
-        padding: 8px; /* Adjust padding for smaller screens */
-        border-radius: 5px; /* Ensure the button keeps its curved shape */
     }
 
     .signup-link {

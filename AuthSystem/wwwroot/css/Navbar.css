@@ -5,6 +5,7 @@
     list-style-type: none;
     padding-left: 0;
     margin: 0;
+    margin-left: auto; /* Ensures items are pushed to the right */
 }
 
     /* Navbar items */

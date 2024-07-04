@@ -1,6 +1,11 @@
 html {
   font-size: 14px;
 }
+/* Custom styles for navbar to ensure items are aligned to the right */
+.navbar-nav.ml-auto {
+    margin-left: auto !important;
+}
+
 
 @media (min-width: 768px) {
   html {

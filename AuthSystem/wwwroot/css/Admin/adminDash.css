@@ -1,28 +1,13 @@
-﻿/* Global link styling */
-a {
-    color: #007bff; /* Default link color */
-    text-decoration: none; /* Remove underline by default */
-    transition: color 0.3s; /* Smooth transition for color change */
-}
-
-    /* Link hover state */
-    a:hover {
-        color: #0056b3; /* Darker blue on hover */
-        text-decoration: underline; /* Underline on hover */
-    }
-
-/* Button within danger button styling */
-.btn-add-user {
+﻿.btn-add-user {
     background-color: cadetblue; /* Cadet blue background color */
     color: white; /* White text color */
     text-decoration: none; /* Remove underline */
     border-radius: 7px; /* Rounded button corners */
     padding: 10px 15px; /* Adjust padding for button size */
     transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
-    margin-right:25px;
+    margin-right: 25px;
 }
 
-    /* Button within danger button hover state */
     .btn-add-user:hover {
         background-color: lightsteelblue; /* Lighter shade of cadet blue on hover */
         color: black; /* Maintain white text color on hover */
@@ -33,7 +18,7 @@ a {
 .table a i.fas {
     color: #6c757d; /* Initial gray color */
     transition: color 0.3s; /* Smooth transition for color change */
-    margin-right:15px;
+    margin-right: 15px;
 }
 
 /* Hover state for edit and delete icons */
@@ -50,22 +35,32 @@ a {
     margin-right: 30px;
     padding: 20px; /* Padding inside the container */
     box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Add shadow */
+    overflow-x: auto; /* Enable horizontal scrolling */
 }
 
 /* Table header and data alignment */
-.table th, .table td {
-    text-align: center;
-    padding: 14px 8px; /* Adjust padding instead of margin */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
-/* Table row styling to ensure consistent spacing */
-.table tr {
-    padding-bottom: 12px; /* Ensure consistent padding between rows */
-}
+    .table th, .table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
 
-    /* Last table row to ensure consistent spacing */
-    .table tr:last-child td {
-        padding-bottom: 18px; /* Ensure last row has the same bottom padding */
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
     }
 
 /* Styling for badge indicating success */
@@ -75,9 +70,9 @@ a {
     font-size: 0.9em; /* Decrease font size */
     padding: 5px 10px; /* Adjust padding for smaller font size */
     font-weight: normal;
-    width:70px;
-    height:24px;
-    margin-bottom:12px;
+    width: 70px;
+    height: 24px;
+    margin-bottom: 12px;
 }
 
 /* Styling for badge indicating secondary status */
@@ -92,9 +87,8 @@ a {
 /* Adjustments for the search bar */
 .search-bar {
     padding: 6px 0; /* Adjust horizontal padding */
-    max-width:800px;
-    margin-left:18px;
-   
+    max-width: 800px;
+    margin-left: 18px;
 }
 
     .search-bar .form-control {
@@ -111,7 +105,6 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     margin-right: 30px; /* Add right margin */
 }
 
@@ -122,4 +115,61 @@ a {
 
 .input-group {
     margin-right: 200px;
+}
+
+@media (max-width: 1170px) { /* md and below */
+    .btn-add-user {
+        padding: 5px 10px; /* Smaller padding for medium screens and smaller */
+        margin-right: 10px; /* Adjust margin */
+        font-size: 0.8em; /* Smaller font size */
+    }
+
+    .header-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .input-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 700px; /* Make the search bar take full width */
+    }
+
+    .btn-actions {
+        display: flex;
+    }
+
+    .btn-users {
+        margin-left: 20px;
+        display: flex;
+    }
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .btn-add-user {
+        padding: 5px 10px; /* Smaller padding for smaller screens */
+        margin-right: 10px; /* Adjust margin */
+        font-size: 0.8em; /* Smaller font size */
+    }
+
+    .header-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .input-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 320px; /* Make the search bar take full width */
+    }
+
+    .btn-actions {
+        display: flex;
+    }
+
+    .btn-users {
+        margin-left: 20px;
+        display: flex;
+    }
 }

@@ -1,5 +1,4 @@
-﻿
-body {
+﻿body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +20,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     padding-top: 80px;
-    width: 100%;
+    width:600px;
     box-sizing: border-box;
 }
 
@@ -75,5 +74,24 @@ body {
     text-align: center;
     margin-top: 10px;
     color: cadetblue;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .form-container {
+        width: 600px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        width: 300px;
+    }
+
+    .save-btn {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
 

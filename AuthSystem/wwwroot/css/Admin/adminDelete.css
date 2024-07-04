@@ -1,9 +1,8 @@
-﻿
-body {
+﻿body {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin: 0;
+    height: 100vh; /* Ensure the body takes the full viewport height */
     font-family: Arial, sans-serif;
 }
 
@@ -18,16 +17,11 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     padding-top: 80px;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 .heading {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 .form-container {
@@ -38,12 +32,10 @@ body {
     border-radius: 10px;
     background-color: #f9f9f9;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-.form-group {
-    margin-bottom: 20px;
-}
+
 
 .form-control {
     width: 100%;
@@ -68,3 +60,39 @@ body {
     color: cadetblue;
 }
 
+/* Media queries for responsiveness */
+@media (max-width: 992px) { /* md and below */
+    .form-container {
+        width: 100%; /* Full width for medium screens */
+        padding: 20px; /* Reduced padding */
+    }
+
+    .btn-danger {
+        font-size: 14px; /* Smaller font size */
+    }
+
+    .form-control {
+        padding: 8px; /* Adjust padding for form control */
+    }
+}
+
+@media (max-width: 576px) { /* sm and below */
+    .form-container {
+        width: 200px; /* Full width for small screens */
+        padding: 15px; /* Further reduced padding */
+    }
+
+    .btn-danger {
+        font-size: 12px; /* Smaller font size */
+        padding: 8px; /* Adjust padding */
+    }
+
+    .form-control {
+        padding: 6px; /* Adjust padding for form control */
+    }
+
+    .heading {
+        font-size: 1.2em; /* Adjust heading font size */
+    }
+
+}
