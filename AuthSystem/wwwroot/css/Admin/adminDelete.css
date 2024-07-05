@@ -1,7 +1,6 @@
 ﻿body {
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh; /* Ensure the body takes the full viewport height */
     font-family: Arial, sans-serif;
 }
@@ -17,7 +16,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    padding-top: 80px;
+    margin-top: 100px; 
 }
 
 .heading {
@@ -34,8 +33,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 10px;
 }
-
-
 
 .form-control {
     width: 100%;
@@ -78,7 +75,7 @@
 
 @media (max-width: 576px) { /* sm and below */
     .form-container {
-        width: 200px; /* Full width for small screens */
+        width: 300px; /* Full width for small screens */
         padding: 15px; /* Further reduced padding */
     }
 
@@ -94,5 +91,4 @@
     .heading {
         font-size: 1.2em; /* Adjust heading font size */
     }
-
 }

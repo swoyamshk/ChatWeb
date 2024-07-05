@@ -220,16 +220,6 @@ footer {
             display: block; /* Show cross icon when sidebar is shown */
         }
 
-/* Ensure Navbar Items Align Correctly */
-/* Debugging */
-.navbar-nav {
-    border: 1px solid red; /* Add a border to see the navbar-nav area */
-}
-
-    .navbar-nav .nav-item {
-        border: 1px solid blue; /* Add a border to see individual nav items */
-    }
-
 
 /* Index Page Specific Styles */
 .index-navbar .navbar-nav {
