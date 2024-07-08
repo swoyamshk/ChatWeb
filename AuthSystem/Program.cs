@@ -5,6 +5,7 @@ using AuthSystem.Services;
 using SendGrid.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using AuthSystem.Hubs;
+using Microsoft.Extensions.Options;
 
 
 
@@ -19,6 +20,7 @@ services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.Scope.Add("profile");
 });
 
  

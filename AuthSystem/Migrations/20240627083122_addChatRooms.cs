@@ -5,20 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuthSystem.Migrations
 {
-    /// <inheritdoc />
     public partial class addChatRooms : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ImageData",
-                table: "Messages");
-
-            migrationBuilder.DropColumn(
-                name: "ImageMimeType",
-                table: "Messages");
-
             migrationBuilder.CreateTable(
                 name: "ChatRooms",
                 columns: table => new
@@ -102,7 +92,6 @@ namespace AuthSystem.Migrations
                 column: "UserId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -113,20 +102,6 @@ namespace AuthSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "ChatRooms");
-
-            migrationBuilder.AddColumn<byte[]>(
-                name: "ImageData",
-                table: "Messages",
-                type: "varbinary(max)",
-                nullable: false,
-                defaultValue: new byte[0]);
-
-            migrationBuilder.AddColumn<string>(
-                name: "ImageMimeType",
-                table: "Messages",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
         }
     }
 }

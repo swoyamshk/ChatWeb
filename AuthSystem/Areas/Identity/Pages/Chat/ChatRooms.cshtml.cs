@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
+
 public class ChatRoomsModel : PageModel
 {
     private readonly AuthDbContext _context;
@@ -19,6 +20,10 @@ public class ChatRoomsModel : PageModel
 
     public async Task OnGetAsync()
     {
-        ChatRooms = await _context.ChatRooms.ToListAsync();
+        var userId = _userManager.GetUserId(User);
+
+        ChatRooms = await _context.ChatRooms
+            .Where(cr => cr.CreatorId == userId || cr.Participants.Any(p => p.UserId == userId))
+            .ToListAsync();
     }
 }
