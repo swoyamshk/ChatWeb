@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuthSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,17 +18,33 @@ namespace AuthSystem.Controllers
     {
         private readonly AuthDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserActivityService _userActivityService;
 
-        public ChatRoomController(AuthDbContext context, UserManager<ApplicationUser> userManager)
+        public ChatRoomController(AuthDbContext context, UserManager<ApplicationUser> userManager, IUserActivityService userActivityService)
         {
             _context = context;
             _userManager = userManager;
+            _userActivityService = userActivityService;
         }
 
         [HttpPost("CreateRoom")]
         public async Task<IActionResult> CreateRoom(string name, bool isGroupChat)
         {
             var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                await _userActivityService.LogActivity(user.Id, "CreateRoom");
+            }
+            catch (Exception ex)
+            {
+                // Log or handle exception
+                return StatusCode(500, "Failed to log user activity");
+            }
 
             var chatRoom = new ChatRoom
             {
@@ -49,6 +66,21 @@ namespace AuthSystem.Controllers
         public async Task<IActionResult> GetRooms()
         {
             var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                await _userActivityService.LogActivity(user.Id, "GetRooms");
+            }
+            catch (Exception ex)
+            {
+                // Log or handle exception
+                return StatusCode(500, "Failed to log user activity");
+            }
+
             var rooms = await _context.ChatRooms
                 .Where(cr => cr.Participants.Any(p => p.UserId == user.Id))
                 .ToListAsync();

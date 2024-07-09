@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 public class ChatModel : PageModel
 {
@@ -12,21 +13,23 @@ public class ChatModel : PageModel
     private readonly AuthDbContext _context;
     private readonly IHubContext<PrivateChatHub> _hubContext;
     private readonly ILogger<ChatModel> _logger;
+    private readonly IUserActivityService _userActivityService;
 
     public ChatModel(
-        UserManager<ApplicationUser> userManager,
-        AuthDbContext context,
-        IHubContext<PrivateChatHub> hubContext,
-        ILogger<ChatModel> logger)
-
-
+    UserManager<ApplicationUser> userManager,
+    AuthDbContext context,
+    IHubContext<PrivateChatHub> hubContext,
+    ILogger<ChatModel> logger,
+    IUserActivityService userActivityService)
     {
         _userManager = userManager;
         _context = context;
         _hubContext = hubContext;
         _logger = logger;
+        _userActivityService = userActivityService; // Initialize IUserActivityService
         Messages = new List<ChatMessage>(); // Initialize Messages to an empty list
     }
+
 
     public ChatRoom Room { get; set; }
     public IList<ChatMessage> Messages { get; set; }
@@ -35,6 +38,12 @@ public class ChatModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(int roomId)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId != null)
+        {
+            await _userActivityService.LogActivity(userId, "Private Chat Room");
+        }
+
         Room = await _context.ChatRooms
             .Include(cr => cr.Creator)
             .FirstOrDefaultAsync(cr => cr.Id == roomId);

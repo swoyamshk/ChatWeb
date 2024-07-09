@@ -30,6 +30,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<AuthDbContext>();
 
+services.AddScoped<IUserActivityService, UserActivityService>();
+
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1)); //Token valid for 1 hour
 
 // Add services to the container.

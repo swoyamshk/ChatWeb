@@ -123,6 +123,17 @@ section {
     margin-top: 15px;
 }
 
+.nameDiv{
+   flex-direction:row;
+}
+#firstName{
+    width:200px;
+
+}
+#lastName {
+    width: 200px;
+}
+
 /* Google Sign-in Button */
 .google-signin-btn {
     display: inline-flex;

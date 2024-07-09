@@ -17,6 +17,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ChatRoom> ChatRooms { get; set; }
     public DbSet<ChatMessage> ChatMessages { get; set; }
     public DbSet<ChatParticipant> ChatParticipants { get; set; }
+    public DbSet<UserActivity> UserActivities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

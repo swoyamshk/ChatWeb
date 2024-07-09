@@ -2,18 +2,17 @@
     ViewData["Title"] = "Chat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    // Fetch the email of the logged-in user
     var userEmail = User.Identity.IsAuthenticated ? User.Identity.Name : "Guest";
 }
 
 <link rel="stylesheet" href="~/css/Chat/userChat.css" />
 
 <div class="container chat-container">
-    <h2>Chat Room</h2>
+    <h2> Room</h2>
 
     <div class="chat-content-container">
         <div class="chat-content">
-            <div class="chat-box">
+            <div class="chat-box" id="chatBox">
                 <ul id="messagesList" class="list-group"></ul>
             </div>
 
@@ -21,7 +20,7 @@
                 <div class="row">
                     <div class="col-1">Message</div>
                     <div class="col-5">
-                        <input type="text" class="form-control w-100" id="messageInput" placeholder="Type your message here..." />
+                        <input type="text" class="form-control w-100" id="messageInput" placeholder="Type your message here..." onkeydown="checkEnter(event)" />
                     </div>
                     <div class="col-6 text-end">
                         <input type="button" class="btn btn-primary" id="sendButton" value="Send Message" onclick="sendMessage()" />
@@ -30,12 +29,8 @@
             </div>
 
             <div class="mt-3">
-                <a class="btn btn-success" asp-area="Identity" asp-page="/Chat/CreateChatRoom">
-                    Create Chat Room
-                </a>
-                <a class="btn btn-success" asp-area="Identity" asp-page="/Chat/ChatRooms">
-                    View Chat Room
-                </a>
+                <a class="btn btn-success" asp-area="Identity" asp-page="/Chat/CreateChatRoom">Create Chat Room</a>
+                <a class="btn btn-success" asp-area="Identity" asp-page="/Chat/ChatRooms">View Chat Room</a>
             </div>
 
         </div>
@@ -62,6 +57,7 @@
                     const savedMessage = await response.json();
                     appendMessageToList(savedMessage);
                     document.getElementById("messageInput").value = ""; // Clear input field
+                    scrollToBottom(); // Scroll to bottom after sending message
                 } else {
                     console.error('Failed to send message');
                 }
@@ -72,10 +68,33 @@
             const response = await fetch('/api/messages');
             if (response.ok) {
                 const messages = await response.json();
-                messages.forEach(messageObj => appendMessageToList(messageObj));
+                let lastDate = null;
+                messages.forEach(messageObj => {
+                    const messageDate = new Date(messageObj.timestamp).toDateString();
+                    if (lastDate !== messageDate) {
+                        appendDateSeparator(messageDate);
+                        lastDate = messageDate;
+                    }
+                    appendMessageToList(messageObj);
+                });
+                scrollToBottom(); // Scroll to bottom after loading messages
             } else {
                 console.error('Failed to load messages');
             }
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function appendDateSeparator(date) {
+            const messagesList = document.getElementById("messagesList");
+            const li = document.createElement("li");
+            li.className = "list-group-item date-separator";
+            li.innerHTML = `<div class="date">${date}</div>`;
+            messagesList.appendChild(li);
         }
 
         function appendMessageToList(messageObj) {
@@ -83,25 +102,29 @@
             const li = document.createElement("li");
             li.className = "list-group-item";
 
-            // Check if the message is sent by the current user
             if (messageObj.userName === "@userEmail") {
                 const messageContent = `
-                            <div class="message">${messageObj.text}</div>
-                            <div class="date">${new Date(messageObj.timestamp).toLocaleString()}</div>
-                        `;
+                                    <div class="message">${messageObj.text}</div>
+                                    <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
+                                `;
                 li.classList.add("sent");
                 li.innerHTML = messageContent;
             } else {
                 const messageContent = `
-                            <div class="username">${messageObj.userName}</div>
-                            <div class="message">${messageObj.text}</div>
-                            <div class="date">${new Date(messageObj.timestamp).toLocaleString()}</div>
-                        `;
+                                    <div class="username">${messageObj.userName}</div>
+                                    <div class="message">${messageObj.text}</div>
+                                    <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
+                                `;
                 li.classList.add("received");
                 li.innerHTML = messageContent;
             }
 
             messagesList.appendChild(li);
+        }
+
+        function scrollToBottom() {
+            const chatBox = document.getElementById("chatBox");
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
         window.onload = function () {

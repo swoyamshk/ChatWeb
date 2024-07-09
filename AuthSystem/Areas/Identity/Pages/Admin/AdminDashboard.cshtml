@@ -1,10 +1,107 @@
 ﻿@page
 @model AuthSystem.Areas.Identity.Pages.Admin.AdminDashboardModel
 @{
+    ViewData["Title"] = "Admin Dashboard";
 }
-<button>
-	<a asp-page="Index">View Users</a> |
-</button>
-<button>
-	<a asp-page="ActiveUsers">Active Users</a> |
-</button>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="~/css/Admin/adminDash.css" />
+
+<div class="buttons-container mb-4">
+    <button class="btn btn-primary">
+        <a class="text-white" asp-page="Index">View Users</a>
+    </button>
+    <button class="btn btn-primary">
+        <a class="text-white" asp-page="ActiveUsers">Active Users</a>
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">User Activity Distribution</h5>
+                <canvas id="userActivityChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">User Roles Distribution</h5>
+                <canvas id="userRolesChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">User Roles Summary</h5>
+                <p class="card-text">Total Users: @Model.TotalUsers</p>
+                <p class="card-text">Total Managers: @Model.TotalManagers</p>
+                <p class="card-text">Total Admins: @Model.TotalAdmins</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // User Activity Chart
+            var ctxActivity = document.getElementById('userActivityChart').getContext('2d');
+            var userActivityChart = new Chart(ctxActivity, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Active', 'Inactive'],
+                    datasets: [{
+                        label: 'User Activity',
+                        data: [@Model.ActiveUsers, @Model.InactiveUsers],
+                        backgroundColor: ['#28a745', '#6c757d'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Active vs Inactive Users'
+                        }
+                    }
+                },
+            });
+
+            // User Roles Chart
+            var ctxRoles = document.getElementById('userRolesChart').getContext('2d');
+            var userRolesChart = new Chart(ctxRoles, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Users', 'Managers', 'Admins'],
+                    datasets: [{
+                        label: 'User Roles',
+                        data: [@Model.TotalUsers - @Model.TotalManagers - @Model.TotalAdmins, @Model.TotalManagers, @Model.TotalAdmins],
+                        backgroundColor: ['#007bff', '#ffc107', '#dc3545'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Users vs Managers vs Admins'
+                        }
+                    }
+                },
+            });
+        });
+    </script>
+}
