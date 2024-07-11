@@ -13,8 +13,8 @@
       "PackagePath": "staticwebassets\\css\\Admin\\adminCreate.css"
     },
     {
-      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDash.css",
-      "PackagePath": "staticwebassets\\css\\Admin\\adminDash.css"
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDashboard.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\adminDashboard.css"
     },
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDelete.css",
@@ -27,6 +27,10 @@
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminEdit.css",
       "PackagePath": "staticwebassets\\css\\Admin\\adminEdit.css"
+    },
+    {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\userManagement.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\userManagement.css"
     },
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Chat\\privateChat.css",

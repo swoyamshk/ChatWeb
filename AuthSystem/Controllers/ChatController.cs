@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AuthSystem.Areas.Identity.Data;
+using AuthSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AuthSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AuthSystem.Areas.Identity.Data;
 
 namespace AuthSystem.Controllers
 {
@@ -87,5 +87,31 @@ namespace AuthSystem.Controllers
 
             return Ok(rooms);
         }
+
+        [HttpPost("LogPageVisit")]
+        public async Task<IActionResult> LogPageVisit([FromBody] LogPageVisitModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                await _userActivityService.LogActivity(user.Id, model.PageName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // Log or handle exception
+                return StatusCode(500, "Failed to log user activity");
+            }
+        }
+    }
+
+    public class LogPageVisitModel
+    {
+        public string PageName { get; set; }
     }
 }

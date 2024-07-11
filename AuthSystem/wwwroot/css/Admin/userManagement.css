@@ -117,6 +117,8 @@
     margin-right: 200px;
 }
 
+
+
 @media (max-width: 1170px) { /* md and below */
     .btn-add-user {
         padding: 5px 10px; /* Smaller padding for medium screens and smaller */

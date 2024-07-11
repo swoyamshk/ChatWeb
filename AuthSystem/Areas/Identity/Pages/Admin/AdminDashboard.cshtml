@@ -5,19 +5,19 @@
 }
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="~/css/Admin/adminDash.css" />
+<link rel="stylesheet" href="~/css/Admin/adminDashboard.css" />
 
 <div class="buttons-container mb-4">
     <button class="btn btn-primary">
-        <a class="text-white" asp-page="Index">View Users</a>
+        <a class="text-white" asp-page="Index">User Management</a>
     </button>
     <button class="btn btn-primary">
-        <a class="text-white" asp-page="ActiveUsers">Active Users</a>
+        <a class="text-white" asp-page="UserActivity">User Activity</a>
     </button>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="row pl-4">
+    <div class="col-md-3 custom-card ">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">User Activity Distribution</h5>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">User Roles Distribution</h5>
@@ -33,13 +33,19 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">User Roles Summary</h5>
-                <p class="card-text">Total Users: @Model.TotalUsers</p>
-                <p class="card-text">Total Managers: @Model.TotalManagers</p>
-                <p class="card-text">Total Admins: @Model.TotalAdmins</p>
+                <h5 class="card-title">Page Visits Distribution</h5>
+                <canvas id="pageVisitsChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Messages Per Day</h5>
+                <canvas id="messagesPerDayChart"></canvas>
             </div>
         </div>
     </div>
@@ -98,6 +104,76 @@
                         title: {
                             display: true,
                             text: 'Users vs Managers vs Admins'
+                        }
+                    }
+                },
+            });
+
+            // Page Visits Chart
+            var ctxPageVisits = document.getElementById('pageVisitsChart').getContext('2d');
+            var pageVisitsChart = new Chart(ctxPageVisits, {
+                type: 'doughnut',
+                data: {
+                    labels: @Html.Raw(Json.Serialize(Model.PageVisitLabels)),
+                    datasets: [{
+                        label: 'Page Visits',
+                        data: @Html.Raw(Json.Serialize(Model.PageVisitData)),
+                        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff', '#ff9f40'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Page Visits Distribution'
+                        }
+                    }
+                },
+            });
+
+            // Messages Per Day Chart
+            var ctxMessagesPerDay = document.getElementById('messagesPerDayChart').getContext('2d');
+            var messagesPerDayChart = new Chart(ctxMessagesPerDay, {
+                type: 'line',
+                data: {
+                    labels: @Html.Raw(Json.Serialize(Model.MessageLabels)),
+                    datasets: [{
+                        label: 'Messages Per Day',
+                        data: @Html.Raw(Json.Serialize(Model.MessageData)),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Messages Sent Per Day'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Number of Messages'
+                            },
+                            beginAtZero: true
                         }
                     }
                 },

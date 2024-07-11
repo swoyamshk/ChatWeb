@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0CjLo0e5LLPmfUB5icy7Ig52rPoPRNQEDFmsrtbF5/M=",
+  "Hash": "JoMZccc0Nu4YOdAbxRUHwF9D4LzGkibkcwHsyXFfYkM=",
   "Source": "AuthSystem",
   "BasePath": "_content/AuthSystem",
   "Mode": "Default",
@@ -1233,12 +1233,12 @@
       "OriginalItemSpec": "wwwroot\\css\\Admin\\adminCreate.css"
     },
     {
-      "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDash.css",
+      "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDashboard.css",
       "SourceId": "AuthSystem",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\",
       "BasePath": "_content/AuthSystem",
-      "RelativePath": "css/Admin/adminDash.css",
+      "RelativePath": "css/Admin/adminDashboard.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1249,7 +1249,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\Admin\\adminDash.css"
+      "OriginalItemSpec": "wwwroot\\css\\Admin\\adminDashboard.css"
     },
     {
       "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\adminDelete.css",
@@ -1307,6 +1307,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\Admin\\adminEdit.css"
+    },
+    {
+      "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\userManagement.css",
+      "SourceId": "AuthSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\",
+      "BasePath": "_content/AuthSystem",
+      "RelativePath": "css/Admin/userManagement.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Admin\\userManagement.css"
     },
     {
       "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Chat\\privateChat.css",

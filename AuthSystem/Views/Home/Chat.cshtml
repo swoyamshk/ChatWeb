@@ -104,17 +104,17 @@
 
             if (messageObj.userName === "@userEmail") {
                 const messageContent = `
-                                    <div class="message">${messageObj.text}</div>
-                                    <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
-                                `;
+                                            <div class="message">${messageObj.text}</div>
+                                            <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
+                                        `;
                 li.classList.add("sent");
                 li.innerHTML = messageContent;
             } else {
                 const messageContent = `
-                                    <div class="username">${messageObj.userName}</div>
-                                    <div class="message">${messageObj.text}</div>
-                                    <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
-                                `;
+                                            <div class="username">${messageObj.userName}</div>
+                                            <div class="message">${messageObj.text}</div>
+                                            <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
+                                        `;
                 li.classList.add("received");
                 li.innerHTML = messageContent;
             }
@@ -127,8 +127,23 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
+        async function logPageVisit() {
+            const response = await fetch('/api/chatroom/logPageVisit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pageName: 'Global Chat' })
+            });
+
+            if (!response.ok) {
+                console.error('Failed to log page visit');
+            }
+        }
+
         window.onload = function () {
             loadMessages();
+            logPageVisit();
         };
     </script>
 }
