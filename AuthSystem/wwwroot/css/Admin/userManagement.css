@@ -63,9 +63,15 @@
         vertical-align: middle;
     }
 
+<<<<<<< HEAD
 
 .badge.badge-success {
     background-color: rgba(144, 238, 144, 0.3) !important; 
+=======
+/* Styling for badge indicating success */
+.badge.badge-success {
+    background-color: rgba(144, 238, 144, 0.3) !important; /* Adjust the alpha value for transparency */
+>>>>>>> db5b718666120c1c876f41aa7cff61fc69f93f56
     color: darkgreen !important;
     font-size: 0.9em;
     padding: 5px 10px;
@@ -79,10 +85,17 @@
 .badge-secondary {
     background-color: rgba(211, 211, 211, 0.4) !important;
     color: darkslategrey;
+<<<<<<< HEAD
     font-size: 0.9em;
     padding: 5px 10px;
 font-weight: 420;
 border-radius: 50px;
+=======
+    font-size: 0.9em; /* Decrease font size */
+    padding: 5px 10px; /* Adjust padding for smaller font size */
+    font-weight: 420;
+    border-radius: 50px;
+>>>>>>> db5b718666120c1c876f41aa7cff61fc69f93f56
 }
 
 /* Adjustments for the search bar */
