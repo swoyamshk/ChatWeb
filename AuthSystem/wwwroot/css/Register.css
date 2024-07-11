@@ -1,4 +1,24 @@
-﻿* {
+﻿/* Ensure the labels are aligned similarly */
+.name-container {
+    display: flex;
+    gap: 20px; /* Adjust gap as needed */
+    width: 100%; /* Ensure the container takes full width */
+}
+
+    .name-container div {
+        flex: 1; /* Distribute available space evenly */
+        display: flex;
+        flex-direction: column; /* Align label and input vertically */
+    }
+
+    .name-container label {
+        margin-bottom: 5px; /* Add margin below labels for spacing */
+        font-size: 14px; /* Same font size as other labels */
+        color: #333; /* Same color as other labels */
+    }
+
+/* Existing CSS */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -121,17 +141,6 @@ section {
     width: 450px; /* Adjust width as needed */
     border-radius: 20px;
     margin-top: 15px;
-}
-
-.nameDiv{
-   flex-direction:row;
-}
-#firstName{
-    width:200px;
-
-}
-#lastName {
-    width: 200px;
 }
 
 /* Google Sign-in Button */

@@ -41,7 +41,7 @@
                     <td>@activity.VisitTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
                     <td>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@activity.Id" onsubmit="return confirm('Are you sure you want to delete this activity?');">
-                            <button type="submit" class="btn btn-danger">
+                            <button type="submit" class="btn">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </form>

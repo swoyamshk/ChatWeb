@@ -7,45 +7,70 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="~/css/Admin/adminDashboard.css" />
 
-<div class="buttons-container mb-4">
-    <button class="btn btn-primary">
-        <a class="text-white" asp-page="Index">User Management</a>
-    </button>
-    <button class="btn btn-primary">
-        <a class="text-white" asp-page="UserActivity">User Activity</a>
-    </button>
-</div>
+<div class="container">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-3">
+            <div class="card bg-sagegreen text-white text-center">
+                <div class="card-body">
+                    <i class="fas fa-users fa-2x mb-3"></i>
+                    <h5 class="card-title">@Model.TotalUsers</h5>
+                    <p class="card-text bg-green">Total Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-lilac text-white text-center">
+                <div class="card-body">
+                    <i class="fas fa-comments fa-2x mb-3"></i>
+                    <h5 class="card-title">@Model.TotalGroupChats</h5>
+                    <p class="card-text">Total Group Chats</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-turquoise text-white text-center">
+                <div class="card-body">
+                    <i class="fas fa-user-shield fa-2x mb-3"></i>
+                    <h5 class="card-title">@Model.TotalAdmins</h5>
+                    <p class="card-text">Total Admins</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="row pl-4">
-    <div class="col-md-3 custom-card ">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">User Activity Distribution</h5>
-                <canvas id="userActivityChart"></canvas>
+    <div class="row justify-content-center">
+        <div class="col-md-3 custom-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User Activity Distribution</h5>
+                    <canvas id="userActivityChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 custom-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User Roles Distribution</h5>
+                    <canvas id="userRolesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 custom-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Page Visits Distribution</h5>
+                    <canvas id="pageVisitsChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">User Roles Distribution</h5>
-                <canvas id="userRolesChart"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Page Visits Distribution</h5>
-                <canvas id="pageVisitsChart"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Messages Per Day</h5>
-                <canvas id="messagesPerDayChart"></canvas>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-9 custom-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Messages Per Day</h5>
+                    <canvas id="messagesPerDayChart"></canvas>
+                </div>
             </div>
         </div>
     </div>

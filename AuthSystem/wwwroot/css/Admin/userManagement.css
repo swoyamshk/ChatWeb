@@ -63,25 +63,26 @@
         vertical-align: middle;
     }
 
-/* Styling for badge indicating success */
-.badge-success {
-    background-color: #28a745;
-    color: white;
-    font-size: 0.9em; /* Decrease font size */
-    padding: 5px 10px; /* Adjust padding for smaller font size */
-    font-weight: normal;
+
+.badge.badge-success {
+    background-color: rgba(144, 238, 144, 0.3) !important; 
+    color: darkgreen !important;
+    font-size: 0.9em;
+    padding: 5px 10px;
+    font-weight:420;
     width: 70px;
     height: 24px;
     margin-bottom: 12px;
+    border-radius: 50px;
 }
 
-/* Styling for badge indicating secondary status */
 .badge-secondary {
-    background-color: #6c757d;
-    color: white;
-    font-size: 0.9em; /* Decrease font size */
-    padding: 5px 10px; /* Adjust padding for smaller font size */
-    font-weight: normal;
+    background-color: rgba(211, 211, 211, 0.4) !important;
+    color: darkslategrey;
+    font-size: 0.9em;
+    padding: 5px 10px;
+font-weight: 420;
+border-radius: 50px;
 }
 
 /* Adjustments for the search bar */

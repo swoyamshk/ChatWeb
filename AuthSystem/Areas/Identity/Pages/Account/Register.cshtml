@@ -24,15 +24,19 @@
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-                <div>
-                    <label for="firstName">First Name</label>
-                    <input asp-for="Input.FirstName" class="form-control" id="firstName" placeholder="John" />
-                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-
-                    <label for="lastName">Last Name</label>
-                    <input asp-for="Input.LastName" class="form-control" id="lastName" placeholder="Doe" />
-                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    <div class="name-container">
+                        <div>
+                            <label for="firstName">First Name</label>
+                            <input asp-for="Input.FirstName" class="form-control" id="firstName" placeholder="John" />
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label for="lastName">Last Name</label>
+                            <input asp-for="Input.LastName" class="form-control" id="lastName" placeholder="Doe" />
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
                     </div>
+
                     <label for="email">Email</label>
                     <input asp-for="Input.Email" class="form-control" id="email" placeholder="example.email@gmail.com" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -47,6 +51,7 @@
 
                     <button type="submit" class="btn btn-primary">Sign-up</button>
                 </form>
+
 
                 <div class="login-link">
                     <p>Already have an account? <a asp-page="/Account/Login" asp-area="Identity">Login</a></p>
