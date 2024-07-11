@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\AuthSystem.csproj": {}
+    "C:\\Users\\deesh\\Source\\Repos\\ChatWeb\\AuthSystem\\AuthSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\AuthSystem.csproj": {
+    "C:\\Users\\deesh\\Source\\Repos\\ChatWeb\\AuthSystem\\AuthSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\AuthSystem.csproj",
+        "projectUniqueName": "C:\\Users\\deesh\\Source\\Repos\\ChatWeb\\AuthSystem\\AuthSystem.csproj",
         "projectName": "AuthSystem",
-        "projectPath": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\AuthSystem.csproj",
-        "packagesPath": "C:\\Users\\LEGION\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\obj\\",
+        "projectPath": "C:\\Users\\deesh\\Source\\Repos\\ChatWeb\\AuthSystem\\AuthSystem.csproj",
+        "packagesPath": "C:\\Users\\deesh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\deesh\\Source\\Repos\\ChatWeb\\AuthSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LEGION\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\deesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -107,7 +108,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     }
