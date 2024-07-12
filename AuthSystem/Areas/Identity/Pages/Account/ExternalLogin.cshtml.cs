@@ -82,6 +82,10 @@ namespace AuthSystem.Areas.Identity.Pages.Account
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
+                var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+                user.LastLoginDate = DateTime.Now;
+                await _userManager.UpdateAsync(user);
+
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
                 return LocalRedirect(returnUrl);
             }
@@ -103,6 +107,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
             }
         }
 
+
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -121,7 +126,8 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
-                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname)
+                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                    LastLoginDate = DateTime.Now
                 };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)

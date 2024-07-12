@@ -4,12 +4,8 @@
 
 .container {
     max-width: 100%;
-<<<<<<< HEAD
     margin-top: 60px;
-=======
     margin-top:60px;
-   
->>>>>>> db5b718666120c1c876f41aa7cff61fc69f93f56
 }
 
 .row {
@@ -43,4 +39,10 @@
 
 .card .fa {
     margin-bottom: 1rem;
+}
+
+
+.custom-ps-20 {
+    padding-left: 40px;
+    width:380px;
 }

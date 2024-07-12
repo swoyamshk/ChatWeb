@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using AuthSystem.Areas.Identity.Data;
-using Microsoft.AspNetCore.Authorization; // Adjust the namespace if necessary
-
+using Microsoft.AspNetCore.Authorization;
 
 [Authorize(Roles = "Admin")]
 public class DeleteModel : PageModel
@@ -25,6 +24,10 @@ public class DeleteModel : PageModel
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync(string id)
@@ -38,7 +41,9 @@ public class DeleteModel : PageModel
 
         Input = new InputModel
         {
-            Email = user.Email
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName
         };
 
         return Page();

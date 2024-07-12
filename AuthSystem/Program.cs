@@ -72,8 +72,6 @@ app.MapHub<PrivateChatHub>("/privatechathub");
 
 
 
-
-
 //Add Roles to the Database
 using (var scope = app.Services.CreateScope())
 {

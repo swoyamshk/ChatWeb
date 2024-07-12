@@ -31,10 +31,10 @@ namespace AuthSystem.Areas.Identity.Pages.Admin
         public List<int> PageVisitData { get; set; }
         public List<string> MessageLabels { get; set; }
         public List<int> MessageData { get; set; }
-
-        // New properties
+        public List<string> GlobalMessageLabels { get; set; }
+        public List<int> GlobalMessageData { get; set; }
         public int TotalGroupChats { get; set; }
-        public int AnotherMetric { get; set; } // Placeholder for another metric
+        public int AnotherMetric { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -85,10 +85,15 @@ namespace AuthSystem.Areas.Identity.Pages.Admin
             MessageLabels = messages.Select(m => m.Date.ToShortDateString()).ToList();
             MessageData = messages.Select(m => m.Count).ToList();
 
-            // Fetch the total number of group chats
-            TotalGroupChats = await _context.ChatRooms.CountAsync(c => c.IsGroupChat);
+            var globalMessages = await _context.Messages
+                .GroupBy(m => m.Timestamp.Date)
+                .Select(g => new { Date = g.Key, Count = g.Count() })
+                .ToListAsync();
 
-            // Set another metric (placeholder logic)
+            GlobalMessageLabels = globalMessages.Select(m => m.Date.ToShortDateString()).ToList();
+            GlobalMessageData = globalMessages.Select(m => m.Count).ToList();
+
+            TotalGroupChats = await _context.ChatRooms.CountAsync(c => c.IsGroupChat);
             AnotherMetric = 0; // Replace with actual logic if needed
         }
     }

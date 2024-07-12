@@ -8,21 +8,17 @@
 <link rel="stylesheet" href="~/css/Admin/adminDashboard.css" />
 
 <div class="container">
-    <div class="row justify-content-center mb-4">
+    <div class="row justify-content-center mb-4 ms-4">
         <div class="col-md-3">
             <div class="card bg-sagegreen text-white text-center">
                 <div class="card-body">
                     <i class="fas fa-users fa-2x mb-3"></i>
                     <h5 class="card-title">@Model.TotalUsers</h5>
-<<<<<<< HEAD
-                    <p class="card-text bg-green">Total Users</p>
-=======
                     <p class="card-text">Total Users</p>
->>>>>>> db5b718666120c1c876f41aa7cff61fc69f93f56
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 ms-4">
             <div class="card bg-lilac text-white text-center">
                 <div class="card-body">
                     <i class="fas fa-comments fa-2x mb-3"></i>
@@ -31,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 custom-ps-20">
             <div class="card bg-turquoise text-white text-center">
                 <div class="card-body">
                     <i class="fas fa-user-shield fa-2x mb-3"></i>
@@ -69,15 +65,25 @@
         </div>
     </div>
     <div class="row justify-content-center mt-4">
-        <div class="col-md-9 custom-card">
+        <div class="col-md-5 custom-card">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Messages Per Day</h5>
-                    <canvas id="messagesPerDayChart"></canvas>
+                    <h5 class="card-title">Group Chat Messages</h5>
+                    <canvas id="groupMessagesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 custom-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Global Chat Messages</h5>
+                    <canvas id="globalMessagesChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
+
 </div>
 
 @section Scripts {
@@ -164,18 +170,19 @@
                 },
             });
 
-            // Messages Per Day Chart
-            var ctxMessagesPerDay = document.getElementById('messagesPerDayChart').getContext('2d');
-            var messagesPerDayChart = new Chart(ctxMessagesPerDay, {
+            // Group Messages Chart
+            var ctxGroupMessages = document.getElementById('groupMessagesChart').getContext('2d');
+            var groupMessagesChart = new Chart(ctxGroupMessages, {
                 type: 'line',
                 data: {
                     labels: @Html.Raw(Json.Serialize(Model.MessageLabels)),
                     datasets: [{
-                        label: 'Messages Per Day',
+                        label: 'Group Chat Messages',
                         data: @Html.Raw(Json.Serialize(Model.MessageData)),
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue shade
+                        borderColor: 'rgba(54, 162, 235, 1)', // Blue color
+                        borderWidth: 2,
+                        pointRadius: 4,
                         fill: true
                     }]
                 },
@@ -187,7 +194,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'Messages Sent Per Day'
+                            text: 'Group Chat Messages'
                         }
                     },
                     scales: {
@@ -207,6 +214,52 @@
                     }
                 },
             });
+
+            // Global Messages Chart
+            var ctxGlobalMessages = document.getElementById('globalMessagesChart').getContext('2d');
+            var globalMessagesChart = new Chart(ctxGlobalMessages, {
+                type: 'line',
+                data: {
+                    labels: @Html.Raw(Json.Serialize(Model.GlobalMessageLabels)),
+                    datasets: [{
+                        label: 'Global Chat Messages',
+                        data: @Html.Raw(Json.Serialize(Model.GlobalMessageData)),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red shade
+                        borderColor: 'rgba(255, 99, 132, 1)', // Red color
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Global Chat Messages'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Number of Messages'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                },
+            });
+
         });
     </script>
 }

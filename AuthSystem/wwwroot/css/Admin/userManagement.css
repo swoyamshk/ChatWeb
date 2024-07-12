@@ -1,44 +1,40 @@
 ﻿.btn-add-user {
-    background-color: cadetblue; /* Cadet blue background color */
-    color: white; /* White text color */
-    text-decoration: none; /* Remove underline */
-    border-radius: 7px; /* Rounded button corners */
-    padding: 10px 15px; /* Adjust padding for button size */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
+    background-color: cadetblue;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
     margin-right: 25px;
 }
 
     .btn-add-user:hover {
-        background-color: lightsteelblue; /* Lighter shade of cadet blue on hover */
-        color: black; /* Maintain white text color on hover */
-        text-decoration: none; /* Remove underline on hover */
+        background-color: lightsteelblue;
+        color: black;
+        text-decoration: none;
     }
 
-/* Edit and delete icons */
 .table a i.fas {
-    color: #6c757d; /* Initial gray color */
-    transition: color 0.3s; /* Smooth transition for color change */
+    color: #6c757d;
+    transition: color 0.3s;
     margin-right: 15px;
 }
 
-/* Hover state for edit and delete icons */
 .table a:hover i.fas {
-    color: cadetblue; /* Cadet blue color on hover */
+    color: cadetblue;
 }
 
-/* Container for the table */
 .table-container {
-    border-radius: 8px; /* Slight curved border radius */
-    border: 1px solid #ddd; /* Light gray border */
-    overflow: hidden; /* Ensure border radius is applied properly */
-    margin-left: 30px; /* Matching left margin */
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    margin-left: 30px;
     margin-right: 30px;
-    padding: 20px; /* Padding inside the container */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Add shadow */
-    overflow-x: auto; /* Enable horizontal scrolling */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow-x: auto;
 }
 
-/* Table header and data alignment */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -63,19 +59,12 @@
         vertical-align: middle;
     }
 
-<<<<<<< HEAD
-
 .badge.badge-success {
-    background-color: rgba(144, 238, 144, 0.3) !important; 
-=======
-/* Styling for badge indicating success */
-.badge.badge-success {
-    background-color: rgba(144, 238, 144, 0.3) !important; /* Adjust the alpha value for transparency */
->>>>>>> db5b718666120c1c876f41aa7cff61fc69f93f56
+    background-color: rgba(144, 238, 144, 0.3) !important;
     color: darkgreen !important;
     font-size: 0.9em;
     padding: 5px 10px;
-    font-weight:420;
+    font-weight: 420;
     width: 70px;
     height: 24px;
     margin-bottom: 12px;
@@ -85,41 +74,32 @@
 .badge-secondary {
     background-color: rgba(211, 211, 211, 0.4) !important;
     color: darkslategrey;
-<<<<<<< HEAD
     font-size: 0.9em;
     padding: 5px 10px;
-font-weight: 420;
-border-radius: 50px;
-=======
-    font-size: 0.9em; /* Decrease font size */
-    padding: 5px 10px; /* Adjust padding for smaller font size */
     font-weight: 420;
     border-radius: 50px;
->>>>>>> db5b718666120c1c876f41aa7cff61fc69f93f56
 }
 
-/* Adjustments for the search bar */
 .search-bar {
-    padding: 6px 0; /* Adjust horizontal padding */
+    padding: 6px 0;
     max-width: 800px;
     margin-left: 18px;
 }
 
     .search-bar .form-control {
-        border-radius: 0; /* Remove border radius if not needed */
+        border-radius: 0;
     }
 
-/* Container and header controls for consistent margin */
 .container {
-    margin-left: 30px; /* Matching left margin */
-    margin-right: 30px; /* Matching right margin */
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .header-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-right: 30px; /* Add right margin */
+    margin-right: 30px;
 }
 
 .search-form {
@@ -131,13 +111,11 @@ border-radius: 50px;
     margin-right: 200px;
 }
 
-
-
-@media (max-width: 1170px) { /* md and below */
+@media (max-width: 1170px) {
     .btn-add-user {
-        padding: 5px 10px; /* Smaller padding for medium screens and smaller */
-        margin-right: 10px; /* Adjust margin */
-        font-size: 0.8em; /* Smaller font size */
+        padding: 5px 10px;
+        margin-right: 10px;
+        font-size: 0.8em;
     }
 
     .header-controls {
@@ -148,7 +126,7 @@ border-radius: 50px;
     .input-group {
         margin-right: 0;
         margin-bottom: 10px;
-        width: 700px; /* Make the search bar take full width */
+        width: 700px;
     }
 
     .btn-actions {
@@ -161,12 +139,11 @@ border-radius: 50px;
     }
 }
 
-/* Media queries for responsiveness */
 @media (max-width: 768px) {
     .btn-add-user {
-        padding: 5px 10px; /* Smaller padding for smaller screens */
-        margin-right: 10px; /* Adjust margin */
-        font-size: 0.8em; /* Smaller font size */
+        padding: 5px 10px;
+        margin-right: 10px;
+        font-size: 0.8em;
     }
 
     .header-controls {
@@ -177,7 +154,7 @@ border-radius: 50px;
     .input-group {
         margin-right: 0;
         margin-bottom: 10px;
-        width: 320px; /* Make the search bar take full width */
+        width: 320px;
     }
 
     .btn-actions {
