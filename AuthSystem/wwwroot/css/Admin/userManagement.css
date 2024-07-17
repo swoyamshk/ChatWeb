@@ -1,4 +1,4 @@
-﻿.btn-add-user {
+﻿﻿.btn-add-user {
     background-color: cadetblue;
     color: white;
     text-decoration: none;
@@ -8,11 +8,11 @@
     margin-right: 25px;
 }
 
-    .btn-add-user:hover {
-        background-color: lightsteelblue;
-        color: black;
-        text-decoration: none;
-    }
+.btn-add-user:hover {
+    background-color: lightsteelblue;
+    color: black;
+    text-decoration: none;
+}
 
 .table a i.fas {
     color: #6c757d;

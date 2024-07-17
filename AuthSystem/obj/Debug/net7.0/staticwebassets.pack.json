@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\css\\Admin\\adminEdit.css"
     },
     {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\userActivity.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\userActivity.css"
+    },
+    {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\userManagement.css",
       "PackagePath": "staticwebassets\\css\\Admin\\userManagement.css"
     },

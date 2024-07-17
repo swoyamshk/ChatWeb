@@ -20,15 +20,16 @@
             </div>
         </form>
         <div class="btn-users">
-        <a class="btn-add-user" asp-area="Identity" asp-page="ActiveUsers">
-            Inactive Users
-        </a>
-        <!--<a class="btn-add-user" asp-area="Identity" asp-page="DisabledUsers">
-            Disabled Users
-        </a>-->
-        <a class="btn-add-user" asp-area="Identity" asp-page="/AdminUserCreation">
-            <i class="fas fa-plus-circle"></i> Add User
-        </a>
+            <a class="btn-add-user" asp-area="Identity" asp-page="ActiveUsers">
+                Inactive Users
+            </a>
+            <!--<a class="btn-add-user" asp-area="Identity" asp-page="DisabledUsers">
+                Disabled Users
+            </a>-->
+            <a class="btn-add-user" asp-area="Identity" asp-page="/AdminUserCreation">
+                <i class="fas fa-plus-circle"></i> Add User
+            </a>
+           
         </div>
     </div>
 </div>
@@ -80,17 +81,23 @@
                     </td>
                     <td>
                         <div class="btn-actions">
-                        @if (!user.Roles.Contains("Admin"))
-                        {
-                            <a asp-page="Edit" asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
-                            <a asp-page="Delete" asp-route-id="@user.Id"><i class="fas fa-trash-alt"></i></a>
-                        }
+                            @if (!user.Roles.Contains("Admin"))
+                            {
+                                <a asp-page="Edit" asp-route-id="@user.Id"><i class="fas fa-edit"></i></a>
+                                <a asp-page="Delete" asp-route-id="@user.Id"><i class="fas fa-trash-alt"></i></a>
+                            }
                         </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <form method="post" asp-page-handler="ExportToExcel" class="d-inline">
+        <button type="submit" class="btn btn-outline-success">Export to Excel</button>
+    </form>
+    <form method="post" asp-page-handler="ExportToPdf" class="d-inline">
+        <button type="submit" class="btn btn-outline-danger">Export to PDF</button>
+    </form>
 </div>
 
 @section Scripts {

@@ -8,9 +8,9 @@
 <link rel="stylesheet" href="~/css/Admin/adminDashboard.css" />
 
 <div class="container">
-    <div class="row justify-content-center mb-4 ms-4">
-        <div class="col-md-3">
-            <div class="card bg-sagegreen text-white text-center">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card bg-turquoise text-white text-center">
                 <div class="card-body">
                     <i class="fas fa-users fa-2x mb-3"></i>
                     <h5 class="card-title">@Model.TotalUsers</h5>
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 ms-4">
+        <div class="col-md-4 col-sm-6 mb-4">
             <div class="card bg-lilac text-white text-center">
                 <div class="card-body">
                     <i class="fas fa-comments fa-2x mb-3"></i>
@@ -27,8 +27,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 custom-ps-20">
-            <div class="card bg-turquoise text-white text-center">
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card bg-sagegreen text-white text-center">
                 <div class="card-body">
                     <i class="fas fa-user-shield fa-2x mb-3"></i>
                     <h5 class="card-title">@Model.TotalAdmins</h5>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-3 custom-card">
+        <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">User Activity Distribution</h5>
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 custom-card">
+        <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">User Roles Distribution</h5>
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 custom-card">
+        <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Page Visits Distribution</h5>
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="row justify-content-center mt-4">
-        <div class="col-md-5 custom-card">
+        <div class="col-md-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Group Chat Messages</h5>
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 custom-card">
+        <div class="col-md-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Global Chat Messages</h5>
@@ -82,8 +82,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 @section Scripts {

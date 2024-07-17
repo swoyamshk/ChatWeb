@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JoMZccc0Nu4YOdAbxRUHwF9D4LzGkibkcwHsyXFfYkM=",
+  "Hash": "mpJ0031QsQdZkp0mA7H3htW0/BDXHBhibTV/ggVNvE0=",
   "Source": "AuthSystem",
   "BasePath": "_content/AuthSystem",
   "Mode": "Default",
@@ -1307,6 +1307,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\Admin\\adminEdit.css"
+    },
+    {
+      "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\userActivity.css",
+      "SourceId": "AuthSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\",
+      "BasePath": "_content/AuthSystem",
+      "RelativePath": "css/Admin/userActivity.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Admin\\userActivity.css"
     },
     {
       "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Admin\\userManagement.css",

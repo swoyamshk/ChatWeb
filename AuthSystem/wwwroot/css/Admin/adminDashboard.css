@@ -1,11 +1,11 @@
 ﻿.custom-card {
-    margin-left: 25px; /* Adjust as needed */
+    margin-left: 25px;
+    margin-bottom: 25px;
 }
 
 .container {
     max-width: 100%;
     margin-top: 60px;
-    margin-top:60px;
 }
 
 .row {
@@ -41,8 +41,7 @@
     margin-bottom: 1rem;
 }
 
-
 .custom-ps-20 {
     padding-left: 40px;
-    width:380px;
+    width: 380px;
 }
