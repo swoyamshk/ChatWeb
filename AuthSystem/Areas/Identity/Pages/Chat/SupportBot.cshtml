@@ -1,0 +1,36 @@
+﻿@page
+@model SupportBotModel
+@{
+    ViewData["Title"] = "Support Bot";
+}
+<h2>Support Bot</h2>
+
+<div>
+    <input type="text" id="userInput" />
+    <button onclick="sendMessage()">Send</button>
+</div>
+<div id="messagesList"></div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/supportBotHub")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        connection.on("ReceiveMessage", (user, message) => {
+            const msg = document.createElement("div");
+            msg.textContent = `${user}: ${message}`;
+            document.getElementById("messagesList").appendChild(msg);
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        function sendMessage() {
+            const user = "User"; // Replace with dynamic user data if needed
+            const message = document.getElementById("userInput").value;
+            connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+        }
+    </script>
+}

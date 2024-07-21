@@ -3,34 +3,82 @@
 @{
     ViewData["Title"] = "Private Chat";
 }
-<h2>Chat Room: @Model.Room.Name</h2>
+<link rel="stylesheet" href="~/css/chat/privateChat.css" />
 
-<div id="messagesList">
-    @foreach (var message in Model.Messages)
-    {
-        <div><strong>@message.Sender.Email:</strong> @message.Content</div>
-    }
-</div>
+<h2 class="chat-room-title">Chat Room: @Model.Room.Name</h2>
+<div class="chat-container">
+    <div class="chat-content-container">
+        <div class="chat-content">
+            <ul id="messagesList" class="chat-box">
+                @if (Model.Messages.Any())
+                {
+                    var lastDate = Model.Messages.First().Timestamp.Date;
+                    <li class="date-separator">
+                        <span class="date">@lastDate.ToString("MMMM dd, yyyy")</span>
+                    </li>
 
-<form id="messageForm" method="post">
-    <div class="form-group">
-        <input type="hidden" id="userEmail" value="@User.Identity.Name" />
-        <input type="hidden" name="ChatRoomId" value="@Model.Room.Id" />
-        <input type="text" class="form-control" name="Content" placeholder="Type your message..." />
-    </div>
-    <button type="submit" class="btn btn-primary">Send Message</button>
-</form>
-
-@if (User.Identity.Name == Model.Room.Creator.Email)
-{
-    <form id="addUserForm" method="post" asp-page-handler="AddUser">
-        <div class="form-group">
-            <input type="hidden" name="ChatRoomId" value="@Model.Room.Id" />
-            <input type="text" class="form-control" name="UserIdToAdd" placeholder="Enter user email..." />
+                    @foreach (var message in Model.Messages)
+                    {
+                        if (message.Timestamp.Date != lastDate)
+                        {
+                            lastDate = message.Timestamp.Date;
+                            <li class="date-separator">
+                                <span class="date">@lastDate.ToString("MMMM dd, yyyy")</span>
+                            </li>
+                        }
+                        <li class="list-group-item @(message.Sender.Email == User.Identity.Name ? "sent" : "received")">
+                            @if (message.Sender.Email != User.Identity.Name)
+                            {
+                                <div class="username">@message.Sender.Email</div>
+                            }
+                            <div class="message">@message.Content</div>
+                            <div class="time">@message.Timestamp.ToString("HH:mm:ss")</div>
+                        </li>
+                    }
+                }
+            </ul>
+            <div class="chat-input">
+                <form id="messageForm" method="post">
+                    <div class="input-group">
+                        <input type="hidden" id="userEmail" value="@User.Identity.Name" />
+                        <input type="hidden" name="ChatRoomId" value="@Model.Room.Id" />
+                        <input type="text" class="form-control" name="Content" placeholder="Type your message..." />
+                        <button type="submit" class="btn btn-primary" id="sendButton">Send Message</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn btn-secondary">Add User</button>
-    </form>
-}
+    </div>
+
+    <div class="participants-add-user-container">
+        <div class="participants-container">
+            <h3>Participants</h3>
+            <ul>
+                @foreach (var participant in Model.Participants)
+                {
+                    <li>
+                        @participant.Email
+                        @if (participant.Email == Model.Room.Creator.Email)
+                        {
+                            <span>(Admin)</span>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+
+        @if (User.Identity.Name == Model.Room.Creator.Email)
+        {
+            <form id="addUserForm" method="post" asp-page-handler="AddUser">
+                <div class="form-group">
+                    <input type="hidden" name="ChatRoomId" value="@Model.Room.Id" />
+                    <input type="text" class="form-control" name="UserIdToAdd" placeholder="Enter user email..." />
+                </div>
+                <button type="submit" class="btn btn-secondary">Add User</button>
+            </form>
+        }
+    </div>
+</div>
 
 
 @section Scripts {
@@ -49,24 +97,20 @@
             console.error("Error starting connection: ", err.toString());
         });
 
-
         connection.on("ReceiveMessage", function (userEmail, message) {
-            const msgDiv = document.createElement("div");
-            msgDiv.innerHTML = "<strong>" + userEmail + ":</strong> " + message;
+            const msgDiv = document.createElement("li");
+            msgDiv.classList.add("list-group-item", userEmail === document.getElementById("userEmail").value ? "sent" : "received");
+            const messageContent = `
+                                                        ${userEmail !== document.getElementById("userEmail").value ? `<div class="username">${userEmail}</div>` : ''}
+                                                        <div class="message">${message}</div>
+                                                        <div class="time">${new Date().toLocaleTimeString()}</div>`;
+            msgDiv.innerHTML = messageContent;
             document.getElementById("messagesList").appendChild(msgDiv);
-        });
-
-        connection.start().then(function () {
-            const chatRoomId = document.getElementsByName("ChatRoomId")[0].value;
-            connection.invoke("JoinChatRoom", chatRoomId).catch(function (err) {
-                console.error("Error joining chat room: ", err.toString());
-            });
-        }).catch(function (err) {
-            console.error("Error starting connection: ", err.toString());
+            scrollToBottom();
         });
 
         document.getElementById("messageForm").addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevents the form from submitting traditionally
+            event.preventDefault();
             const form = event.target;
             const message = form.Content.value;
             const chatRoomId = form.ChatRoomId.value;
@@ -84,41 +128,25 @@
                         connection.invoke("SendMessage", chatRoomId, message).catch(function (err) {
                             console.error("Error sending message: ", err.toString());
                         });
-                        form.Content.value = ''; // Clear the input field after successful send
+                        form.Content.value = '';
+                        scrollToBottom();
                     } else {
                         console.error("Form submission failed.");
                     }
                 }).catch(error => {
-                    console.error("Error during fetch:", error);
+                    console.error("Error submitting form: ", error);
                 });
             }
         });
 
-        document.getElementById("addUserForm")?.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevents the form from submitting traditionally
-            const form = event.target;
-            const userIdToAdd = form.UserIdToAdd.value;
-            const chatRoomId = form.ChatRoomId.value;
+        function scrollToBottom() {
+            const chatBox = document.querySelector(".chat-box");
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
 
-            if (userIdToAdd.trim() !== "" && chatRoomId) {
-                fetch(form.action, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: new URLSearchParams(new FormData(form)).toString()
-                }).then(response => {
-                    if (response.ok) {
-                        form.UserIdToAdd.value = ''; // Clear the input field after successful send
-                    } else {
-                        console.error("Form submission failed.");
-                    }
-                }).catch(error => {
-                    console.error("Error during fetch:", error);
-                });
-            }
-        });
-
-
+        // Scroll to bottom when the page is first loaded
+        window.onload = function () {
+            scrollToBottom();
+        };
     </script>
 }

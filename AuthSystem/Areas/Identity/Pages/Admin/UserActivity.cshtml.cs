@@ -37,6 +37,17 @@ public class UserActivitiesModel : PageModel
     [BindProperty(SupportsGet = true)]
     public DateTime? EndDate { get; set; }
 
+    [BindProperty(SupportsGet = true)]
+    public string SortColumn { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public string SortDirection { get; set; } = "desc";
+
+    [BindProperty(SupportsGet = true)]
+    public int PageNumber { get; set; } = 1;
+
+    public int TotalPages { get; set; }
+
     public class UserActivityViewModel
     {
         public int Id { get; set; }
@@ -66,7 +77,19 @@ public class UserActivitiesModel : PageModel
             activitiesQuery = activitiesQuery.Where(a => a.VisitTime <= EndDate.Value);
         }
 
-        var activities = await activitiesQuery.ToListAsync();
+        activitiesQuery = SortColumn switch
+        {
+            "VisitTime" => SortDirection == "asc" ? activitiesQuery.OrderBy(a => a.VisitTime) : activitiesQuery.OrderByDescending(a => a.VisitTime),
+            _ => activitiesQuery.OrderByDescending(a => a.VisitTime),
+        };
+
+        var totalRecords = await activitiesQuery.CountAsync();
+        TotalPages = (int)Math.Ceiling(totalRecords / 10.0);
+
+        var activities = await activitiesQuery
+            .Skip((PageNumber - 1) * 10)
+            .Take(10)
+            .ToListAsync();
 
         foreach (var activity in activities)
         {
@@ -165,6 +188,12 @@ public class UserActivitiesModel : PageModel
         {
             activitiesQuery = activitiesQuery.Where(a => a.VisitTime <= EndDate.Value);
         }
+
+        activitiesQuery = SortColumn switch
+        {
+            "VisitTime" => SortDirection == "asc" ? activitiesQuery.OrderBy(a => a.VisitTime) : activitiesQuery.OrderByDescending(a => a.VisitTime),
+            _ => activitiesQuery.OrderByDescending(a => a.VisitTime),
+        };
 
         var activities = await activitiesQuery.ToListAsync();
 

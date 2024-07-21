@@ -113,3 +113,18 @@
         margin: 20px 100px;
     }
 }
+
+.chat-buttons {
+    position: absolute;
+    top: 60px;
+    right: 120px;
+}
+.btn-success {
+    background-color: cadetblue;
+    border-color: cadetblue;
+}
+
+    .btn-success:hover {
+        background-color: darkcyan;
+        border-color: darkcyan;
+    }

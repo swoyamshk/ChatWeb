@@ -1,18 +1,24 @@
-﻿﻿.btn-add-user {
+﻿/* Adding background color for inactive users */
+
+a, a:hover, a:focus {
+    text-decoration: none;
+}
+
+.btn-add-user {
     background-color: cadetblue;
     color: white;
     text-decoration: none;
     border-radius: 7px;
     padding: 10px 15px;
     transition: background-color 0.3s, color 0.3s;
-    margin-right: 25px;
+    margin-left: 10px;
 }
 
-.btn-add-user:hover {
-    background-color: lightsteelblue;
-    color: black;
-    text-decoration: none;
-}
+    .btn-add-user:hover {
+        background-color: lightsteelblue;
+        color: black;
+        text-decoration: none;
+    }
 
 .table a i.fas {
     color: #6c757d;
@@ -81,9 +87,9 @@
 }
 
 .search-bar {
+    flex-grow: 1;
     padding: 6px 0;
     max-width: 800px;
-    margin-left: 18px;
 }
 
     .search-bar .form-control {
@@ -99,23 +105,56 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     margin-right: 30px;
 }
 
 .search-form {
-    margin: 0;
+    display: flex;
+    align-items: center;
     flex-grow: 1;
+    margin-left: 20px;
 }
 
 .input-group {
-    margin-right: 200px;
+    flex-grow: 1;
+    display: flex;
 }
+
+.date-filters {
+    display: flex;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.date-picker {
+    margin-right: 10px;
+}
+
+.dropdown-filter {
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+    .dropdown-filter:focus {
+        border-color: cadetblue;
+        box-shadow: 0 0 5px rgba(95, 158, 160, 0.5);
+    }
 
 @media (max-width: 1170px) {
     .btn-add-user {
+        width: 100%;
         padding: 5px 10px;
-        margin-right: 10px;
+        margin-left: 0;
         font-size: 0.8em;
+        margin-bottom: 10px;
     }
 
     .header-controls {
@@ -126,7 +165,7 @@
     .input-group {
         margin-right: 0;
         margin-bottom: 10px;
-        width: 700px;
+        width: 100%;
     }
 
     .btn-actions {
@@ -134,15 +173,18 @@
     }
 
     .btn-users {
-        margin-left: 20px;
+        margin-left: 0;
         display: flex;
+        width: 100%;
+        justify-content: space-between;
     }
 }
 
 @media (max-width: 768px) {
     .btn-add-user {
+        width:100px;
         padding: 5px 10px;
-        margin-right: 10px;
+        margin-left: 0;
         font-size: 0.8em;
     }
 
@@ -154,7 +196,7 @@
     .input-group {
         margin-right: 0;
         margin-bottom: 10px;
-        width: 320px;
+        width: 100%;
     }
 
     .btn-actions {
@@ -162,7 +204,9 @@
     }
 
     .btn-users {
-        margin-left: 20px;
+        margin-left: 0;
         display: flex;
+        width: 100%;
+        justify-content: space-between;
     }
 }

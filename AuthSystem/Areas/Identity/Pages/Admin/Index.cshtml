@@ -19,19 +19,41 @@
                 </div>
             </div>
         </form>
+        
+
         <div class="btn-users">
             <a class="btn-add-user" asp-area="Identity" asp-page="ActiveUsers">
                 Inactive Users
             </a>
-            <!--<a class="btn-add-user" asp-area="Identity" asp-page="DisabledUsers">
-                Disabled Users
-            </a>-->
             <a class="btn-add-user" asp-area="Identity" asp-page="/AdminUserCreation">
                 <i class="fas fa-plus-circle"></i> Add User
             </a>
-           
         </div>
     </div>
+
+    <div class="header-controls date-filters">
+
+        <form method="get">
+            <div class="input-group">
+                <input type="date" class="form-control date-picker" name="StartDate" value="@Model.StartDate?.ToString("yyyy-MM-dd")" />
+                <input type="date" class="form-control date-picker" name="EndDate" value="@Model.EndDate?.ToString("yyyy-MM-dd")" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form>
+        <form method="get">
+            <select name="SelectedRole" class="dropdown-filter" onchange="this.form.submit()">
+                <option value="">All Roles</option>
+                @foreach (var role in Model.Roles)
+                {
+                    <option value="@role" selected="@(role == Model.SelectedRole ? "selected" : null)">@role</option>
+                }
+            </select>
+        </form>
+
+    </div>
+
 </div>
 
 <div class="table-container">
@@ -49,7 +71,7 @@
         <tbody>
             @foreach (var user in Model.Users)
             {
-                <tr>
+                <tr class="@(user.ActiveStatus == "Inactive" ? "bg-cadetblue" : "")">
                     <td>@user.Email</td>
                     <td>@(string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName) ? "N/A" : $"{user.FirstName} {user.LastName}")</td>
                     <td>
@@ -91,13 +113,15 @@
                 </tr>
             }
         </tbody>
+        
     </table>
-    <form method="post" asp-page-handler="ExportToExcel" class="d-inline">
+    <form method="post" asp-page-handler="ExportToExcel" class="d-inline" style="margin-right:10px;">
         <button type="submit" class="btn btn-outline-success">Export to Excel</button>
     </form>
     <form method="post" asp-page-handler="ExportToPdf" class="d-inline">
         <button type="submit" class="btn btn-outline-danger">Export to PDF</button>
     </form>
+
 </div>
 
 @section Scripts {

@@ -1,39 +1,63 @@
 ﻿.chat-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100vh;
-    max-height: 100vh;
+    max-height: 85vh;
+    width: 100%;
+    margin-left: 15px;
 }
 
 .chat-content-container {
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
-    flex: 1;
+    flex: 0.7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .chat-content {
     height: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .chat-box {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .chat-input {
     padding: 10px;
     background-color: white;
     border-top: 1px solid #ccc;
+    width: 100%;
 }
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+    .input-group .form-control {
+        flex-grow: 1;
+        margin-right: 10px;
+    }
 
 #messagesList {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .list-group-item {
@@ -42,6 +66,8 @@
     padding: 10px 15px;
     max-width: 70%;
     word-wrap: break-word;
+    font-size: 1em;
+    position: relative;
 }
 
 .sent {
@@ -60,7 +86,8 @@
 
 .username {
     margin-bottom: 5px;
-    font-size: 1em;
+    font-size: 0.9em;
+    font-weight: 500;
 }
 
 .message {
@@ -68,7 +95,7 @@
     font-size: 0.9em;
 }
 
-.date {
+.time {
     font-size: 0.8em;
     color: #888;
     margin-top: 2px;
@@ -78,8 +105,106 @@
     background-color: cadetblue;
     color: white;
     border-color: black;
+    flex-shrink: 0; /* Ensure the button doesn't shrink */
 }
 
     #sendButton:hover {
         background-color: darkcyan;
+    }
+
+.date-separator {
+    text-align: center;
+    background-color: transparent;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 0;
+    border: none;
+    width: 100%;
+}
+
+    .date-separator .date {
+        display: inline-block;
+        background-color: white;
+        padding: 0 10px;
+    }
+
+@media screen and (max-width: 768px) {
+    .chat-container {
+        flex-direction: column;
+    }
+
+    .participants-container {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #ccc;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .date-separator {
+        margin: 20px 50px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .date-separator {
+        margin: 20px 100px;
+    }
+}
+
+.chat-room-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.participants-add-user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0.3;
+    border-left: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.participants-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .participants-container h3 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .participants-container ul {
+        list-style-type: none;
+        padding: 0;
+        width: 100%;
+    }
+
+    .participants-container li {
+        margin-bottom: 5px;
+        padding: 5px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+#addUserForm {
+    width: 100%;
+}
+
+    #addUserForm .input-group {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    #addUserForm .form-control {
+        flex-grow: 1;
+        margin-right: 10px;
     }

@@ -17,15 +17,25 @@ using System.Threading.Tasks;
 public class IndexModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public IndexModel(UserManager<ApplicationUser> userManager)
+    public IndexModel(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
+        _roleManager = roleManager;
     }
 
     public List<UserViewModel> Users { get; set; }
+    public List<string> Roles { get; set; }
+
     [BindProperty(SupportsGet = true)]
     public string CurrentFilter { get; set; }
+    [BindProperty(SupportsGet = true)]
+    public DateTime? StartDate { get; set; }
+    [BindProperty(SupportsGet = true)]
+    public DateTime? EndDate { get; set; }
+    [BindProperty(SupportsGet = true)]
+    public string SelectedRole { get; set; }
 
     public class UserViewModel
     {
@@ -36,11 +46,13 @@ public class IndexModel : PageModel
         public IList<string> Roles { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public string ActiveStatus { get; set; }
+
     }
 
     public async Task OnGetAsync()
     {
         Users = new List<UserViewModel>();
+        Roles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
 
         var usersQuery = _userManager.Users.AsQueryable();
 
@@ -49,22 +61,35 @@ public class IndexModel : PageModel
             usersQuery = usersQuery.Where(u => u.Email.Contains(CurrentFilter));
         }
 
+        if (StartDate.HasValue)
+        {
+            usersQuery = usersQuery.Where(u => u.LastLoginDate >= StartDate);
+        }
+
+        if (EndDate.HasValue)
+        {
+            usersQuery = usersQuery.Where(u => u.LastLoginDate <= EndDate);
+        }
+
         var users = await usersQuery.ToListAsync();
 
         foreach (var user in users)
         {
             var roles = await _userManager.GetRolesAsync(user);
 
-            Users.Add(new UserViewModel
+            if (string.IsNullOrEmpty(SelectedRole) || roles.Contains(SelectedRole))
             {
-                Id = user.Id,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Roles = roles.ToList(),
-                LastLoginDate = user.LastLoginDate,
-                ActiveStatus = user.ActiveStatus
-            });
+                Users.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Roles = roles.ToList(),
+                    LastLoginDate = user.LastLoginDate,
+                    ActiveStatus = user.ActiveStatus
+                });
+            }
         }
     }
 

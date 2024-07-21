@@ -210,6 +210,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQ2hhdFxDcmVhdGVDaGF0Um9vbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/LEGION/Desktop/Auth/AuthSystem/Areas/Identity/Pages/Chat/SupportBot.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQ2hhdFxTdXBwb3J0Qm90LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/LEGION/Desktop/Auth/AuthSystem/Areas/Identity/Pages/ResetPasswordAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcUmVzZXRQYXNzd29yZEFkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

@@ -65,6 +65,18 @@
               "target": "Package",
               "version": "[7.0.18, )"
             },
+            "Microsoft.Bot.Builder": {
+              "target": "Package",
+              "version": "[4.22.7, )"
+            },
+            "Microsoft.Bot.Builder.Dialogs": {
+              "target": "Package",
+              "version": "[4.22.7, )"
+            },
+            "Microsoft.Bot.Builder.Integration.AspNet.Core": {
+              "target": "Package",
+              "version": "[4.22.7, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[7.0.18, )"

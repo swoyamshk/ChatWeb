@@ -1,38 +1,68 @@
-﻿.btn-add-user {
-    background-color: cadetblue;
-    color: white;
-    text-decoration: none;
-    border-radius: 7px;
-    padding: 10px 15px;
-    transition: background-color 0.3s, color 0.3s;
-    margin-right: 25px;
+﻿
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }
 
-    .btn-add-user:hover {
-        background-color: lightsteelblue;
-        color: black;
-        text-decoration: none;
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    display: flex;
+    margin-right: 10px;
+}
+
+    .search-bar .form-control {
+        border-radius: 0;
+        flex: 1;
     }
 
-.table a i.fas {
-    color: #6c757d;
-    transition: color 0.3s;
-    margin-right: 15px;
+.date-filters {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
 }
 
-.table a:hover i.fas {
-    color: cadetblue;
+    .date-filters .form-control {
+        margin-right: 5px;
+    }
+
+.filter-button {
+    width: 300px; / Adjust the width as needed /
 }
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+}
+
+    .action-buttons form {
+        margin-right: 10px;
+    }
 
 .table-container {
     border-radius: 8px;
     border: 1px solid #ddd;
     overflow: hidden;
-    margin-left: 30px;
-    margin-right: 30px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     overflow-x: auto;
+    margin-top: 20px;
 }
 
 .table {
@@ -59,125 +89,68 @@
         vertical-align: middle;
     }
 
-.badge.badge-success {
-    background-color: rgba(144, 238, 144, 0.3) !important;
-    color: darkgreen !important;
-    font-size: 0.9em;
-    padding: 5px 10px;
-    font-weight: 420;
-    width: 70px;
-    height: 24px;
-    margin-bottom: 12px;
-    border-radius: 50px;
-}
 
-.badge-secondary {
-    background-color: rgba(211, 211, 211, 0.4) !important;
-    color: darkslategrey;
-    font-size: 0.9em;
-    padding: 5px 10px;
-    font-weight: 420;
-    border-radius: 50px;
-}
 
-.search-bar {
-    padding: 6px 0;
-    max-width: 800px;
-    margin-left: 18px;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-    .search-bar .form-control {
-        border-radius: 0;
-    }
-
-.date-filters {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px;
-}
-
-    .date-filters .form-control {
-        display: inline-block;
-        width: auto;
-    }
-
-.container {
-    margin-left: 30px;
-    margin-right: 30px;
-}
-
-.header-controls {
+.pagination-controls {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: 30px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.search-form {
-    margin: 0;
-    flex-grow: 1;
+.pagination {
     display: flex;
-    align-items: center;
+    list-style: none;
+    padding-left: 0;
 }
 
-.input-group {
-    margin-right: 200px;
-}
-
-@media (max-width: 1170px) {
-    .btn-add-user {
-        padding: 5px 10px;
-        margin-right: 10px;
-        font-size: 0.8em;
+    .pagination .page-item {
+        margin: 0 5px;
     }
 
-    .header-controls {
-        flex-direction: column;
-        align-items: flex-start;
+    .pagination .page-link {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
     }
 
-    .input-group {
-        margin-right: 0;
-        margin-bottom: 10px;
-        width: 700px;
+    .pagination .page-item.active .page-link {
+        z-index: 1;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
     }
 
-    .btn-actions {
-        display: flex;
+    .pagination .page-link:hover {
+        background-color: #e9ecef;
     }
-
-    .btn-users {
-        margin-left: 20px;
-        display: flex;
-    }
-}
 
 @media (max-width: 768px) {
-    .btn-add-user {
-        padding: 5px 10px;
-        margin-right: 10px;
-        font-size: 0.8em;
-    }
-
     .header-controls {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .input-group {
+    .search-form, .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .search-bar, .date-filters {
+        width: 100%;
         margin-right: 0;
-        margin-bottom: 10px;
-        width: 320px;
     }
 
-    .btn-actions {
-        display: flex;
-    }
+        .date-filters .form-control, .filter-button {
+            width: 100%;
+        }
 
-    .btn-users {
-        margin-left: 20px;
-        display: flex;
+    .action-buttons form {
+        width: 100%;
+        margin-right: 0;
     }
 }
