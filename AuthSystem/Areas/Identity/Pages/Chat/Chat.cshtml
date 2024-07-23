@@ -29,7 +29,7 @@
                         <li class="list-group-item @(message.Sender.Email == User.Identity.Name ? "sent" : "received")">
                             @if (message.Sender.Email != User.Identity.Name)
                             {
-                                <div class="username">@message.Sender.Email</div>
+                                <div class="username">@message.Sender.FirstName @message.Sender.LastName</div>
                             }
                             <div class="message">@message.Content</div>
                             <div class="time">@message.Timestamp.ToString("HH:mm:ss")</div>
@@ -57,7 +57,7 @@
                 @foreach (var participant in Model.Participants)
                 {
                     <li>
-                        @participant.Email
+                        @participant.FirstName
                         @if (participant.Email == Model.Room.Creator.Email)
                         {
                             <span>(Admin)</span>
@@ -97,13 +97,13 @@
             console.error("Error starting connection: ", err.toString());
         });
 
-        connection.on("ReceiveMessage", function (userEmail, message) {
+        connection.on("ReceiveMessage", function (userName, message) {
             const msgDiv = document.createElement("li");
-            msgDiv.classList.add("list-group-item", userEmail === document.getElementById("userEmail").value ? "sent" : "received");
+            msgDiv.classList.add("list-group-item", userName === document.getElementById("userEmail").value ? "sent" : "received");
             const messageContent = `
-                                                        ${userEmail !== document.getElementById("userEmail").value ? `<div class="username">${userEmail}</div>` : ''}
-                                                        <div class="message">${message}</div>
-                                                        <div class="time">${new Date().toLocaleTimeString()}</div>`;
+                    ${userName !== document.getElementById("userEmail").value ? `<div class="username">${userName}</div>` : ''}
+                    <div class="message">${message}</div>
+                    <div class="time">${new Date().toLocaleTimeString()}</div>`;
             msgDiv.innerHTML = messageContent;
             document.getElementById("messagesList").appendChild(msgDiv);
             scrollToBottom();
@@ -125,7 +125,7 @@
                     body: new URLSearchParams(new FormData(form)).toString()
                 }).then(response => {
                     if (response.ok) {
-                        connection.invoke("SendMessage", chatRoomId, message).catch(function (err) {
+                        connection.invoke("SendMessage", chatRoomId, userEmail, message).catch(function (err) {
                             console.error("Error sending message: ", err.toString());
                         });
                         form.Content.value = '';
