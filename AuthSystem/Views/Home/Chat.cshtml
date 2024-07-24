@@ -103,17 +103,17 @@
 
             if (messageObj.userName === "@userEmail") {
                 const messageContent = `
-                                                            <div class="message">${messageObj.text}</div>
-                                                            <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
-                                                        `;
+                                                                    <div class="message">${messageObj.text}</div>
+                                                                    <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
+                                                                `;
                 li.classList.add("sent");
                 li.innerHTML = messageContent;
             } else {
                 const messageContent = `
-                                                            <div class="username">${messageObj.userName}</div>
-                                                            <div class="message">${messageObj.text}</div>
-                                                            <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
-                                                        `;
+                                                                    <div class="username">${messageObj.userName}</div>
+                                                                    <div class="message">${messageObj.text}</div>
+                                                                    <div class="time">${new Date(messageObj.timestamp).toLocaleTimeString()}</div>
+                                                                `;
                 li.classList.add("received");
                 li.innerHTML = messageContent;
             }

@@ -16,10 +16,11 @@ namespace AuthSystem.Models
     public class ChatMessage
     {
         public int Id { get; set; }
-        public string Content { get; set; } 
+        public string? Content { get; set; } 
         public DateTime Timestamp { get; set; }
         public string SenderId { get; set; }
         public virtual ApplicationUser Sender { get; set; }
+        public string? ImageUrl { get; set; } 
         public int ChatRoomId { get; set; }
         public virtual ChatRoom ChatRoom { get; set; }
     }

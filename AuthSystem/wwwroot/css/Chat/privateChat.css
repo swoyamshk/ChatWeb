@@ -100,6 +100,12 @@
     color: #888;
     margin-top: 2px;
 }
+.chat-image {
+    max-width: 200px; /* Adjust the max-width to your preferred size */
+    max-height: 200px; /* Adjust the max-height to your preferred size */
+    width: auto;
+    height: auto;
+}
 
 #sendButton {
     background-color: cadetblue;

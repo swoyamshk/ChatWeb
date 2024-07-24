@@ -1,8 +1,10 @@
 using AuthSystem.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +18,13 @@ public class ActiveUsersModel : PageModel
     {
         _userManager = userManager;
     }
+
+    // Properties for date filtering
+    [BindProperty(SupportsGet = true)]
+    public DateTime? StartDate { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public DateTime? EndDate { get; set; }
 
     public List<UserViewModel> InactiveUsers { get; set; }
     public string SearchString { get; set; }
@@ -34,9 +43,20 @@ public class ActiveUsersModel : PageModel
     {
         IQueryable<ApplicationUser> usersQuery = _userManager.Users.Where(u => u.ActiveStatus == "Inactive");
 
+        // Apply search filter
         if (!string.IsNullOrEmpty(searchString))
         {
             usersQuery = usersQuery.Where(u => u.Email.Contains(searchString));
+        }
+
+        // Apply date filters
+        if (StartDate.HasValue)
+        {
+            usersQuery = usersQuery.Where(u => u.LastLoginDate >= StartDate.Value);
+        }
+        if (EndDate.HasValue)
+        {
+            usersQuery = usersQuery.Where(u => u.LastLoginDate <= EndDate.Value);
         }
 
         var users = await usersQuery.ToListAsync();
@@ -62,7 +82,7 @@ public class ActiveUsersModel : PageModel
             }
         }
 
-        // Assign the search string to the property to maintain state
+        // Assign the search string and date filters to properties to maintain state
         SearchString = searchString;
     }
 }

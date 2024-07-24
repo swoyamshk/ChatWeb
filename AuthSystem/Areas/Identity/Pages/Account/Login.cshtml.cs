@@ -63,7 +63,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/Home/Chat");
+            returnUrl = returnUrl ?? Url.Content("~/Identity/Chat/GlobalChat");
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -75,7 +75,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/Home/Chat");
+            returnUrl = returnUrl ?? Url.Content("~/Identity/Chat/GlobalChat");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -108,7 +108,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                         }
                         else if (await _userManager.IsInRoleAsync(user, "User"))
                         {
-                            returnUrl = Url.Content("~/Home/Chat");
+                            returnUrl = Url.Content("~/Identity/Chat/GlobalChat");
                         }
 
                         return LocalRedirect(returnUrl);

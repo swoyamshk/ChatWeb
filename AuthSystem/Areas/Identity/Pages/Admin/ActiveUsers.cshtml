@@ -10,13 +10,27 @@
 
 <div class="container">
     <h2>Inactive Users</h2>
-    <form method="get" class="search-form">
-        <div class="input-group search-bar">
-            <input type="text" class="form-control" name="CurrentFilter" placeholder="Search by Email" value="@Model.SearchString">
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-outline-secondary">
-                    <i class="fas fa-search"></i>
-                </button>
+
+    <form method="get" class="mb-4">
+        <div class="row input-group-container">
+            <div class="col-md-4">
+                <div class="search-form">
+                    <input type="text" class="form-control" name="searchString" placeholder="Search by Email" value="@Model.SearchString">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 d-flex justify-content-end">
+                <div class="date-filter-form">
+                    <input type="date" class="form-control" name="StartDate" placeholder="Start Date" value="@Model.StartDate?.ToString("yyyy-MM-dd")" />
+                    <input type="date" class="form-control" name="EndDate" placeholder="End Date" value="@Model.EndDate?.ToString("yyyy-MM-dd")" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

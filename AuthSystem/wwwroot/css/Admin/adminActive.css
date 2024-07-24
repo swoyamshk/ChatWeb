@@ -2,10 +2,33 @@
     padding: 20px;
 }
 
-.input-group {
-    width: 600px;
+.input-group-container {
+    display: flex;
+    align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
+
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Space between search input and date picker */
+}
+
+    .search-form .form-control {
+        max-width: 200px; /* Adjust the width of the search input field */
+        margin-right: 10px; /* Space between search input and date picker */
+    }
+
+.date-filter-form {
+    display: flex;
+    align-items: center;
+}
+
+    .date-filter-form .form-control {
+        margin-right: 10px; /* Space between date pickers and the filter button */
+        max-width: 150px; /* Adjust the width of the date input fields */
+    }
 
 .table {
     width: 100%;
@@ -42,7 +65,6 @@
         color: cadetblue;
     }
 
-/* Responsive table */
 .table-responsive {
     overflow-x: auto;
 }
@@ -51,13 +73,29 @@
     margin-top: 10px;
 }
 
-/* Adjust table font size and padding for smaller screens */
 @media (max-width: 767px) {
     .table th, .table td {
         white-space: nowrap;
         padding: 4px;
         font-size: 14px;
     }
+
+    .input-group-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-form, .date-filter-form {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+        .search-form .form-control,
+        .date-filter-form .form-control {
+            margin-right: 0;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
 }
 
 @media (max-width: 576px) {
@@ -65,7 +103,13 @@
         padding: 2px;
         font-size: 12px;
     }
-    .input-group{
-        width:300px;
+
+    .input-group-container {
+        flex-direction: column;
+    }
+
+    .search-form .form-control,
+    .date-filter-form .form-control {
+        max-width: 100%;
     }
 }
