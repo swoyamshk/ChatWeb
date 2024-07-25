@@ -1,4 +1,6 @@
-﻿namespace AuthSystem.Models
+﻿using AuthSystem.Areas.Identity.Data;
+
+namespace AuthSystem.Models
 {
     public class Message
     {
@@ -7,7 +9,7 @@
         public string? Text { get; set; }
         public DateTime Timestamp { get; set; }
         public string? ImageUrl { get; set; }
-
+        public ApplicationUser User { get; internal set; }
     }
 
 }

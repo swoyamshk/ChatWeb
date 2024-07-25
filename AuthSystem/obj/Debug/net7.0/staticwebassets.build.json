@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+/H+8CjioZ2VCQupivRdJEQNW1VJ5Rp/wUZzTUhCxeE=",
+  "Hash": "WFNTq1AMIdZ/Hogx9HDN5NVBAP+SIfRYfJYrAJrf4CE=",
   "Source": "AuthSystem",
   "BasePath": "_content/AuthSystem",
   "Mode": "Default",
@@ -2770,6 +2770,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\1st.png"
+    },
+    {
+      "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\2nd.png",
+      "SourceId": "AuthSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\",
+      "BasePath": "_content/AuthSystem",
+      "RelativePath": "uploads/2nd.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\2nd.png"
     },
     {
       "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\bgimage.png",

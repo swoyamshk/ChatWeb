@@ -337,6 +337,10 @@
       "PackagePath": "staticwebassets\\uploads\\1st.png"
     },
     {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\2nd.png",
+      "PackagePath": "staticwebassets\\uploads\\2nd.png"
+    },
+    {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\bgimage.png",
       "PackagePath": "staticwebassets\\uploads\\bgimage.png"
     },

@@ -21,10 +21,14 @@
                 <ul id="messagesList" class="list-group">
                     @foreach (var message in Model.Messages)
                     {
-                        <li class="list-group-item @(message.UserName == User.Identity.Name ? "sent" : "received")">
-                            @if (message.UserName != User.Identity.Name)
+                        <li class="list-group-item @(message.UserName == Model.CurrentUser?.Email ? "sent" : "received")">
+                            @if (message.User != null && message.User.Email != Model.CurrentUser?.Email)
                             {
-                                <div class="username">@message.UserName</div>
+                                <div class="username">@message.User.FirstName @message.User.LastName</div>
+                            }
+                            else if (message.User == null || message.User.Email == Model.CurrentUser?.Email)
+                            {
+                                <div class="username"></div>
                             }
                             <div class="message">@message.Text</div>
                             @if (!string.IsNullOrEmpty(message.ImageUrl))
@@ -36,13 +40,15 @@
                             <div class="time">@message.Timestamp.ToLocalTime().ToString("HH:mm:ss")</div>
                         </li>
                     }
+
+
                 </ul>
             </div>
 
             <div class="chat-input">
                 <form id="messageForm" method="post" enctype="multipart/form-data">
                     <div class="input-group">
-                        <input type="hidden" id="userEmail" value="@User.Identity.Name" />
+                        <input type="hidden" id="userEmail" value="@Model.CurrentUser.Email" />
                         <input type="text" class="form-control" name="Content" placeholder="Type your message..." />
                         <input type="file" class="form-control" name="Image" accept="image/*" />
                         <button type="submit" class="btn btn-primary" id="sendButton">Send Message</button>
@@ -68,14 +74,17 @@
             console.error("Error starting connection: ", err.toString());
         });
 
-        connection.on("ReceiveMessage", function (userName, message, imageUrl) {
+        connection.on("ReceiveMessage", function (userName, firstName, lastName, message, imageUrl) {
             const msgDiv = document.createElement("li");
-            msgDiv.classList.add("list-group-item", userName === document.getElementById("userEmail").value ? "sent" : "received");
+            const currentUserEmail = document.getElementById("userEmail").value;
+            msgDiv.classList.add("list-group-item", userName === currentUserEmail ? "sent" : "received");
 
             let messageContent = '';
 
-            if (userName !== document.getElementById("userEmail").value) {
-                messageContent += `<div class="username">${userName}</div>`;
+            if (userName !== currentUserEmail) {
+                messageContent += `<div class="username">${firstName} ${lastName}</div>`;
+            } else {
+                messageContent += `<div class="username"></div>`;
             }
 
             messageContent += `<div class="message">${message}</div>`;
@@ -88,6 +97,7 @@
             document.getElementById("messagesList").appendChild(msgDiv);
             scrollToBottom();
         });
+
 
         document.getElementById("messageForm").addEventListener("submit", function (event) {
             event.preventDefault();
@@ -109,7 +119,7 @@
                         throw new Error('Form submission failed');
                     }
                 }).then(data => {
-                    connection.invoke("SendMessage", userEmail, message, data.imageUrl).catch(function (err) {
+                    connection.invoke("SendMessage", userEmail, data.firstName, data.lastName, message, data.imageUrl).catch(function (err) {
                         console.error("Error sending message: ", err.toString());
                     });
                     form.Content.value = '';

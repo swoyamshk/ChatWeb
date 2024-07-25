@@ -256,6 +256,7 @@ public class ChatModel : PageModel
         return RedirectToPage(new { roomId = ChatRoomId });
     }
 
+
     public async Task<IActionResult> OnPostRemoveUserAsync(int ChatRoomId, string UserIdToRemove)
     {
         var user = await _userManager.GetUserAsync(User);

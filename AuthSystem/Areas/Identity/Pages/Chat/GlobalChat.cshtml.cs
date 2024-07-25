@@ -6,14 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using AuthSystem.Models;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
 
 public class GlobalChatModel : PageModel
 {
@@ -24,6 +16,7 @@ public class GlobalChatModel : PageModel
     private readonly IHubContext<ChatHub> _hubContext;
 
     public List<Message> Messages { get; set; }
+    public ApplicationUser CurrentUser { get; set; }
 
     public GlobalChatModel(
         ILogger<GlobalChatModel> logger,
@@ -43,7 +36,9 @@ public class GlobalChatModel : PageModel
     {
         try
         {
+            CurrentUser = await _userManager.GetUserAsync(User);
             Messages = await _context.Messages
+                .Include(m => m.User)
                 .OrderBy(m => m.Timestamp)
                 .ToListAsync();
             _logger.LogInformation("Retrieved messages from the database.");
@@ -95,7 +90,8 @@ public class GlobalChatModel : PageModel
             UserName = user.Email,
             Text = Content,
             Timestamp = DateTime.Now,
-            ImageUrl = imageUrl
+            ImageUrl = imageUrl,
+            User = user
         };
 
         _context.Messages.Add(message);
@@ -104,7 +100,7 @@ public class GlobalChatModel : PageModel
         {
             await _context.SaveChangesAsync();
             _logger.LogInformation("Message saved to database.");
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", user.Email, Content, imageUrl);
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", user.Email, user.FirstName, user.LastName, Content, imageUrl);
         }
         catch (DbUpdateException ex)
         {
@@ -116,7 +112,6 @@ public class GlobalChatModel : PageModel
             _logger.LogError(ex, "An error occurred while saving the message.");
             return StatusCode(500, "An error occurred while saving the message.");
         }
-        return new JsonResult(new { imageUrl });
+        return new JsonResult(new { imageUrl, user.FirstName, user.LastName });
     }
-
 }

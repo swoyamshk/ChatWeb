@@ -83,11 +83,14 @@
                 <div class="form-group">
                     <input type="hidden" name="ChatRoomId" value="@Model.Room.Id" />
                     <input type="text" class="form-control" name="UserIdToAdd" placeholder="Enter user email..." />
+                    <span asp-validation-for="UserIdToAdd" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-secondary">Add User</button>
             </form>
         }
     </div>
+
+
 </div>
 
 <!-- Remove User Modal -->

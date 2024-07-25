@@ -35,7 +35,7 @@
                                     <a class="nav-link" asp-controller="Home" asp-action="Chat">Chat</a>
                                 </li>*/
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Chat/GlobalChat">Global</a>
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Chat/GlobalChat">Chat</a>
                                 </li>
                                 /*<li class="nav-item">
                                     <a class="nav-link" asp-area="Identity" asp-page="/Chat/SupportBot">Support</a>
@@ -55,6 +55,15 @@
                             {
                                 <li class="nav-item">
                                     <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Chat/GlobalChat">Chat</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Chat/ChatRooms">Chat Rooms</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Chat/CreateChatRoom">Create Chat Room</a>
                                 </li>
                                 <li class="nav-item">
                                     <a id="logout" class="nav-link" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
