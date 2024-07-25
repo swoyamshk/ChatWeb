@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DCiwmd87a06cETRyOGn8C3ZofU3YYVrEWVdRxfxJ3vM=",
+  "Hash": "+/H+8CjioZ2VCQupivRdJEQNW1VJ5Rp/wUZzTUhCxeE=",
   "Source": "AuthSystem",
   "BasePath": "_content/AuthSystem",
   "Mode": "Default",
@@ -2753,6 +2753,25 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
+      "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\1st.png",
+      "SourceId": "AuthSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\",
+      "BasePath": "_content/AuthSystem",
+      "RelativePath": "uploads/1st.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\1st.png"
+    },
+    {
       "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\bgimage.png",
       "SourceId": "AuthSystem",
       "SourceType": "Discovered",
@@ -2789,6 +2808,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\logo.png"
+    },
+    {
+      "Identity": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\wall.jpg",
+      "SourceId": "AuthSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\",
+      "BasePath": "_content/AuthSystem",
+      "RelativePath": "uploads/wall.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\wall.jpg"
     }
   ]
 }

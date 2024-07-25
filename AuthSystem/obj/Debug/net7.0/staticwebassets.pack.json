@@ -333,12 +333,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\1st.png",
+      "PackagePath": "staticwebassets\\uploads\\1st.png"
+    },
+    {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\bgimage.png",
       "PackagePath": "staticwebassets\\uploads\\bgimage.png"
     },
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\logo.png",
       "PackagePath": "staticwebassets\\uploads\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\wall.jpg",
+      "PackagePath": "staticwebassets\\uploads\\wall.jpg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.AuthSystem.Microsoft.AspNetCore.StaticWebAssets.props",

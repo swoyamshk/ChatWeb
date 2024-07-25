@@ -23,6 +23,12 @@ namespace AuthSystem.Migrations
                 table: "Messages",
                 type: "nvarchar(max)",
                 nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "ImageUrl",
+                table: "ChatMessages",
+                type: "nvarchar(max)",
+                nullable: true);
         }
 
         /// <inheritdoc />
@@ -31,6 +37,10 @@ namespace AuthSystem.Migrations
             migrationBuilder.DropColumn(
                 name: "ImageUrl",
                 table: "Messages");
+
+            migrationBuilder.DropColumn(
+                name: "ImageUrl",
+                table: "ChatMessages");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Text",

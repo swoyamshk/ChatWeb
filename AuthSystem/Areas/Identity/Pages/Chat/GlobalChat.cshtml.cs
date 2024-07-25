@@ -1,64 +1,70 @@
 using AuthSystem.Areas.Identity.Data;
 using AuthSystem.Hubs;
-using AuthSystem.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using AuthSystem.Models;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
+public class GlobalChatModel : PageModel
+{
+    private readonly ILogger<GlobalChatModel> _logger;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
+    private readonly AuthDbContext _context;
+    private readonly IHubContext<ChatHub> _hubContext;
 
-    public class GlobalChatModel : PageModel
-    {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly AuthDbContext _context;
-        private readonly IHubContext<ChatHub> _hubContext;
-        private readonly ILogger<GlobalChatModel> _logger;
-        private readonly IWebHostEnvironment _environment;
+    public List<Message> Messages { get; set; }
 
     public GlobalChatModel(
-            UserManager<ApplicationUser> userManager,
-            AuthDbContext context,
-            IHubContext<ChatHub> hubContext,
-            ILogger<GlobalChatModel> logger,
-            IWebHostEnvironment environment)
-        {
-            _userManager = userManager;
-            _context = context;
-            _hubContext = hubContext;
-            _logger = logger;
-            _environment = environment;
-        }
-    public IList<Message> Messages { get; set; }
-
+        ILogger<GlobalChatModel> logger,
+        UserManager<ApplicationUser> userManager,
+        Microsoft.AspNetCore.Hosting.IHostingEnvironment environment,
+        AuthDbContext context,
+        IHubContext<ChatHub> hubContext)
+    {
+        _logger = logger;
+        _userManager = userManager;
+        _environment = environment;
+        _context = context;
+        _hubContext = hubContext;
+    }
     public async Task<IActionResult> OnGetAsync()
     {
-        Messages = await _context.Messages
-            .OrderBy(m => m.Timestamp)
-            .ToListAsync();
-
-        foreach (var message in Messages)
+        try
         {
-            if (message.Text == null)
-            {
-                message.Text = "[No Content]";
-            }
-            if (message.ImageUrl == null)
-            {
-                message.ImageUrl = "/path/to/default/image.png";
-            }
+            Messages = await _context.Messages
+                .OrderBy(m => m.Timestamp)
+                .ToListAsync();
+            _logger.LogInformation("Retrieved messages from the database.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while retrieving messages.");
         }
 
         return Page();
     }
-
-
-    public async Task<IActionResult> OnPostAsync(string Content, IFormFile Image)
+    public async Task<IActionResult> OnPostSendMessageAsync(string Content, IFormFile Image)
     {
+        System.Diagnostics.Debug.WriteLine("OnPostSendMessageAsync called."); // Add this line for debugging
+        _logger.LogInformation("OnPostSendMessageAsync called.");
+
+        if (string.IsNullOrEmpty(Content) && (Image == null || Image.Length == 0))
+        {
+            _logger.LogWarning("Validation failed: Message or image must be provided.");
+            return BadRequest("Message or image must be provided.");
+        }
+
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
         {
@@ -67,26 +73,20 @@ using System.Threading.Tasks;
         }
 
         string imageUrl = null;
-        if (Image != null)
+        if (Image != null && Image.Length > 0)
         {
-            var uploads = Path.Combine(_environment.WebRootPath, "uploads");
-            if (!Directory.Exists(uploads))
+            var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
+            if (!Directory.Exists(uploadsFolder))
             {
-                Directory.CreateDirectory(uploads);
+                Directory.CreateDirectory(uploadsFolder);
             }
-
-            var filePath = Path.Combine(uploads, Image.FileName);
+            var uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await Image.CopyToAsync(fileStream);
             }
-            imageUrl = $"/uploads/{Image.FileName}";
-        }
-
-        if (string.IsNullOrEmpty(Content) && string.IsNullOrEmpty(imageUrl))
-        {
-            ModelState.AddModelError(string.Empty, "Message or image must be provided.");
-            return Page();
+            imageUrl = "/uploads/" + uniqueFileName;
         }
 
         var message = new Message
@@ -98,12 +98,21 @@ using System.Threading.Tasks;
         };
 
         _context.Messages.Add(message);
+        _logger.LogInformation("Added message to context.");
 
         try
         {
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Message saved to database.");
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", user.Email, Content, imageUrl);
+            int result = await _context.SaveChangesAsync();
+            _logger.LogInformation($"SaveChangesAsync result: {result}");
+            if (result > 0)
+            {
+                _logger.LogInformation("Message saved to database.");
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", user.Email, Content, imageUrl);
+            }
+            else
+            {
+                _logger.LogWarning("No changes were saved to the database.");
+            }
         }
         catch (DbUpdateException ex)
         {
@@ -118,10 +127,4 @@ using System.Threading.Tasks;
 
         return RedirectToPage();
     }
-
-
-
-
-
 }
-

@@ -83,11 +83,11 @@ public class ChatModel : PageModel
         {
             if (message.Content == null)
             {
-                message.Content = "[No Content]";
+                message.Content = "";
             }
             if (message.ImageUrl == null)
             {
-                message.ImageUrl = "/path/to/default/image.png";
+                message.ImageUrl = "";
             }
         }
 
