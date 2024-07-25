@@ -19,7 +19,7 @@ public class GlobalChatModel : PageModel
 {
     private readonly ILogger<GlobalChatModel> _logger;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
+    private readonly IWebHostEnvironment _environment;
     private readonly AuthDbContext _context;
     private readonly IHubContext<ChatHub> _hubContext;
 
@@ -28,7 +28,7 @@ public class GlobalChatModel : PageModel
     public GlobalChatModel(
         ILogger<GlobalChatModel> logger,
         UserManager<ApplicationUser> userManager,
-        Microsoft.AspNetCore.Hosting.IHostingEnvironment environment,
+        IWebHostEnvironment environment,
         AuthDbContext context,
         IHubContext<ChatHub> hubContext)
     {
@@ -38,6 +38,7 @@ public class GlobalChatModel : PageModel
         _context = context;
         _hubContext = hubContext;
     }
+
     public async Task<IActionResult> OnGetAsync()
     {
         try
@@ -54,10 +55,10 @@ public class GlobalChatModel : PageModel
 
         return Page();
     }
-    public async Task<IActionResult> OnPostSendMessageAsync(string Content, IFormFile Image)
+
+    public async Task<IActionResult> OnPostAsync(string Content, IFormFile Image)
     {
-        System.Diagnostics.Debug.WriteLine("OnPostSendMessageAsync called."); // Add this line for debugging
-        _logger.LogInformation("OnPostSendMessageAsync called.");
+        _logger.LogInformation("OnPostSendMessageAsync called with Content: {Content} and Image: {Image}", Content, Image?.FileName);
 
         if (string.IsNullOrEmpty(Content) && (Image == null || Image.Length == 0))
         {
@@ -73,20 +74,20 @@ public class GlobalChatModel : PageModel
         }
 
         string imageUrl = null;
-        if (Image != null && Image.Length > 0)
+        if (Image != null)
         {
-            var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
-            if (!Directory.Exists(uploadsFolder))
+            var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+            if (!Directory.Exists(uploads))
             {
-                Directory.CreateDirectory(uploadsFolder);
+                Directory.CreateDirectory(uploads);
             }
-            var uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            var filePath = Path.Combine(uploads, Image.FileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await Image.CopyToAsync(fileStream);
             }
-            imageUrl = "/uploads/" + uniqueFileName;
+            imageUrl = $"/uploads/{Image.FileName}";
         }
 
         var message = new Message
@@ -98,21 +99,12 @@ public class GlobalChatModel : PageModel
         };
 
         _context.Messages.Add(message);
-        _logger.LogInformation("Added message to context.");
 
         try
         {
-            int result = await _context.SaveChangesAsync();
-            _logger.LogInformation($"SaveChangesAsync result: {result}");
-            if (result > 0)
-            {
-                _logger.LogInformation("Message saved to database.");
-                await _hubContext.Clients.All.SendAsync("ReceiveMessage", user.Email, Content, imageUrl);
-            }
-            else
-            {
-                _logger.LogWarning("No changes were saved to the database.");
-            }
+            await _context.SaveChangesAsync();
+            _logger.LogInformation("Message saved to database.");
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", user.Email, Content, imageUrl);
         }
         catch (DbUpdateException ex)
         {
@@ -121,10 +113,10 @@ public class GlobalChatModel : PageModel
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected error occurred while saving the message.");
-            return StatusCode(500, "An unexpected error occurred while saving the message.");
+            _logger.LogError(ex, "An error occurred while saving the message.");
+            return StatusCode(500, "An error occurred while saving the message.");
         }
-
-        return RedirectToPage();
+        return new JsonResult(new { imageUrl });
     }
+
 }

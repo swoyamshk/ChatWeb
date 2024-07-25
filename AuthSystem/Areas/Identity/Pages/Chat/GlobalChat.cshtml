@@ -27,6 +27,12 @@
                                 <div class="username">@message.UserName</div>
                             }
                             <div class="message">@message.Text</div>
+                            @if (!string.IsNullOrEmpty(message.ImageUrl))
+                            {
+                                <div class="image chat-image">
+                                    <img src="@message.ImageUrl" alt="Image" style="max-width: 200px; max-height: 200px;" />
+                                </div>
+                            }
                             <div class="time">@message.Timestamp.ToLocalTime().ToString("HH:mm:ss")</div>
                         </li>
                     }
@@ -34,11 +40,13 @@
             </div>
 
             <div class="chat-input">
-                <form id="messageForm" method="post" enctype="multipart/form-data" asp-page="/GlobalChat" asp-page-handler="SendMessage">
-                    <input type="hidden" id="userEmail" name="UserEmail" value="@User.Identity.Name" />
-                    <input type="text" class="form-control" name="Content" placeholder="Type your message..." />
-                    <input type="file" class="form-control" name="Image" accept="image/*" />
-                    <button type="submit" class="btn btn-primary" id="sendButton">Send Message</button>
+                <form id="messageForm" method="post" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <input type="hidden" id="userEmail" value="@User.Identity.Name" />
+                        <input type="text" class="form-control" name="Content" placeholder="Type your message..." />
+                        <input type="file" class="form-control" name="Image" accept="image/*" />
+                        <button type="submit" class="btn btn-primary" id="sendButton">Send Message</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -60,7 +68,7 @@
             console.error("Error starting connection: ", err.toString());
         });
 
-        connection.on("ReceiveMessage", function (userName, message) {
+        connection.on("ReceiveMessage", function (userName, message, imageUrl) {
             const msgDiv = document.createElement("li");
             msgDiv.classList.add("list-group-item", userName === document.getElementById("userEmail").value ? "sent" : "received");
 
@@ -71,6 +79,9 @@
             }
 
             messageContent += `<div class="message">${message}</div>`;
+            if (imageUrl) {
+                messageContent += `<div class="image chat-image"><img src="${imageUrl}" alt="Image" style="max-width: 200px; max-height: 200px;" /></div>`;
+            }
             messageContent += `<div class="time">${new Date().toLocaleTimeString()}</div>`;
 
             msgDiv.innerHTML = messageContent;
@@ -84,23 +95,26 @@
             const message = form.Content.value;
             const userEmail = document.getElementById("userEmail").value;
 
-            if (message.trim() !== "") {
-                fetch('@Url.Page("/GlobalChat")', {
+            const formData = new FormData(form);
+
+            if (message.trim() !== "" || form.Image.files.length > 0) {
+                fetch(form.action, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: new URLSearchParams(new FormData(form))
+                    body: formData
                 }).then(response => {
                     if (response.ok) {
-                        connection.invoke("SendMessage", userEmail, message).catch(function (err) {
-                            console.error("Error sending message: ", err.toString());
-                        });
-                        form.Content.value = '';
-                        scrollToBottom();
+                        return response.json();
                     } else {
                         console.error("Form submission failed.");
+                        throw new Error('Form submission failed');
                     }
+                }).then(data => {
+                    connection.invoke("SendMessage", userEmail, message, data.imageUrl).catch(function (err) {
+                        console.error("Error sending message: ", err.toString());
+                    });
+                    form.Content.value = '';
+                    form.Image.value = '';
+                    scrollToBottom();
                 }).catch(error => {
                     console.error("Error submitting form: ", error);
                 });
