@@ -114,4 +114,39 @@ public class GlobalChatModel : PageModel
         }
         return new JsonResult(new { imageUrl, user.FirstName, user.LastName });
     }
+
+    public async Task<IActionResult> OnPostDeleteMessageAsync(int Id)
+    {
+        _logger.LogInformation("Delete message request received for messageId: {MessageId}", Id);
+
+        var message = await _context.Messages.FindAsync(Id);
+
+        if (message == null)
+        {
+            _logger.LogWarning("Message with Id {MessageId} not found.", Id);
+            return NotFound("Message not found.");
+        }
+
+        _context.Messages.Remove(message);
+
+        try
+        {
+            await _context.SaveChangesAsync();
+            _logger.LogInformation("Message deleted from database.");
+            await _hubContext.Clients.All.SendAsync("DeleteMessage", Id);
+        }
+        catch (DbUpdateException ex)
+        {
+            _logger.LogError(ex, "A database update error occurred while deleting the message.");
+            return StatusCode(500, "A database update error occurred while deleting the message.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while deleting the message.");
+            return StatusCode(500, "An error occurred while deleting the message.");
+        }
+
+        return new JsonResult(new { success = true });
+    }
+
 }

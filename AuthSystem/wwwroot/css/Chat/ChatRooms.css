@@ -1,0 +1,89 @@
+﻿
+.container {
+    max-width: 800px;
+    margin: 20px auto 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    color: #555;
+}
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.form-check-label {
+    color: #555;
+}
+
+.btn-cadetblue {
+    background-color: cadetblue;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-cadetblue:hover {
+        background-color: #5f9ea0;
+    }
+
+.table-container {
+    max-height: 300px; / Adjust height as needed to display 4 chatrooms */
+overflow-y: auto;
+margin-top: 20px;
+border-top: 1px solid #ddd;
+padding-top: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table th, .table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    .table tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .table a.btn-cadetblue {
+        padding: 5px 10px;
+        font-size: 14px;
+    }

@@ -1,43 +1,177 @@
-﻿.chat-container {
+﻿body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-wrapper {
     display: flex;
-    flex-direction: row;
-    height: 100vh;
-    max-height: 85vh;
-    width: 100%;
-    margin-left: 15px;
+    height: calc(100vh - 56px); /* Adjust height for navbar */
+    padding: 0;
+    margin: 0;
+}
+
+.chat-rooms-container {
+    max-width: 700px;
+    border-right: 1px solid #ddd;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.chat-rooms-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chat-room-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    text-align: center;
+}
+
+    .chat-room-item.active {
+        background-color: #d1e7dd;
+        font-weight: bold;
+    }
+
+    .chat-room-item a {
+        text-decoration: none;
+        color: #333;
+    }
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+/* Style for the add user form */
+#addUserForm {
+    margin-bottom: 15px; /* Space below the form */
+}
+
+    #addUserForm .form-control {
+        margin-bottom: 10px; /* Space below the input field */
+    }
+
+    #addUserForm .btn-secondary {
+        background-color: cadetblue;
+        color: white;
+        border: none;
+    }
+
+        #addUserForm .btn-secondary:hover {
+            background-color: #5f9ea0; /* Slightly darker shade on hover */
+        }
+
+
+.participant-count {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+}
+
+.chat-room-title {
+    text-align: center;
+    margin: 10px 0;
 }
 
 .chat-content-container {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-    flex: 0.7;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 15px;
+    overflow: hidden;
 }
 
 .chat-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-right: -15px;
 }
 
 .chat-box {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 10px; /* Space between messages */
 }
+
+.list-group-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    position: relative;
+    text-align: left; /* Default text alignment */
+}
+
+.sent {
+    align-self: flex-end;
+    text-align: right; /* Align text to the right */
+    margin-bottom: 15px; /* Space below sent messages */
+}
+
+.received {
+    align-self: flex-start;
+    text-align: left; /* Align text to the left */
+    margin-bottom: 15px; /* Space below received messages */
+}
+
+.list-group-item.sent {
+    background-color: #e0f7fa !important; /* Light blue background */
+    border: 1px solid #b2ebf2 !important; /* Light blue border */
+}
+
+.list-group-item.received {
+    background-color: #e8f5e9 !important; /* Light green background */
+    border: 1px solid #c8e6c9 !important; /* Light green border */
+}
+
+.username {
+    font-weight: bold; /* Make the username bold */
+    margin-bottom: 5px; /* Optional: Add space below the username */
+}
+
+.message {
+    margin-bottom: 5px; /* Space below the message content */
+}
+
+.time {
+    font-size: 12px; /* Make the timestamp smaller */
+    color: #777; /* Optional: Set a lighter color for the timestamp */
+}
+
+.date-separator {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #777;
+}
+
+    .date-separator .date {
+        background: #f8f9fa;
+        padding: 0 10px;
+        border-radius: 5px;
+    }
 
 .chat-input {
     padding: 10px;
-    background-color: white;
-    border-top: 1px solid #ccc;
-    width: 100%;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+    border-radius: 0 0 10px 10px;
 }
 
 .input-group {
@@ -46,171 +180,238 @@
 }
 
     .input-group .form-control {
-        flex-grow: 1;
-        margin-right: 10px;
+        flex: 1;
+        margin-right: 5px;
     }
-
-#messagesList {
-    list-style-type: none;
-    padding-left: 0;
-    margin: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.list-group-item {
-    margin-bottom: 10px;
-    border-radius: 10px;
-    padding: 10px 15px;
-    max-width: 70%;
-    word-wrap: break-word;
-    font-size: 1em;
-    position: relative;
-}
-
-.sent {
-    align-self: flex-end;
-    background-color: #d1e7dd;
-    color: #000;
-    text-align: right;
-}
-
-.received {
-    align-self: flex-start;
-    background-color: lightblue;
-    color: #000;
-    text-align: left;
-}
-
-.username {
-    margin-bottom: 5px;
-    font-size: 0.9em;
-    font-weight: 500;
-}
-
-.message {
-    margin-top: 5px;
-    font-size: 0.9em;
-}
-
-.time {
-    font-size: 0.8em;
-    color: #888;
-    margin-top: 2px;
-}
-.chat-image {
-    max-width: 200px; /* Adjust the max-width to your preferred size */
-    max-height: 200px; /* Adjust the max-height to your preferred size */
-    width: auto;
-    height: auto;
-}
 
 #sendButton {
     background-color: cadetblue;
     color: white;
-    border-color: black;
-    flex-shrink: 0; /* Ensure the button doesn't shrink */
+    border: none;
+    height: 38px; /* Match this height to the file icon height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
     #sendButton:hover {
-        background-color: darkcyan;
+        background-color: #5f9ea0; /* Slightly darker shade on hover */
     }
 
-.date-separator {
-    text-align: center;
-    background-color: transparent;
-    font-size: 0.9em;
-    font-weight: bold;
-    margin: 20px 0;
-    padding: 0;
-    border: none;
-    width: 100%;
+.chat-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
-    .date-separator .date {
-        display: inline-block;
-        background-color: white;
-        padding: 0 10px;
+.file-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: white !important; /* Ensure the background is white */
+    padding: 5px; /* Add some padding */
+    border-radius: 5px; /* Optional: Round corners */
+    height: 38px; /* Match this height to the send button height */
+}
+
+    .file-label i {
+        font-size: 18px;
+        color: cadetblue; /* File icon color */
     }
 
-@media screen and (max-width: 768px) {
-    .chat-container {
+/* Add a horizontal line below Chat Rooms heading */
+.chat-rooms-container h2 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px; /* Adjust padding to add some space between the heading and the line */
+}
+
+/* Add a horizontal line below Participants heading */
+.participants-container h3 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px; /* Adjust padding to add some space between the heading and the line */
+}
+
+/* Style for the toggle icon */
+.toggle-icon {
+    font-size: 20px;
+    color: #555;
+    margin-left: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Style for the custom button */
+.btn-custom {
+    background-color: white; /* White background */
+    border: 2px solid black; /* Black border */
+    border-radius: 5px; /* Border radius */
+    color: cadetblue; /* Text color */
+    font-size: 14px; /* Font size */
+    font-weight: bold; /* Bold text */
+    padding: 10px 15px; /* Padding for better spacing */
+    display: flex; /* Flex to align icon and text */
+    align-items: center; /* Center align items vertically */
+    gap: 8px; /* Space between icon and text */
+}
+
+    .btn-custom i {
+        font-size: 16px; /* Icon size */
+        color: cadetblue; /* Icon color */
+    }
+
+button.btn.btn-custom {
+    border: 1px solid black; /* Black border with thickness */
+}
+
+/* Style for the three-dot icon */
+
+
+.btn-link {
+    color: black; /* Icon color */
+    padding: 0;
+}
+
+    .btn-link .fas.fa-ellipsis-v {
+        font-size: 18px; /* Adjust size as needed */
+    }
+
+.dropdown-toggle {
+    background-color: black; /* Black background */
+    border: none; /* Remove border */
+    color: white; /* White dots */
+    padding: 0; /* Remove padding */
+    font-size: 20px; /* Adjust size as needed */
+}
+
+    .dropdown-toggle .fa-ellipsis-v {
+        display: inline-block;
+        font-size: 18px; /* Adjust size as needed */
+        color: white; /* White dots */
+        margin: 0; /* Remove margin */
+    }
+
+.dropdown-menu {
+    background-color: black; /* Black background */
+    border: none; /* Remove border */
+    border-radius: 0; /* Remove border radius */
+}
+
+.dropdown-item {
+    color: white; /* White text */
+    font-size: 14px; /* Adjust size as needed */
+}
+
+    .dropdown-item:hover {
+        background-color: #333; /* Darker background on hover */
+    }
+
+/* Style for the Chat Details heading */
+.chat-details h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+}
+
+/* Style for the horizontal line */
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 10px 0;
+}
+
+/* Adjust margins if necessary */
+.participants-container {
+    margin-bottom: 20px;
+    overflow-y: auto;
+    padding: 15px;
+    border-left: 1px solid #ddd;
+}
+
+/* Adjust the visibility toggle icon */
+.toggle-icon {
+    font-size: 20px;
+    color: #555;
+    margin-left: 10px;
+    vertical-align: middle; /* Align with the heading text */
+}
+
+/* Adjust the font-size and color of the heading */
+h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 10px; /* Margin below the heading */
+}
+
+/* Hide the participants list by default */
+#participantsList {
+    display: block; /* Change this to 'none' if you want it hidden by default */
+}
+
+.participants-container {
+    margin-bottom: 20px;
+    overflow-y: auto;
+    padding: 15px;
+    border-left: 1px solid #ddd;
+}
+
+    .participants-container ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .participants-container ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+            .participants-container ul li .remove-btn {
+                background-color: transparent;
+                color: cadetblue; /* Color for the delete icon */
+                border: none;
+                cursor: pointer;
+                font-size: 18px;
+                margin-left: 10px;
+            }
+
+                .participants-container ul li .remove-btn:hover {
+                    color: blue; /* Darker color on hover */
+                }
+
+
+
+@media (max-width: 768px) {
+    .chat-wrapper {
         flex-direction: column;
+        height: calc(100vh - 56px); /* Adjust for navbar height */
+    }
+
+    .chat-rooms-container {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .chat-container {
+        height: auto;
+        border-radius: 0;
     }
 
     .participants-container {
         width: 100%;
         border-left: none;
-        border-top: 1px solid #ccc;
+        border-top: 1px solid #ddd;
     }
 }
-
-@media screen and (max-width: 576px) {
-    .date-separator {
-        margin: 20px 50px;
-    }
-}
-
-@media screen and (min-width: 768px) and (max-width: 991px) {
-    .date-separator {
-        margin: 20px 100px;
-    }
-}
-
-.chat-room-title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.participants-add-user-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 0.3;
-    border-left: 1px solid #ccc;
-    padding: 10px;
-    overflow-y: auto;
-}
-
-.participants-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-    .participants-container h3 {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .participants-container ul {
-        list-style-type: none;
-        padding: 0;
-        width: 100%;
-    }
-
-    .participants-container li {
-        margin-bottom: 5px;
-        padding: 5px;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-        text-align: center;
-    }
-
-#addUserForm {
-    width: 100%;
-}
-
-    #addUserForm .input-group {
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-
-    #addUserForm .form-control {
-        flex-grow: 1;
-        margin-right: 10px;
-    }

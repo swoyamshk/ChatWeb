@@ -3,27 +3,46 @@
 @{
     ViewData["Title"] = "Chat Rooms";
 }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="~/css/Chat/ChatRooms.css" />
 
-<h2>Chat Rooms</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Room Name</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var room in Model.ChatRooms)
-        {
-            <tr>
-                <td>@room.Name</td>
-                <td>
-                    <a asp-page="Chat" asp-route-roomId="@room.Id" class="btn btn-primary">Join</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container">
+    <h2>Create New Chat Room</h2>
 
-<a asp-page="CreateChatRoom" class="btn btn-success">Create New Chat Room</a>
+    <form asp-page-handler="Create" method="post">
+        <div class="form-group">
+            <label asp-for="RoomName">Room Name</label>
+            <input asp-for="RoomName" class="form-control" />
+        </div>
+        <!--<div class="form-check">
+            <input asp-for="IsGroupChat" class="form-check-input" />
+            <label asp-for="IsGroupChat" class="form-check-label">Is Group Chat</label>
+        </div>-->
+        <button type="submit" class="btn btn-cadetblue">Create Room</button>
+    </form>
+
+    <h2>Chat Rooms</h2>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var room in Model.ChatRooms)
+                {
+                    <tr>
+                        <td>@room.Name</td>
+                        <td>
+                            <a asp-page="Chat" asp-route-roomId="@room.Id" class="btn btn-cadetblue">Join</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

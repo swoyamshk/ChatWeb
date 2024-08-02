@@ -4,74 +4,222 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="~/css/Landing.css?v=1.0">
+<link rel="stylesheet" href="~/css/Landing.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
 
 
-
-<div class="outer-container">
-    <div class="container">
-        <div class="logo">
-            <img src="img/logo1.png" alt="Logo">
-        </div>
-        <h2>Unleash AnyChat Conversations</h2>
-        <p>To continue, kindly log in with your account</p>
-        <button>
-            <a href="https://localhost:7143/Identity/Account/Login" class="btn">Get Started</a>
-        </button>
-    </div>
-</div>
-
-<div class="file-sharing-background">
-    <div class="file-sharing-container">
-        <h3>What is a ChatterBox, and what can it do for you?</h3>
-        <p class="file-sharing-footer">Chatterbox simplifies communications with any of your users, quickly and easily. Below are the services we offer.</p>
-    </div>
-</div>
-
-<div class="features-section">
-    <div class="features-container">
-        <div class="feature feature-create-chat-rooms">
-            <h3>Create Chat Rooms</h3>
-            <p>Easily create chat rooms for different topics and projects.</p>
-        </div>
-        <div class="feature feature-file-sharing">
-            <h3>File Sharing</h3>
-            <p>Share files with your chat groups quickly and securely.</p>
-        </div>
-        <div class="feature feature-real-time-messaging">
-            <h3>Real-Time Messaging</h3>
-            <p>Enjoy seamless and instant communication with your team.</p>
-        </div>
-    </div>
-</div>
-
-<footer class="text-center text-lg-start rounded-4">
-    <div class="footer-container">
-        <div class="footer-left">
-            <img src="img/logo1-bg.png" alt="Footer Logo" class="footer-logo">
-        </div>
-        <div class="footer-right">
-            <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #3434c9;">
-                <i class="fab fa-facebook-f"></i>
-            </button>
-            <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #c21313;">
-                <i class="fab fa-youtube"></i>
-            </button>
-            <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #be8a31;">
-                <i class="fab fa-instagram"></i>
-            </button>
-            <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #6890d3;">
-                <i class="fab fa-twitter"></i>
+<body>
+    <div class="outer-container">
+        <div class="container">
+            <div class="logo">
+                <img src="img/logo1.png" alt="Logo" style="margin-right:10px;">
+            </div>
+            <h2>Unleash AnyChat Conversations</h2>
+            <p>To continue, kindly log in with your account</p>
+            <button>
+                <a href="https://localhost:7143/Identity/Account/Login" class="btn">Get Started</a>
             </button>
         </div>
     </div>
-</footer>
+
+    <div class="file-sharing-background">
+        <div class="file-sharing-container">
+            <h3>What is a ChatterBox, and what can it do for you?</h3>
+            <p class="file-sharing-footer">Chatterbox simplifies communications with any of your users, quickly and easily. Below are the services we offer.</p>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <div class="features-container">
+            <div class="feature feature-create-chat-rooms">
+                <h3>Create Chat Rooms</h3>
+                <p>Easily create chat rooms for different topics and projects.</p>
+            </div>
+            <div class="feature feature-file-sharing">
+                <h3>File Sharing</h3>
+                <p>Share files with your chat groups quickly and securely.</p>
+            </div>
+            <div class="feature feature-real-time-messaging">
+                <h3>Real-Time Messaging</h3>
+                <p>Enjoy seamless and instant communication with your team.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <h2 class="faq" style="text-align: center; font-family: 'Roboto', sans-serif; font-weight: 400; font-size:24px; margin-bottom:20px;">Frequently Asked Questions</h2>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        How can I create a new chat room?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>To create a new chat room:</strong> Navigate to the 'Create Chat Room' section from the main menu. Enter a name for your chat room and click 'Create'. Your new chat room will be ready for use immediately.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        How can I share files in a chat room?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>To share files in a chat room:</strong> In the chat room, click the 'Attach File' button (usually represented by a paperclip icon). Select the file you wish to share from your device and click 'Send'. The file will be uploaded and shared with all participants in the chat room.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        How can I add a new participant to an existing chat room?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>To add a new participant:</strong> Open the chat room where you want to add a new participant. Click on the 'Add Participants' button. Enter the email address of the person you want to add, and click 'Add'. The new participant will receive an invitation to join the chat room.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="text-center text-lg-start rounded-4">
+        <div class="footer-container">
+            <div class="footer-left">
+                <img src="img/logo1-bg.png" alt="Footer Logo" class="footer-logo">
+            </div>
+            <div class="footer-right">
+                <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #3434c9;">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #c21313;">
+                    <i class="fab fa-youtube"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #be8a31;">
+                    <i class="fab fa-instagram"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-lg btn-floating mx-2" style="background-color: #6890d3;">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+    <button class="chat-button" id="chatToggleButton">
+        <i class="fas fa-comment"></i>
+    </button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            Chatbot
+        </div>
+        <div class="chat-body" id="chatBody">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">Chatbot is typing...</div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#sidebarToggle').on('click', function () {
-            $('.sidebar').toggleClass('show');
+        $('#chatToggleButton').on('click', function () {
+            $('#chatWindow').toggle();
         });
+
+        function scrollToBottom() {
+            const chatBody = document.getElementById("chatBody");
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        window.onload = function () {
+            scrollToBottom();
+        };
+
+        $('#sendButton').on('click', function () {
+            sendMessage();
+        });
+
+        $('#userInput').on('keypress', function (event) {
+            if (event.which === 13) { // Enter key
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userMessage = $('#userInput').val();
+            if (userMessage.trim() !== '') {
+                addMessage(userMessage, 'user');
+                $('#userInput').val('');
+                showTypingIndicator();
+                setTimeout(() => {
+                    const botMessage = getBotResponse(userMessage);
+                    typeWriter(botMessage); // Call the typewriter effect
+                    hideTypingIndicator();
+                }, 2000);
+            }
+        }
+
+        function addMessage(message, sender) {
+            const messageClass = sender === 'user' ? 'user' : 'bot';
+            $('#chatBody').append(`<div class="chat-message ${messageClass}">${message}</div>`);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            $('#typingIndicator').show();
+        }
+
+        function hideTypingIndicator() {
+            $('#typingIndicator').hide();
+        }
+
+        function getBotResponse(userMessage) {
+            switch (userMessage.toLowerCase()) {
+                case 'how can i create a new chat room?':
+                    return 'You can navigate through Create Chat Room.';
+                case 'what is my recent message sent?':
+                    return '.';
+                case 'thank you':
+                    return 'You are welcome.';
+                case 'how can i add a person to a chat room?':
+                    return 'You can add a person to a chat room using their email.';
+                case 'which car did i book recently?':
+                    return 'You booked a Tesla Model S.';
+                case 'what are the top five t-shirts?':
+                    return '1. Red T-shirt\n2. Blue T-shirt\n3. Green T-shirt\n4. Yellow T-shirt\n5. Black T-shirt';
+                default:
+                    return 'How can I help you today?';
+            }
+        }
+
+        function typeWriter(text) {
+            let i = 0;
+            const speed = 50;
+            const demoElement = document.createElement("div");
+            demoElement.classList.add("chat-message", "bot");
+            document.getElementById("chatBody").appendChild(demoElement);
+
+            function type() {
+                if (i < text.length) {
+                    demoElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                    scrollToBottom();
+                }
+            }
+            type();
+        }
     });
 </script>

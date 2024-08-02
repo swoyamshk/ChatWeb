@@ -35,6 +35,7 @@ namespace AuthSystem.Areas.Identity.Pages.Admin
         public List<int> GlobalMessageData { get; set; }
         public int TotalGroupChats { get; set; }
         public int AnotherMetric { get; set; }
+        public int TotalChatRooms { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -93,7 +94,7 @@ namespace AuthSystem.Areas.Identity.Pages.Admin
             GlobalMessageLabels = globalMessages.Select(m => m.Date.ToShortDateString()).ToList();
             GlobalMessageData = globalMessages.Select(m => m.Count).ToList();
 
-            TotalGroupChats = await _context.ChatRooms.CountAsync(c => c.IsGroupChat);
+            TotalChatRooms = await _context.ChatRooms.CountAsync();
             AnotherMetric = 0; // Replace with actual logic if needed
         }
     }

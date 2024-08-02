@@ -9,12 +9,6 @@
 
 <div class="container chat-container">
     <h2>Global Chat</h2>
-
-    <div class="chat-buttons">
-        <a class="btn btn-success" asp-area="Identity" asp-page="/Chat/CreateChatRoom">Create Chat Room</a>
-        <a class="btn btn-success" asp-area="Identity" asp-page="/Chat/ChatRooms">View Chat Rooms</a>
-    </div>
-
     <div class="chat-content-container">
         <div class="chat-content">
             <div class="chat-box" id="chatBox">
@@ -26,21 +20,18 @@
                             {
                                 <div class="username">@message.User.FirstName @message.User.LastName</div>
                             }
-                            else if (message.User == null || message.User.Email == Model.CurrentUser?.Email)
-                            {
-                                <div class="username"></div>
-                            }
                             <div class="message">@message.Text</div>
                             @if (!string.IsNullOrEmpty(message.ImageUrl))
                             {
                                 <div class="image chat-image">
-                                    <img src="@message.ImageUrl" alt="Image" style="max-width: 200px; max-height: 200px;" />
+                                    <img src="@message.ImageUrl" alt="Image" />
                                 </div>
                             }
-                            <div class="time">@message.Timestamp.ToLocalTime().ToString("HH:mm:ss")</div>
+                            <div class="time">@message.Timestamp.ToLocalTime().ToString("HH:mm")</div>
+
+                         
                         </li>
                     }
-
 
                 </ul>
             </div>
@@ -49,8 +40,11 @@
                 <form id="messageForm" method="post" enctype="multipart/form-data">
                     <div class="input-group">
                         <input type="hidden" id="userEmail" value="@Model.CurrentUser.Email" />
+                        <input type="file" class="form-control" name="Image" id="imageInput" accept="image/*" style="display: none;" />
+                        <label for="imageInput" class="btn btn-secondary" style="margin-right:10px;">
+                            <i class="fas fa-image"></i>
+                        </label>
                         <input type="text" class="form-control" name="Content" placeholder="Type your message..." />
-                        <input type="file" class="form-control" name="Image" accept="image/*" />
                         <button type="submit" class="btn btn-primary" id="sendButton">Send Message</button>
                     </div>
                 </form>
@@ -59,9 +53,27 @@
     </div>
 </div>
 
+<button class="chat-button" id="chatToggleButton">
+    <i class="fas fa-comment"></i>
+</button>
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        Chatbot
+    </div>
+    <div class="chat-body" id="chatBody">
+        <!-- Chat messages will appear here -->
+    </div>
+    <div class="chat-footer">
+        <input type="text" id="userInput" placeholder="Type a message...">
+        <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
+    </div>
+    <div class="typing-indicator" id="typingIndicator">Chatbot is typing...</div>
+</div>
+
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.3/signalr.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script>
         const connection = new signalR.HubConnectionBuilder()
@@ -97,7 +109,6 @@
             document.getElementById("messagesList").appendChild(msgDiv);
             scrollToBottom();
         });
-
 
         document.getElementById("messageForm").addEventListener("submit", function (event) {
             event.preventDefault();
@@ -139,5 +150,128 @@
         window.onload = function () {
             scrollToBottom();
         };
+
+        // Ensure jQuery is available, as this code relies on it
+        $(document).ready(function () {
+            $('#messagesList').on('submit', '.delete-message-form', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const form = $(this);
+                const messageId = form.find('input[name="Id"]').val();
+
+                $.ajax({
+                    url: `/Identity/Chat/GlobalChat?handler=DeleteMessage`,
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            form.closest('li').remove(); // Remove the message from the list
+                            console.log(`Message with ID ${messageId} deleted.`);
+                        } else {
+                            console.error('Error deleting message:', data.error);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error deleting message:', error);
+                    }
+                });
+            });
+        });
+
+        function scrollToBottom() {
+            const chatBody = document.getElementById("chatBody");
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        window.onload = function () {
+            scrollToBottom();
+        };
+
+        $('#sendButton').on('click', function () {
+            sendMessage();
+        });
+
+        $('#userInput').on('keypress', function (event) {
+            if (event.which === 13) { // Enter key
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userMessage = $('#userInput').val();
+            if (userMessage.trim() !== '') {
+                addMessage(userMessage, 'user');
+                $('#userInput').val('');
+                showTypingIndicator();
+                setTimeout(() => {
+                    const botMessage = getBotResponse(userMessage);
+                    typeWriter(botMessage); // Call the typewriter effect
+                    hideTypingIndicator();
+                }, 2000);
+            }
+        }
+
+        function addMessage(message, sender) {
+            const messageClass = sender === 'user' ? 'user' : 'bot';
+            $('#chatBody').append(`<div class="chat-message ${messageClass}">${message}</div>`);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            $('#typingIndicator').show();
+        }
+
+        function hideTypingIndicator() {
+            $('#typingIndicator').hide();
+        }
+
+        function getBotResponse(userMessage) {
+            switch (userMessage.toLowerCase()) {
+                case 'how can i create a new chat room?':
+                    return 'You can navigate through Create Chat Room.';
+                case 'what is my recent message sent?':
+                    return '.';
+                case 'thank you':
+                    return 'You are welcome.';
+                case 'how can i add a person to a chat room?':
+                    return 'You can add a person to a chat room using their email.';
+                case 'which car did i book recently?':
+                    return 'You booked a Tesla Model S.';
+                case 'what are the top five t-shirts?':
+                    return '1. Red T-shirt\n2. Blue T-shirt\n3. Green T-shirt\n4. Yellow T-shirt\n5. Black T-shirt';
+                default:
+                    return 'How can I help you today?';
+            }
+        }
+
+        function typeWriter(text) {
+            let i = 0;
+            const speed = 50;
+            const demoElement = document.createElement("div");
+            demoElement.classList.add("chat-message", "bot");
+            document.getElementById("chatBody").appendChild(demoElement);
+
+            function type() {
+                if (i < text.length) {
+                    demoElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                    scrollToBottom();
+                }
+            }
+            type();
+        }
+
+        // Toggle chat window
+        document.getElementById("chatToggleButton").addEventListener("click", function () {
+            const chatWindow = document.getElementById("chatWindow");
+            if (chatWindow.style.display === "none" || chatWindow.style.display === "") {
+                chatWindow.style.display = "flex";
+            } else {
+                chatWindow.style.display = "none";
+            }
+        });
+
     </script>
 }
+

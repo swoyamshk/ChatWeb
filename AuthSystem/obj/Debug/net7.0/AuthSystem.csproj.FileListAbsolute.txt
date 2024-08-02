@@ -1776,3 +1776,4 @@ C:\Users\LEGION\Desktop\Auth\AuthSystem\bin\Debug\net7.0\Microsoft.Recognizers.T
 C:\Users\LEGION\Desktop\Auth\AuthSystem\bin\Debug\net7.0\Microsoft.Recognizers.Text.Number.dll
 C:\Users\LEGION\Desktop\Auth\AuthSystem\bin\Debug\net7.0\Microsoft.Recognizers.Text.NumberWithUnit.dll
 C:\Users\LEGION\Desktop\Auth\AuthSystem\bin\Debug\net7.0\Microsoft.Rest.ClientRuntime.dll
+C:\Users\LEGION\Desktop\Auth\AuthSystem\bin\Debug\net7.0\OpenAI_API.dll

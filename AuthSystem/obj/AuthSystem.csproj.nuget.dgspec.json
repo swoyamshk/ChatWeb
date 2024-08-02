@@ -95,6 +95,10 @@
               "target": "Package",
               "version": "[7.0.12, )"
             },
+            "OpenAI": {
+              "target": "Package",
+              "version": "[1.5.5, )"
+            },
             "SendGrid": {
               "target": "Package",
               "version": "[9.29.3, )"

@@ -8,6 +8,7 @@ using AuthSystem.Hubs;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Options;
+using AuthSystem.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
@@ -42,7 +43,6 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(options => option
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
 // Configure SendGrid Settings to Dotnet Application
 builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGridSettings"));
 builder.Services.AddSendGrid(options =>
@@ -76,7 +76,6 @@ app.MapControllerRoute(
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<PrivateChatHub>("/privatechathub");
-app.MapHub<SupportBotHub>("/supportBotHub");
 
 // Add Roles to the Database
 using (var scope = app.Services.CreateScope())

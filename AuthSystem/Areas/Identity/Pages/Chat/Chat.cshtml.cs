@@ -32,9 +32,11 @@ public class ChatModel : PageModel
         _environment = environment;
         Messages = new List<ChatMessage>();
         UsersInChat = new List<ApplicationUser>();
+        ChatRooms = new List<ChatRoom>();
     }
 
     public ChatRoom Room { get; set; }
+    public IList<ChatRoom> ChatRooms { get; set; }
     public IList<ChatMessage> Messages { get; set; }
     public IList<ApplicationUser> UsersInChat { get; set; }
     public IList<ApplicationUser> Participants { get; set; }
@@ -91,10 +93,12 @@ public class ChatModel : PageModel
             }
         }
 
+        ChatRooms = await _context.ChatRooms
+            .Where(cr => cr.Participants.Any(p => p.UserId == userId)) // Filter chat rooms by user participation
+            .ToListAsync();
+
         return Page();
     }
-
-
 
     public async Task<IActionResult> OnPostAsync(string Content, int ChatRoomId, IFormFile Image)
     {
@@ -168,9 +172,6 @@ public class ChatModel : PageModel
 
         return RedirectToPage(new { roomId = ChatRoomId });
     }
-
-
-
 
     public async Task<IActionResult> OnPostAddUserAsync(int ChatRoomId, string UserIdToAdd)
     {
@@ -256,7 +257,6 @@ public class ChatModel : PageModel
         return RedirectToPage(new { roomId = ChatRoomId });
     }
 
-
     public async Task<IActionResult> OnPostRemoveUserAsync(int ChatRoomId, string UserIdToRemove)
     {
         var user = await _userManager.GetUserAsync(User);
@@ -299,8 +299,7 @@ public class ChatModel : PageModel
 
         try
         {
-            chatRoom.Participants.Remove(participantToRemove);
-
+            _context.ChatParticipants.Remove(participantToRemove);
             await _context.SaveChangesAsync();
         }
         catch (DbUpdateException ex)

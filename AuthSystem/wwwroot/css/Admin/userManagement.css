@@ -1,6 +1,4 @@
-﻿/* Adding background color for inactive users */
-
-a, a:hover, a:focus {
+﻿a, a:hover, a:focus {
     text-decoration: none;
 }
 
@@ -107,6 +105,7 @@ a, a:hover, a:focus {
     align-items: center;
     flex-wrap: wrap;
     margin-right: 30px;
+    margin-bottom: 10px;
 }
 
 .search-form {
@@ -131,6 +130,13 @@ a, a:hover, a:focus {
     margin-right: 10px;
 }
 
+.dropdown-container {
+    margin-top: 10px;
+    margin-left: 2  0px;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .dropdown-filter {
     font-size: 1em;
     padding: 5px;
@@ -140,7 +146,6 @@ a, a:hover, a:focus {
     width: 100%;
     max-width: 300px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
 }
 
     .dropdown-filter:focus {
@@ -182,7 +187,7 @@ a, a:hover, a:focus {
 
 @media (max-width: 768px) {
     .btn-add-user {
-        width:100px;
+        width: 100px;
         padding: 5px 10px;
         margin-left: 0;
         font-size: 0.8em;
