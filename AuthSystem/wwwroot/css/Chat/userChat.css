@@ -1,6 +1,7 @@
-﻿*{
-    overflow:hidden;
+﻿﻿* {
+    overflow: hidden;
 }
+
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -60,7 +61,7 @@
     background-color: #d1e7dd;
     color: #000;
     text-align: right;
-    height:60px;
+    height: 60px;
 }
 
 .received {
@@ -85,7 +86,7 @@
     font-size: 0.7em;
     color: #888;
     margin-top: 0px;
-    text-align:right;
+    text-align: right;
 }
 
 #sendButton {
@@ -284,6 +285,7 @@
         width: auto;
         height: auto;
     }
+
 .btn-secondary {
     background-color: #5f9f9f;
     border: none;
@@ -296,6 +298,6 @@
     height: auto;
 }
 
-.fa-image{
-    padding-top:6px;
+.fa-image {
+    padding-top: 6px;
 }

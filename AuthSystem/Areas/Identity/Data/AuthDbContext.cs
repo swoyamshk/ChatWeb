@@ -18,6 +18,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ChatMessage> ChatMessages { get; set; }
     public DbSet<ChatParticipant> ChatParticipants { get; set; }
     public DbSet<UserActivity> UserActivities { get; set; }
+    public DbSet<FAQ> FAQs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -41,6 +42,13 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
            .WithMany()
            .HasForeignKey(cr => cr.CreatorId)
            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<FAQ>().HasData(
+        new FAQ { Id = 1, Question = "How can I create a new chat room?", Answer = "You can navigate through Create Chat Room." },
+        new FAQ { Id = 2, Question = "What is my recent message sent?", Answer = "." },
+        new FAQ { Id = 3, Question = "Thank you", Answer = "You are welcome." },
+        new FAQ { Id = 4, Question = "How can I add a person to a chat room?", Answer = "You can add a person to a chat room using their email." }
+    );
     }
 
 }

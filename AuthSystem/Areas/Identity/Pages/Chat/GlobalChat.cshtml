@@ -20,19 +20,29 @@
                             {
                                 <div class="username">@message.User.FirstName @message.User.LastName</div>
                             }
-                            <div class="message">@message.Text</div>
-                            @if (!string.IsNullOrEmpty(message.ImageUrl))
-                            {
-                                <div class="image chat-image">
-                                    <img src="@message.ImageUrl" alt="Image" />
+                            <div class="message-container">
+                                <div class="message-content">
+                                    <div class="message">@message.Text</div>
+                                    @if (!string.IsNullOrEmpty(message.ImageUrl))
+                                    {
+                                        <div class="image chat-image">
+                                            <img src="@message.ImageUrl" alt="Image" />
+                                        </div>
+                                    }
+                                    <div class="time">@message.Timestamp.ToLocalTime().ToString("HH:mm")</div>
                                 </div>
-                            }
-                            <div class="time">@message.Timestamp.ToLocalTime().ToString("HH:mm")</div>
-
-                         
+                                @if (message.User.Email == Model.CurrentUser?.Email)
+                                {
+                                    <form method="post" class="delete-message-form">
+                                        <input type="hidden" name="Id" value="@message.Id" />
+                                        <button type="submit" class="btn btn-sm delete-button">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
                         </li>
                     }
-
                 </ul>
             </div>
 
@@ -61,6 +71,12 @@
         Chatbot
     </div>
     <div class="chat-body" id="chatBody">
+        <div id="predefinedQuestions">
+            @foreach (var faq in Model.FAQs)
+            {
+                <div class="question" data-question="@faq.Question">@faq.Question</div>
+            }
+        </div>
         <!-- Chat messages will appear here -->
     </div>
     <div class="chat-footer">
@@ -70,12 +86,17 @@
     <div class="typing-indicator" id="typingIndicator">Chatbot is typing...</div>
 </div>
 
+
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.3/signalr.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script>
+        const faqs = @Html.Raw(ViewData["FAQsJson"]);
+
+        console.log(faqs); // Check if FAQs are correctly passed
+
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
@@ -135,21 +156,29 @@
                     });
                     form.Content.value = '';
                     form.Image.value = '';
-                    scrollToBottom();
                 }).catch(error => {
-                    console.error("Error submitting form: ", error);
+                    console.error(error);
                 });
             }
         });
 
-        function scrollToBottom() {
-            const chatBox = document.querySelector(".chat-box");
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+        document.getElementById("imageInput").addEventListener("change", function () {
+            const file = this.files[0];
+            const reader = new FileReader();
 
-        window.onload = function () {
-            scrollToBottom();
-        };
+            reader.onload = function (e) {
+                const previewImage = document.createElement("img");
+                previewImage.src = e.target.result;
+                previewImage.style.maxWidth = "200px";
+                previewImage.style.maxHeight = "200px";
+                document.getElementById("imagePreview").innerHTML = "";
+                document.getElementById("imagePreview").appendChild(previewImage);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
 
         // Ensure jQuery is available, as this code relies on it
         $(document).ready(function () {
@@ -178,100 +207,123 @@
             });
         });
 
+
+
         function scrollToBottom() {
-            const chatBody = document.getElementById("chatBody");
-            chatBody.scrollTop = chatBody.scrollHeight;
+            const chatBox = document.getElementById("chatBox");
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        window.onload = function () {
-            scrollToBottom();
-        };
+        document.getElementById("chatToggleButton").addEventListener("click", function () {
+            const chatWindow = document.getElementById("chatWindow");
+            chatWindow.style.display = chatWindow.style.display === "none" ? "block" : "none";
+        });
 
-        $('#sendButton').on('click', function () {
+        function getBotResponse(userMessage) {
+            const userQuestion = userMessage.trim().toLowerCase();
+
+            console.log("User Question:", userQuestion); // Debugging
+
+            if (!Array.isArray(faqs)) {
+                console.error("FAQs data is not an array.");
+                return "How can I help you today?";
+            }
+
+            // Iterate over FAQs to find a match
+            const faq = faqs.find(f => {
+                if (!f || !f.Question) {
+                    console.error("Invalid FAQ entry:", f);
+                    return false;
+                }
+                // Normalize FAQ question for comparison
+                const faqQuestion = f.Question.trim().toLowerCase();
+                return faqQuestion === userQuestion;
+            });
+
+            // Return the answer if found, otherwise default message
+            return faq ? faq.Answer : "How can I help you today?";
+        }
+
+
+        document.querySelectorAll("#predefinedQuestions .question").forEach(function (element) {
+            element.addEventListener("click", function () {
+                const question = this.getAttribute("data-question");
+                addUserMessage(question);
+                setTimeout(() => {
+                    const botResponse = getBotResponse(question);
+                    addBotMessage(botResponse);
+                }, 1000);
+            });
+        });
+
+        document.getElementById("sendButton").addEventListener("click", function () {
             sendMessage();
         });
 
-        $('#userInput').on('keypress', function (event) {
-            if (event.which === 13) { // Enter key
+        document.getElementById("userInput").addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
                 sendMessage();
             }
         });
 
         function sendMessage() {
-            const userMessage = $('#userInput').val();
-            if (userMessage.trim() !== '') {
-                addMessage(userMessage, 'user');
-                $('#userInput').val('');
-                showTypingIndicator();
+            const userInput = document.getElementById("userInput").value;
+            if (userInput.trim() !== "") {
+                addUserMessage(userInput);
                 setTimeout(() => {
-                    const botMessage = getBotResponse(userMessage);
-                    typeWriter(botMessage); // Call the typewriter effect
-                    hideTypingIndicator();
-                }, 2000);
+                    const botResponse = getBotResponse(userInput);
+                    addBotMessage(botResponse);
+                }, 1000);
             }
         }
 
-        function addMessage(message, sender) {
-            const messageClass = sender === 'user' ? 'user' : 'bot';
-            $('#chatBody').append(`<div class="chat-message ${messageClass}">${message}</div>`);
+        function addUserMessage(message) {
+            const chatBody = document.getElementById("chatBody");
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("user-message");
+            messageElement.textContent = message;
+            chatBody.appendChild(messageElement);
+            document.getElementById("userInput").value = "";
             scrollToBottom();
         }
 
-        function showTypingIndicator() {
-            $('#typingIndicator').show();
+        function addBotMessage(message) {
+            const chatBody = document.getElementById("chatBody");
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("bot-message");
+            messageElement.textContent = message;
+            chatBody.appendChild(messageElement);
+            scrollToBottom();
         }
 
-        function hideTypingIndicator() {
-            $('#typingIndicator').hide();
+        function scrollToBottom() {
+            const chatBody = document.getElementById("chatBody");
+            chatBody.scrollTop = chatBody.scrollHeight;
         }
-
-        function getBotResponse(userMessage) {
-            switch (userMessage.toLowerCase()) {
-                case 'how can i create a new chat room?':
-                    return 'You can navigate through Create Chat Room.';
-                case 'what is my recent message sent?':
-                    return '.';
-                case 'thank you':
-                    return 'You are welcome.';
-                case 'how can i add a person to a chat room?':
-                    return 'You can add a person to a chat room using their email.';
-                case 'which car did i book recently?':
-                    return 'You booked a Tesla Model S.';
-                case 'what are the top five t-shirts?':
-                    return '1. Red T-shirt\n2. Blue T-shirt\n3. Green T-shirt\n4. Yellow T-shirt\n5. Black T-shirt';
-                default:
-                    return 'How can I help you today?';
-            }
-        }
-
-        function typeWriter(text) {
-            let i = 0;
-            const speed = 50;
-            const demoElement = document.createElement("div");
-            demoElement.classList.add("chat-message", "bot");
-            document.getElementById("chatBody").appendChild(demoElement);
-
-            function type() {
-                if (i < text.length) {
-                    demoElement.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                    scrollToBottom();
-                }
-            }
-            type();
-        }
-
-        // Toggle chat window
-        document.getElementById("chatToggleButton").addEventListener("click", function () {
-            const chatWindow = document.getElementById("chatWindow");
-            if (chatWindow.style.display === "none" || chatWindow.style.display === "") {
-                chatWindow.style.display = "flex";
-            } else {
-                chatWindow.style.display = "none";
-            }
-        });
-
     </script>
+
+    <style>
+        .message-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .message-content {
+            flex-grow: 1;
+        }
+
+        .delete-button {
+            opacity: 0.6; /* Decreased opacity */
+            font-size: 0.8rem; /* Reduced size */
+            margin-left: 10px;
+        }
+
+        .chat-image img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>
 }
 

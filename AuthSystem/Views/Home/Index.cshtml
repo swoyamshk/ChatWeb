@@ -1,4 +1,9 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using AuthSystem.Areas.Identity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
     ViewData["Title"] = "Chatter Box";
 }
 
@@ -16,11 +21,19 @@
             <div class="logo">
                 <img src="img/logo1.png" alt="Logo" style="margin-right:10px;">
             </div>
-            <h2>Unleash AnyChat Conversations</h2>
-            <p>To continue, kindly log in with your account</p>
-            <button>
-                <a href="https://localhost:7143/Identity/Account/Login" class="btn">Get Started</a>
-            </button>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <h2>Welcome to Chatter Box!</h2>
+                <p>Explore and start chatting with your friends and colleagues.</p>
+            }
+            else
+            {
+                <h2>Unleash AnyChat Conversations</h2>
+                <p>To continue, kindly log in with your account</p>
+                <button>
+                    <a href="https://localhost:7143/Identity/Account/Login" class="btn">Get Started</a>
+                </button>
+            }
         </div>
     </div>
 
@@ -113,113 +126,8 @@
             </div>
         </div>
     </footer>
-    <button class="chat-button" id="chatToggleButton">
-        <i class="fas fa-comment"></i>
-    </button>
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            Chatbot
-        </div>
-        <div class="chat-body" id="chatBody">
-            <!-- Chat messages will appear here -->
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="userInput" placeholder="Type a message...">
-            <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
-        </div>
-        <div class="typing-indicator" id="typingIndicator">Chatbot is typing...</div>
-    </div>
+   
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#chatToggleButton').on('click', function () {
-            $('#chatWindow').toggle();
-        });
 
-        function scrollToBottom() {
-            const chatBody = document.getElementById("chatBody");
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
-
-        window.onload = function () {
-            scrollToBottom();
-        };
-
-        $('#sendButton').on('click', function () {
-            sendMessage();
-        });
-
-        $('#userInput').on('keypress', function (event) {
-            if (event.which === 13) { // Enter key
-                sendMessage();
-            }
-        });
-
-        function sendMessage() {
-            const userMessage = $('#userInput').val();
-            if (userMessage.trim() !== '') {
-                addMessage(userMessage, 'user');
-                $('#userInput').val('');
-                showTypingIndicator();
-                setTimeout(() => {
-                    const botMessage = getBotResponse(userMessage);
-                    typeWriter(botMessage); // Call the typewriter effect
-                    hideTypingIndicator();
-                }, 2000);
-            }
-        }
-
-        function addMessage(message, sender) {
-            const messageClass = sender === 'user' ? 'user' : 'bot';
-            $('#chatBody').append(`<div class="chat-message ${messageClass}">${message}</div>`);
-            scrollToBottom();
-        }
-
-        function showTypingIndicator() {
-            $('#typingIndicator').show();
-        }
-
-        function hideTypingIndicator() {
-            $('#typingIndicator').hide();
-        }
-
-        function getBotResponse(userMessage) {
-            switch (userMessage.toLowerCase()) {
-                case 'how can i create a new chat room?':
-                    return 'You can navigate through Create Chat Room.';
-                case 'what is my recent message sent?':
-                    return '.';
-                case 'thank you':
-                    return 'You are welcome.';
-                case 'how can i add a person to a chat room?':
-                    return 'You can add a person to a chat room using their email.';
-                case 'which car did i book recently?':
-                    return 'You booked a Tesla Model S.';
-                case 'what are the top five t-shirts?':
-                    return '1. Red T-shirt\n2. Blue T-shirt\n3. Green T-shirt\n4. Yellow T-shirt\n5. Black T-shirt';
-                default:
-                    return 'How can I help you today?';
-            }
-        }
-
-        function typeWriter(text) {
-            let i = 0;
-            const speed = 50;
-            const demoElement = document.createElement("div");
-            demoElement.classList.add("chat-message", "bot");
-            document.getElementById("chatBody").appendChild(demoElement);
-
-            function type() {
-                if (i < text.length) {
-                    demoElement.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                    scrollToBottom();
-                }
-            }
-            type();
-        }
-    });
-</script>

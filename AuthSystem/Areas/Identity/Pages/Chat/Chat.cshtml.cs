@@ -5,7 +5,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 public class ChatModel : PageModel
 {
@@ -200,28 +206,26 @@ public class ChatModel : PageModel
             return Forbid();
         }
 
+        // Validate the email input
+        if (string.IsNullOrWhiteSpace(UserIdToAdd))
+        {
+            ModelState.AddModelError("UserIdToAdd", "Email cannot be empty.");
+            await LoadChatRoomData(chatRoom);
+            return Page();
+        }
+
         var userToAdd = await _userManager.FindByEmailAsync(UserIdToAdd);
         if (userToAdd == null)
         {
             ModelState.AddModelError("UserIdToAdd", "User not found.");
-            Room = chatRoom;
-            Messages = await _context.ChatMessages
-                .Where(m => m.ChatRoomId == ChatRoomId)
-                .Include(m => m.Sender)
-                .ToListAsync();
-            Participants = chatRoom.Participants.Select(p => p.User).ToList();
+            await LoadChatRoomData(chatRoom);
             return Page();
         }
 
         if (chatRoom.Participants.Any(p => p.UserId == userToAdd.Id))
         {
             ModelState.AddModelError("UserIdToAdd", "User is already a participant.");
-            Room = chatRoom;
-            Messages = await _context.ChatMessages
-                .Where(m => m.ChatRoomId == ChatRoomId)
-                .Include(m => m.Sender)
-                .ToListAsync();
-            Participants = chatRoom.Participants.Select(p => p.User).ToList();
+            await LoadChatRoomData(chatRoom);
             return Page();
         }
 
@@ -239,21 +243,10 @@ public class ChatModel : PageModel
         {
             _logger.LogError(ex, "A database update error occurred while adding the user.");
             ModelState.AddModelError("", "A database update error occurred.");
-            Room = chatRoom;
-            Messages = await _context.ChatMessages
-                .Where(m => m.ChatRoomId == ChatRoomId)
-                .Include(m => m.Sender)
-                .ToListAsync();
-            Participants = chatRoom.Participants.Select(p => p.User).ToList();
+            await LoadChatRoomData(chatRoom);
             return Page();
         }
 
-        Room = chatRoom;
-        Messages = await _context.ChatMessages
-            .Where(m => m.ChatRoomId == ChatRoomId)
-            .Include(m => m.Sender)
-            .ToListAsync();
-        Participants = chatRoom.Participants.Select(p => p.User).ToList();
         return RedirectToPage(new { roomId = ChatRoomId });
     }
 
@@ -288,12 +281,7 @@ public class ChatModel : PageModel
         if (participantToRemove == null)
         {
             ModelState.AddModelError("UserIdToRemove", "Participant not found.");
-            Room = chatRoom;
-            Messages = await _context.ChatMessages
-                .Where(m => m.ChatRoomId == ChatRoomId)
-                .Include(m => m.Sender)
-                .ToListAsync();
-            Participants = chatRoom.Participants.Select(p => p.User).ToList();
+            await LoadChatRoomData(chatRoom);
             return Page();
         }
 
@@ -306,21 +294,76 @@ public class ChatModel : PageModel
         {
             _logger.LogError(ex, "A database update error occurred while removing the user.");
             ModelState.AddModelError("", "A database update error occurred.");
-            Room = chatRoom;
-            Messages = await _context.ChatMessages
-                .Where(m => m.ChatRoomId == ChatRoomId)
-                .Include(m => m.Sender)
-                .ToListAsync();
-            Participants = chatRoom.Participants.Select(p => p.User).ToList();
+            await LoadChatRoomData(chatRoom);
             return Page();
         }
 
-        Room = chatRoom;
-        Messages = await _context.ChatMessages
-            .Where(m => m.ChatRoomId == ChatRoomId)
-            .Include(m => m.Sender)
-            .ToListAsync();
-        Participants = chatRoom.Participants.Select(p => p.User).ToList();
         return RedirectToPage(new { roomId = ChatRoomId });
     }
+
+    private async Task LoadChatRoomData(ChatRoom chatRoom)
+    {
+        Room = chatRoom;
+        Messages = await _context.ChatMessages
+            .Where(m => m.ChatRoomId == chatRoom.Id)
+            .Include(m => m.Sender)
+            .ToListAsync();
+        UsersInChat = chatRoom.Participants.Select(p => p.User).ToList();
+        Participants = chatRoom.Participants.Select(p => p.User).ToList();
+        ChatRooms = await _context.ChatRooms
+            .Where(cr => cr.Participants.Any(p => p.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            .ToListAsync();
+    }
+
+
+    public async Task<IActionResult> OnPostDeleteMessageAsync(int id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            _logger.LogWarning("User not found.");
+            return Challenge();
+        }
+
+        // Find the message to be deleted
+        var message = await _context.ChatMessages
+            .Include(m => m.Sender)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (message == null)
+        {
+            _logger.LogWarning("Message with Id {MessageId} not found.", id);
+            return NotFound("Message not found.");
+        }
+
+        // Check if the current user is the sender of the message
+        if (message.SenderId != user.Id)
+        {
+            _logger.LogWarning("User is not authorized to delete this message.");
+            return Forbid();
+        }
+
+        try
+        {
+            _context.ChatMessages.Remove(message);
+            await _context.SaveChangesAsync();
+            _logger.LogInformation("Message deleted from database.");
+
+            // Notify clients about the deletion
+            await _hubContext.Clients.Group(message.ChatRoomId.ToString()).SendAsync("DeleteMessage", id);
+        }
+        catch (DbUpdateException ex)
+        {
+            _logger.LogError(ex, "A database update error occurred while deleting the message.");
+            return StatusCode(500, "A database update error occurred while deleting the message.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while deleting the message.");
+            return StatusCode(500, "An error occurred while deleting the message.");
+        }
+
+        return new JsonResult(new { success = true });
+    }
+
 }

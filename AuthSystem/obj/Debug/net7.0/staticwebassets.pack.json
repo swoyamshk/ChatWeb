@@ -37,6 +37,10 @@
       "PackagePath": "staticwebassets\\css\\Admin\\userManagement.css"
     },
     {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Chat\\ChatRooms.css",
+      "PackagePath": "staticwebassets\\css\\Chat\\ChatRooms.css"
+    },
+    {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\css\\Chat\\privateChat.css",
       "PackagePath": "staticwebassets\\css\\Chat\\privateChat.css"
     },
@@ -343,6 +347,10 @@
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\bgimage.png",
       "PackagePath": "staticwebassets\\uploads\\bgimage.png"
+    },
+    {
+      "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\er.png",
+      "PackagePath": "staticwebassets\\uploads\\er.png"
     },
     {
       "Id": "C:\\Users\\LEGION\\Desktop\\Auth\\AuthSystem\\wwwroot\\uploads\\logo.png",

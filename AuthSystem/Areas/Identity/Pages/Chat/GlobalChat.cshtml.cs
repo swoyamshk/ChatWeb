@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using AuthSystem.Models;
+using Newtonsoft.Json;
 
 public class GlobalChatModel : PageModel
 {
@@ -17,6 +18,7 @@ public class GlobalChatModel : PageModel
 
     public List<Message> Messages { get; set; }
     public ApplicationUser CurrentUser { get; set; }
+    public List<FAQ> FAQs { get; set; }
 
     public GlobalChatModel(
         ILogger<GlobalChatModel> logger,
@@ -41,11 +43,15 @@ public class GlobalChatModel : PageModel
                 .Include(m => m.User)
                 .OrderBy(m => m.Timestamp)
                 .ToListAsync();
-            _logger.LogInformation("Retrieved messages from the database.");
+            FAQs = await _context.FAQs.ToListAsync();
+            _logger.LogInformation("Retrieved messages and FAQs from the database.");
+
+            // Serialize FAQs to JSON
+            ViewData["FAQsJson"] = JsonConvert.SerializeObject(FAQs);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while retrieving messages.");
+            _logger.LogError(ex, "An error occurred while retrieving messages and FAQs.");
         }
 
         return Page();

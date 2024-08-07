@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AuthSystem.Areas.Identity.Pages.Admin
@@ -15,6 +16,7 @@ namespace AuthSystem.Areas.Identity.Pages.Admin
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AuthDbContext _context;
+        private readonly IUserActivityService _userActivityService;
 
         public AdminDashboardModel(UserManager<ApplicationUser> userManager, AuthDbContext context)
         {
@@ -45,7 +47,7 @@ namespace AuthSystem.Areas.Identity.Pages.Admin
             TotalManagers = 0;
             ActiveUsers = 0;
             InactiveUsers = 0;
-
+       
             foreach (var user in users)
             {
                 var roles = await _userManager.GetRolesAsync(user);
