@@ -27,6 +27,9 @@
                     Total Participants: @Model.Participants.Count
                 </div>
             </h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search messages..." />
+            </div>
             <div class="chat-content-container">
                 <div class="chat-content">
                     <ul id="messagesList" class="chat-box">
@@ -35,6 +38,7 @@
                             var lastDate = Model.Messages.First().Timestamp.Date;
                             <li class="date-separator">
                                 <span class="date">@lastDate.ToString("MMMM dd, yyyy")</span>
+
                             </li>
                             @foreach (var message in Model.Messages)
                             {
@@ -144,6 +148,7 @@
                 <i class="fas fa-times"></i>
             </span>
         </div>
+
     </div>
 </div>
 
@@ -192,6 +197,43 @@
             });
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById('searchInput');
+        const messagesList = document.getElementById('messagesList');
+        const messages = messagesList.getElementsByTagName('li');
+
+        searchInput.addEventListener('keyup', function () {
+            const filter = searchInput.value.toLowerCase();
+            let previousMessageWasVisible = false;
+
+            for (let i = 0; i < messages.length; i++) {
+                const messageText = messages[i].querySelector('.message-text');
+                const dateSeparator = messages[i].classList.contains('date-separator');
+
+                if (messageText) {
+                    const textValue = messageText.textContent || messageText.innerText;
+                    if (textValue.toLowerCase().indexOf(filter) > -1) {
+                        messages[i].style.display = "";
+                        if (previousMessageWasVisible && i > 0 && messages[i - 1].classList.contains('date-separator')) {
+                            messages[i - 1].style.display = "";
+                        }
+                        previousMessageWasVisible = true;
+                    } else {
+                        messages[i].style.display = "none";
+                        previousMessageWasVisible = false;
+                    }
+                } else if (dateSeparator) {
+                    messages[i].style.display = "none";
+                    if (i < messages.length - 1 && messages[i + 1].style.display === "") {
+                        messages[i].style.display = "";
+                    }
+                }
+            }
+        });
+    });
+
+
 
     document.addEventListener("DOMContentLoaded", function () {
         const deleteForms = document.querySelectorAll('.delete-message-form');

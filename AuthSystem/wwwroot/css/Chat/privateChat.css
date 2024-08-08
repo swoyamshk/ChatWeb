@@ -153,6 +153,7 @@
 }
 
 .date-separator {
+    list-style-type: none;
     text-align: center;
     margin: 20px 0;
     font-weight: bold;
@@ -314,6 +315,7 @@ button.btn.btn-custom {
     font-weight: bold;
     color: #333;
     display: inline-block;
+    margin-bottom:10px;
 }
 
 /* Style for the horizontal line */
@@ -421,14 +423,24 @@ h3 {
     cursor: pointer;
 }
 
-.toggle-icon {
-    float: right;
+/* Add this CSS to your existing stylesheet */
+
+.toggle-button-container {
+    position: absolute;
+    margin-top:60px;
+    top: 10px;
+    right: 10px;
+    width: 40px; /* Set a fixed width */
+    height: 40px; /* Set a fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.toggle-button-container{
-    width:10px;
-    height:10px;
-}
+    .toggle-button-container .toggle-icon {
+        font-size: 20px; /* Ensure the font size is consistent */
+    }
+
 
 .plus-icon{
    margin: 0;
