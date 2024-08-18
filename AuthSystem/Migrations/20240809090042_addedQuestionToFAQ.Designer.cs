@@ -4,6 +4,7 @@ using AuthSystem.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthSystem.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240809090042_addedQuestionToFAQ")]
+    partial class addedQuestionToFAQ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,27 +182,6 @@ namespace AuthSystem.Migrations
                     b.ToTable("ChatRooms");
                 });
 
-            modelBuilder.Entity("AuthSystem.Models.CombinedData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TableName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CombinedData");
-                });
-
             modelBuilder.Entity("AuthSystem.Models.FAQ", b =>
                 {
                     b.Property<int>("Id")
@@ -230,18 +212,24 @@ namespace AuthSystem.Migrations
                         new
                         {
                             Id = 2,
+                            Answer = ".",
+                            Question = "What is my recent message sent?"
+                        },
+                        new
+                        {
+                            Id = 3,
                             Answer = "You are welcome.",
                             Question = "Thank you"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 4,
                             Answer = "To reset your password, go to profile section.",
                             Question = "How do I reset my password?"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 5,
                             Answer = "You can contact support by clicking on their socials.",
                             Question = "How can I contact support?"
                         });

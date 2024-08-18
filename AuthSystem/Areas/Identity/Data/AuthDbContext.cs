@@ -24,6 +24,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(builder);
 
+        // Configure relationships
         builder.Entity<ChatParticipant>()
             .HasKey(cp => new { cp.ChatRoomId, cp.UserId });
 
@@ -43,12 +44,12 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
            .HasForeignKey(cr => cr.CreatorId)
            .OnDelete(DeleteBehavior.Restrict);
 
+        // Seed FAQs
         builder.Entity<FAQ>().HasData(
-        new FAQ { Id = 1, Question = "How can I create a new chat room?", Answer = "You can navigate through Create Chat Room." },
-        new FAQ { Id = 2, Question = "What is my recent message sent?", Answer = "." },
-        new FAQ { Id = 3, Question = "Thank you", Answer = "You are welcome." },
-        new FAQ { Id = 4, Question = "How can I add a person to a chat room?", Answer = "You can add a person to a chat room using their email." }
-    );
+            new FAQ { Id = 1, Question = "How can I create a new chat room?", Answer = "You can navigate through Create Chat Room." },
+            new FAQ { Id = 2, Question = "Thank you", Answer = "You are welcome." },
+            new FAQ { Id = 3, Question = "How do I reset my password?", Answer = "To reset your password, go to profile section." },
+            new FAQ { Id = 4, Question = "How can I contact support?", Answer = "You can contact support by clicking on their socials." }
+        );
     }
-
 }

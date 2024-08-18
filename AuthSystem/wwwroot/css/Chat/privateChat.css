@@ -2,7 +2,7 @@
     height: 100%;
     margin: 0;
     padding-right: 5px;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .chat-wrapper {
@@ -50,20 +50,22 @@
     flex-direction: column;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #f5f5f5 !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     height: 96%;
-    width:1200px;
+    width: 1200px;
 }
+
 /* Style for the add user form */
 #addUserForm {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
+
     #addUserForm .btn-secondary {
         background-color: cadetblue;
         color: white;
         border: none;
-        height:38px;
+        height: 38px;
     }
 
         #addUserForm .btn-secondary:hover {
@@ -78,6 +80,7 @@
 }
 
 .chat-room-title {
+    text-align: center;
     text-align: center;
     margin: 10px 0;
 }
@@ -98,6 +101,7 @@
 }
 
 .chat-box {
+    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 10px; /* Space between messages */
@@ -129,12 +133,12 @@
 }
 
 .list-group-item.sent {
-    background-color: #e0f7fa !important; /* Light blue background */
+    background-color: #f0faff !important; /* pale blue background */
     border: 1px solid #b2ebf2 !important; /* Light blue border */
 }
 
 .list-group-item.received {
-    background-color: #e8f5e9 !important; /* Light green background */
+    background-color: #ffffff !important; /* white background */
     border: 1px solid #c8e6c9 !important; /* Light green border */
 }
 
@@ -161,7 +165,7 @@
 }
 
     .date-separator .date {
-        background: #f8f9fa;
+        background-color: #f5f5f5 !important;
         padding: 0 10px;
         border-radius: 5px;
     }
@@ -232,16 +236,24 @@
     padding-bottom: 10px; /* Adjust padding to add some space between the heading and the line */
 }
 
-/* Style for the toggle icon */
+/* Initially hide the cross icon */
+#icon-open {
+    display: none;
+}
+
+/* Hide or show icons based on visibility */
+.hidden {
+    display: none;
+}
+
 .toggle-icon {
     font-size: 20px;
     color: #555;
     margin-left: 10px;
+    vertical-align: middle;
 }
 
-.hidden {
-    display: none;
-}
+
 
 /* Style for the custom button */
 .btn-custom {
@@ -294,10 +306,15 @@ button.btn.btn-custom {
     }
 
 .dropdown-menu {
-    background-color: black; /* Black background */
-    border: none; /* Remove border */
-    border-radius: 0; /* Remove border radius */
+    background-color: #e8f5e9 !important; /* Light background color */
+    font-weight: bold; /* Make the text bold */
+    border: 2px solid black;
 }
+
+    .dropdown-menu .dropdown-item:hover {
+        background-color: cadetblue !important; /* Slightly darker color on hover */
+        color: white;
+    }
 
 .dropdown-item {
     color: white; /* White text */
@@ -315,7 +332,7 @@ button.btn.btn-custom {
     font-weight: bold;
     color: #333;
     display: inline-block;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 /* Style for the horizontal line */
@@ -390,6 +407,102 @@ h3 {
                     color: blue; /* Darker color on hover */
                 }
 
+.message-info {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: flex-end; /* Align items to the end (right side) */
+    gap: 8px; /* Space between time and reply icon */
+}
+
+.time {
+    font-size: 12px; /* Adjust the font size */
+    color: #555; /* Text color */
+}
+/* Style for messages that are replies */
+.list-group-item.replied {
+    border-left: 4px solid #007bff; /* Blue border for replied messages */
+    background-color: #f1f9ff; /* Light blue background for replied messages */
+    padding-left: 10px; /* Add some padding to distinguish replied messages */
+    margin-left: 10px; /* Indent replied messages */
+}
+
+/* Optional: Style for the text indicating a reply */
+.replied-message-indicator {
+    font-size: 12px;
+    color: #007bff; /* Blue color for the reply indicator text */
+    margin-bottom: 5px; /* Space below the indicator */
+}
+
+
+.reply-icon {
+    cursor: pointer;
+    font-size: 12px; /* Adjust icon size to match time */
+    color: #555; /* Match the time color */
+    display: inline-flex; /* Ensure icon is displayed inline */
+    align-items: center; /* Center icon vertically */
+}
+
+.dropdown-toggle {
+    background-color: transparent; /* Transparent background */
+    border: none; /* Remove border */
+    color: #555 !important; /* Match the time color */
+    padding: 0; /* Remove padding */
+    font-size: 12px; /* Adjust icon size to match time */
+    display: inline-flex; /* Use inline-flex for alignment */
+    align-items: center; /* Center icon vertically */
+}
+
+    .dropdown-toggle .fa-chevron-down {
+        font-size: 12px; /* Match the size of the time text */
+        color: #555 !important; /* Match the time color */
+    }
+    /* Optional: Adjust the dropdown arrow size and color */
+    .dropdown-toggle .fa-chevron-down {
+        font-size: 12px; /* Match the size of the time text */
+        color: #555 !important; /* Match the time color */
+        margin: 0; /* Remove any margin */
+        display: none; /* Hide the chevron-down icon */
+    }
+
+
+
+.dropdown-menu {
+    background-color: #fff; /* White background */
+    border: 1px solid #ddd; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    min-width: 100px; /* Minimum width */
+}
+
+.dropdown-item {
+    color: #333; /* Text color */
+    font-size: 14px; /* Font size */
+}
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa; /* Light background on hover */
+    }
+
+
+.reply-preview {
+    background-color: #f8f9fa !important; /* Light background on hover */
+    ;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.fa-times {
+    border: none;
+}
+
+.reply-preview #cancelReply {
+    color: red;
+    cursor: pointer;
+    margin-left: 10px;
+}
 
 
 @media (max-width: 768px) {
@@ -423,11 +536,19 @@ h3 {
     cursor: pointer;
 }
 
+.chat-room-title {
+    text-align: center;
+    margin: 10px 0;
+    color: cadetblue;
+    font-weight: bold; /* Set the chat room title color to cadetblue */
+}
+
+
 /* Add this CSS to your existing stylesheet */
 
 .toggle-button-container {
     position: absolute;
-    margin-top:60px;
+    margin-top: 60px;
     top: 10px;
     right: 10px;
     width: 40px; /* Set a fixed width */
@@ -440,9 +561,3 @@ h3 {
     .toggle-button-container .toggle-icon {
         font-size: 20px; /* Ensure the font size is consistent */
     }
-
-
-.plus-icon{
-   margin: 0;
-   padding:0;
-}

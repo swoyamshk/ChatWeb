@@ -29,7 +29,6 @@ builder.Services.AddSignalR(options =>
     options.EnableDetailedErrors = true;
 });
 
-
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -50,12 +49,16 @@ builder.Services.AddSendGrid(options =>
     options.ApiKey = builder.Configuration.GetSection("SendGridSettings").GetValue<string>("ApiKey"); // Configuring ApiKey for SendGrid Library
 });
 
+services.AddHttpClient<SearchModel>(client =>
+{
+    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {builder.Configuration["OpenAI:ApiKey"]}");
+});
+
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 
 // Register the bot framework
 builder.Services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>();
 builder.Services.AddSingleton<IBot, SupportBot>();
-
 
 var app = builder.Build();
 
@@ -109,7 +112,7 @@ using (var scope = app.Services.CreateScope())
             Email = email,
             EmailConfirmed = true,
             FirstName = "Admin",
-            LastName =""
+            LastName = ""
         };
 
         var result = await userManager.CreateAsync(user, password);
@@ -132,5 +135,6 @@ using (var scope = app.Services.CreateScope())
         logger.LogInformation("Admin user already exists.");
     }
 }
+
 
 app.Run();

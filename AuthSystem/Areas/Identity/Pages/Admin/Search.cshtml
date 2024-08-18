@@ -1,0 +1,30 @@
+﻿@page
+@model SearchModel
+@{
+    ViewData["Title"] = "Search Data";
+}
+
+<h2>Search Data</h2>
+
+<form method="post">
+    <div>
+        <label for="searchTerm">Search Term:</label>
+        <input type="text" id="searchTerm" name="searchTerm" value="@Model.SearchTerm" />
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+@if (Model.Results != null && Model.Results.Any())
+{
+    <h3>AI Analysis:</h3>
+    <ul>
+        @foreach (var result in Model.Results)
+        {
+            <li>@result</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No analysis available for the term "@Model.SearchTerm".</p>
+}
